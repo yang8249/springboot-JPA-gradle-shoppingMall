@@ -33,7 +33,7 @@ public class BoardController {
 		
 		model.addAttribute("boards", boards);
 		
-		return "index";
+		return "main";
 	}
 
 	@GetMapping("/board/{id}")
