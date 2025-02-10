@@ -65,6 +65,7 @@
 <link rel="stylesheet"
 	href="//img.echosting.cafe24.com/api/store/css/store.min.css">
 <link rel="stylesheet" href="/css/cafe24.css">
+<link rel="stylesheet" href="/css/cafe24_2.css">
 <script src="/_next/static/chunks/polyfills-c67a75d1b6f99dc8.js"
 	nomodule=""></script>
 </head>

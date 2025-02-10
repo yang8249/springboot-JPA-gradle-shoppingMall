@@ -31,7 +31,8 @@ public class ProductController {
 			@PageableDefault(size = 10, sort = "productSeq", direction = Direction.DESC) Pageable pageable) {
 		// 스프링 시큐리티에서 작성한 로그인처리 로직이 끝난다음에 principal 객체에 정보가 담겨진다.
 		// System.out.println("로그인 사용자 : "+principal.getUsername());
-		model.addAttribute("product", productService.selectProduct(category, pageable));
+		model.addAttribute("products", productService.selectProduct(category, pageable));
+		
 		return "product/products";
 	}
 

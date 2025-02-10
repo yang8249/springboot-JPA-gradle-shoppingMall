@@ -73,12 +73,15 @@
 						<div data-ez-role="title">New Arrival</div>
 						<span data-ez-role="subtitle">카테고리별 새로운 아이템</span>
 					</div>
+					
+
 					<!-- //listpage_title -->
-					<ul class="prdList grid4 list_gallery"
-						data-ez-role="layout ez-discount-tag">
 						<!--
-※ 상품진열 공통소스
--->
+						※ 신상품 진열칸
+						-->	
+						<ul class="prdList grid4 list_gallery"
+							data-ez-role="layout ez-discount-tag">
+					<c:forEach var="product" items="${products.content}" varStatus="status">
 						<li id="anchorBoxId_11" class="xans-record-">
 							<div class="prdList__item">
 								<div class="thumbnail">
@@ -127,7 +130,31 @@
 								</div>
 							</div>
 						</li>
-						<li id="anchorBoxId_12" class="xans-record-">
+					</c:forEach>
+	
+			  		</ul>
+			  		
+			  		<!-- 페이징 처리 -->
+				  <ul class="pagination justify-content-center">
+				  	<c:choose>
+				  		<c:when test="${products.first}">
+					  		<li class="disabled"><a onclick="return false;" href="?page=${products.number-1}">Previous</a></li>
+				  		</c:when>
+				  		<c:otherwise>
+					  		<li class=""><a href="?page=${products.number-1}">Previous</a></li>
+				  		</c:otherwise>
+				  	</c:choose>
+				  	
+				  	<c:choose>
+				  		<c:when test="${products.last}">
+					  		<li class="disabled"><a onclick="return false;" href="?page=${products.number+1}">Next</a></li>
+				  		</c:when>
+				  		<c:otherwise>
+					 		<li class=""><a href="?page=${products.number+1}">Next</a></li>
+				  		</c:otherwise>
+				  	</c:choose>
+				  </ul>
+						<!-- <li id="anchorBoxId_12" class="xans-record-">
 							<div class="prdList__item">
 								<div class="thumbnail">
 									<a href="/product/선글라스/12/category/42/display/3/"><img
@@ -272,12 +299,15 @@
 									<div class="icon"></div>
 								</div>
 							</div>
-						</li>
+						</li> -->
 					</ul>
 				</div>
 			</div>
 			<!-- //product_list -->
 		</div>
+		
+		
+		
 		<div class="normalpackage_box section"
 			data-ez-module="product-normalpackage/1" data-ez-layout="grid4"
 			data-ez="contents-01tj6em-1">
