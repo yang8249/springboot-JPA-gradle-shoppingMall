@@ -89,9 +89,9 @@
 					data-ez-column="3">
 					<li data-ez-role="image-item ez-align"><a data-ez-role="a"
 						href="#" target="_self"> <picture>
-							<source srcset="/SkinImg/img/main_banner01_pc.png"
+							<source srcset="https://ecudemo276583.cafe24.com/SkinImg/img/main_banner01_pc.png"
 								media="(max-width: 1024px)" data-ez-role="img-pc">
-							<img src="/SkinImg/img/main_banner01_pc.png"
+							<img src="https://ecudemo276583.cafe24.com/SkinImg/img/main_banner01_pc.png"
 								data-ez-role="img-mobile"> &nbsp;</picture>
 							<div class="main_banner_txt">
 								<div class="main_banner_txt01" data-ez-role="title"
@@ -103,9 +103,9 @@
 					</a></li>
 					<li data-ez-role="image-item ez-align"><a data-ez-role="a"
 						href="#" target="_self"> <picture>
-							<source srcset="/SkinImg/img/main_banner02_pc.png"
+							<source srcset="https://ecudemo276583.cafe24.com/SkinImg/img/main_banner02_pc.png"
 								media="(max-width: 1024px)" data-ez-role="img-pc">
-							<img src="/SkinImg/img/main_banner02_pc.png"
+							<img src="https://ecudemo276583.cafe24.com/SkinImg/img/main_banner02_pc.png"
 								data-ez-role="img-mobile"> &nbsp;</picture>
 							<div class="main_banner_txt">
 								<div class="main_banner_txt01" data-ez-role="title"
@@ -117,9 +117,9 @@
 					</a></li>
 					<li data-ez-role="image-item ez-align"><a data-ez-role="a"
 						href="#" target="_self"> <picture>
-							<source srcset="/SkinImg/img/main_banner03_pc.png"
+							<source srcset="https://ecudemo276583.cafe24.com/SkinImg/img/main_banner03_pc.png"
 								media="(max-width: 1024px)" data-ez-role="img-pc">
-							<img src="/SkinImg/img/main_banner03_pc.png"
+							<img src="https://ecudemo276583.cafe24.com/SkinImg/img/main_banner03_pc.png"
 								data-ez-role="img-mobile"> &nbsp;</picture>
 							<div class="main_banner_txt">
 								<div class="main_banner_txt01" data-ez-role="title"

@@ -114,6 +114,15 @@
     #container{
         margin-top: 100px;
     }
+    .logo {
+	  outline: none;
+	  user-select: none; /* 텍스트 선택 방지 */
+	}
+	#nav-header {
+	  top: 0;
+	  position: sticky;
+	  z-index: 1000;
+	}
   </style>
 <body>
 
@@ -124,7 +133,7 @@
   </div>
 </div>
 
-<nav class="navbar navbar-inverse">
+<nav id="nav-header" class="navbar navbar-inverse">
   <div class="container-fluid">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
@@ -132,12 +141,12 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>                        
       </button>
-      <a class="navbar-brand" href="#">Logo</a>
+      <span class="navbar-brand logo" >Logo</span>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
-        <li class="active"><a href="#">Home</a></li>
-        <li><a href="#">Outerwear</a></li>
+        <li class="active"><a href="/">Home</a></li>
+        <li><a href="/products?category=outerwear">Outerwear</a></li>
         <li><a href="#">Tops</a></li>
         <li><a href="#">Dresses</a></li>
         <li><a href="#">Bottoms</a></li>
@@ -145,7 +154,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><img class="searchIcon" alt="" src="/img/free-icon-magnifier-2866321.png">검색</a></li>
-        <li><a href="#"><span class="glyphicon glyphicon-user"></span> 로그인/회원가입</a></li>
+        <li><a href="/auth/loginForm"><span class="glyphicon glyphicon-user"></span> 로그인/회원가입</a></li>
         <li><a href="#"><span style="margin-right:5px" class="glyphicon glyphicon-shopping-cart"></span>장바구니</a></li>
       </ul>
     </div>
