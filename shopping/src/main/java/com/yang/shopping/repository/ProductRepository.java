@@ -1,5 +1,6 @@
 package com.yang.shopping.repository;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.data.domain.Page;
@@ -17,6 +18,10 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 	
     @Query("SELECT p FROM Product p WHERE p.category = :category")
     Page<Product> findByCategory(@Param("category") String category, Pageable pageable);
+
+    @Query("SELECT p FROM Product p "
+    		+ "ORDER BY p.createDate DESC LIMIT 4")
+	List<Product> findByNewProduct();
 
 	
 }

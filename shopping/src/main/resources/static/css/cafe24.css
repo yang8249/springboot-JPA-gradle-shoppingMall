@@ -8312,7 +8312,7 @@ h1,h3 {
     margin: 0;
 }
 
-.ec-base-product .prdList .thumbnail .badge {
+.ec-base-product .prdList .thumbnail .custom_badge {
     position: absolute;
     top: 5%;
     left: 5%;
@@ -8327,7 +8327,7 @@ h1,h3 {
     flex-direction: row-reverse;
 }
 
-.ec-base-product .prdList .thumbnail .badge span {
+.ec-base-product .prdList .thumbnail .custom_badge span {
     padding-left: 5px;
 }
 
@@ -10338,7 +10338,7 @@ div.ec-base-help ul {
         font-size: calc(12px + (14 - 12) * ((100vw - 370px) / (1760 - 370)));
     }
 
-    .ec-base-product .prdList .thumbnail .badge {
+    .ec-base-product .prdList .thumbnail .custom_badge {
         font-size: calc(13px + (16 - 13) * ((100vw - 370px) / (1760 - 370)));
     }
 }

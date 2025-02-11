@@ -32,6 +32,12 @@ public class ProductService {
 	public Page<Product> selectProduct(String category, Pageable pageable) {
         return productRepository.findByCategory(category, pageable);
 	}
+
+
+	public List<Product> selectNewProduct() {
+		// TODO Auto-generated method stub
+		return productRepository.findByNewProduct();
+	}
 	
 	/*
 	 * //이 트랜잭션 어노테이션으로 해당 서비스를 하나의 트랜잭션 단위로 묶었다.

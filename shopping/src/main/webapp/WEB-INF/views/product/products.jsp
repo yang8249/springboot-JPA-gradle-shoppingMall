@@ -2,7 +2,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/header.jsp" %>
-
 <div id="container" data-ez="layout-06i7law-1">
 	<div id="contents" style="margin-top: 0px;">
 		<span class="xans-element- xans-layout xans-layout-mobileaction RTMB "><a
@@ -31,7 +30,7 @@
 		<div data-ez-module="product-list-head-title/1"
 			data-ez="contents-0jjwmux-1"
 			class="xans-element- xans-product xans-product-headcategory section titleArea ">
-			<h2>Outerwear</h2>
+			<h2 style="text-transform: capitalize">${category}</h2>
 			<span class="likeButton displaynone"><button type="button">
 					<strong></strong>
 				</button></span>
@@ -81,7 +80,7 @@
 						-->	
 						<ul class="prdList grid4 list_gallery"
 							data-ez-role="layout ez-discount-tag">
-					<c:forEach var="product" items="${products.content}" varStatus="status">
+					<c:forEach var="newProduct" items="${newProducts}" varStatus="status">
 						<li id="anchorBoxId_11" class="xans-record-">
 							<div class="prdList__item">
 								<div class="thumbnail">
@@ -93,8 +92,8 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
-										<span>1</span>NEW
+									<div class="custom_badge">
+										<span>${status.count}</span>NEW
 									</div>
 									<div class="icon__box">
 										<span class="wish"><img
@@ -111,10 +110,9 @@
 								</div>
 								<div class="description" ec-data-custom="" ec-data-price="39000">
 									<div class="name">
-										<a href="/product/그물-가방/11/category/42/display/3/" class=""><span
-											class="title displaynone"><span
-												style="font-size: 13px; color: #555555;">상품명</span> :</span> <span
-											style="font-size: 13px; color: #555555;">그물 가방</span></a>
+										<a href="/product/그물-가방/11/category/42/display/3/" class="">
+										 	<span style="font-size: 13px; color: #555555;">${newProduct.productName}</span>
+									 	</a>
 									</div>
 									<p class="ec-base-help txtWarn txt11 displaynone">단독구매상품</p>
 									<ul
@@ -134,7 +132,7 @@
 	
 			  		</ul>
 			  		
-			  		<!-- 페이징 처리 -->
+			  		<%-- <!-- 페이징 처리 -->
 				  <ul class="pagination justify-content-center">
 				  	<c:choose>
 				  		<c:when test="${products.first}">
@@ -153,7 +151,7 @@
 					 		<li class=""><a href="?page=${products.number+1}">Next</a></li>
 				  		</c:otherwise>
 				  	</c:choose>
-				  </ul>
+				  </ul> --%>
 						<!-- <li id="anchorBoxId_12" class="xans-record-">
 							<div class="prdList__item">
 								<div class="thumbnail">
@@ -165,7 +163,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										<span>2</span>NEW
 									</div>
 									<div class="icon__box">
@@ -214,7 +212,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										<span>3</span>NEW
 									</div>
 									<div class="icon__box">
@@ -263,7 +261,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										<span>4</span>NEW
 									</div>
 									<div class="icon__box">
@@ -319,7 +317,7 @@
 			-->
 					<div class="function" id="Product_ListMenu">
 						<p class="prdCount">
-							총<strong class="txtEm">10</strong>개의 상품이 있습니다.
+							총<strong class="txtEm">${products.totalElements}</strong>개의 상품이 있습니다.
 						</p>
 						<div class="sort">
 							<select id="selArray" name="selArray"
@@ -327,16 +325,12 @@
 									value="">- 정렬방식 -</option>
 								<option value="?cate_no=42&amp;sort_method=5#Product_ListMenu"
 									class="xans-record-">신상품</option>
-								<option value="?cate_no=42&amp;sort_method=1#Product_ListMenu"
-									class="xans-record-">상품명</option>
 								<option value="?cate_no=42&amp;sort_method=3#Product_ListMenu"
 									class="xans-record-">낮은가격</option>
 								<option value="?cate_no=42&amp;sort_method=4#Product_ListMenu"
 									class="xans-record-">높은가격</option>
-								<option value="?cate_no=42&amp;sort_method=2#Product_ListMenu"
-									class="xans-record-">제조사</option>
-								<option value="?cate_no=42&amp;sort_method=7#Product_ListMenu"
-									class="xans-record-">사용후기</option>
+								<option value="?cate_no=42&amp;sort_method=1#Product_ListMenu"
+									class="xans-record-">상품명</option>
 							</select>
 						</div>
 					</div>
@@ -372,6 +366,7 @@
 							<!--
 ※ 상품진열 공통소스
 -->
+						<c:forEach var="product" items="${products.content}" varStatus="status">
 							<li id="anchorBoxId_14" class="xans-record-">
 								<div class="prdList__item">
 									<div class="thumbnail">
@@ -383,7 +378,7 @@
 												<strong></strong>
 											</button>
 										</div>
-										<div class="badge">
+										<div class="custom_badge">
 											<span></span>
 										</div>
 										<div class="icon__box">
@@ -421,7 +416,8 @@
 									</div>
 								</div>
 							</li>
-							<li id="anchorBoxId_15" class="xans-record-">
+						</c:forEach>
+							<!-- <li id="anchorBoxId_15" class="xans-record-">
 								<div class="prdList__item">
 									<div class="thumbnail">
 										<a href="/product/와이드-데님-팬츠/15/category/42/display/1/"><img
@@ -432,7 +428,7 @@
 												<strong></strong>
 											</button>
 										</div>
-										<div class="badge">
+										<div class="custom_badge">
 											<span></span>
 										</div>
 										<div class="icon__box">
@@ -497,7 +493,7 @@
 												<strong></strong>
 											</button>
 										</div>
-										<div class="badge">
+										<div class="custom_badge">
 											<span></span>
 										</div>
 										<div class="icon__box">
@@ -562,7 +558,7 @@
 												<strong></strong>
 											</button>
 										</div>
-										<div class="badge">
+										<div class="custom_badge">
 											<span></span>
 										</div>
 										<div class="icon__box">
@@ -611,7 +607,7 @@
 												<strong></strong>
 											</button>
 										</div>
-										<div class="badge">
+										<div class="custom_badge">
 											<span></span>
 										</div>
 										<div class="icon__box">
@@ -666,7 +662,7 @@
 												<strong></strong>
 											</button>
 										</div>
-										<div class="badge">
+										<div class="custom_badge">
 											<span></span>
 										</div>
 										<div class="icon__box">
@@ -721,7 +717,7 @@
 												<strong></strong>
 											</button>
 										</div>
-										<div class="badge">
+										<div class="custom_badge">
 											<span></span>
 										</div>
 										<div class="icon__box">
@@ -770,7 +766,7 @@
 												<strong></strong>
 											</button>
 										</div>
-										<div class="badge">
+										<div class="custom_badge">
 											<span></span>
 										</div>
 										<div class="icon__box">
@@ -819,7 +815,7 @@
 												<strong></strong>
 											</button>
 										</div>
-										<div class="badge">
+										<div class="custom_badge">
 											<span></span>
 										</div>
 										<div class="icon__box">
@@ -868,7 +864,7 @@
 												<strong></strong>
 											</button>
 										</div>
-										<div class="badge">
+										<div class="custom_badge">
 											<span></span>
 										</div>
 										<div class="icon__box">
@@ -905,19 +901,45 @@
 										<div class="icon"></div>
 									</div>
 								</div>
-							</li>
+							</li> -->
 						</ul>
 					</div>
 
-
 					<div
 						class="xans-element- xans-product xans-product-normalpaging ec-base-paginate typeList">
-						<a href="#none" class="first">첫 페이지</a> <a href="#none">이전 페이지</a>
+						
+				  	<c:choose>
+				  		<c:when test="${products.first}">
+							<!-- <a href="#none" class="first">첫 페이지</a> --> 
+							<a onclick="return false;" href="?page=${products.number-1}">이전 페이지</a>
+				  		</c:when>
+				  		<c:otherwise>
+							<a href="?page=${products.number-1}">이전 페이지</a>
+				  		</c:otherwise>
+				  	</c:choose>
+				  	
+					<c:forEach var="i" begin="0" end="${products.number}">
+						<ol>
+							<li class="xans-record-"><a href="?category=${category}&page=${products.number}" class="this">${i+1}</a></li>
+						</ol>
+				  	</c:forEach>
+				  	
+				  	<c:choose>
+				  		<c:when test="${products.last}">
+				  			<a onclick="return false;" href="?category=${category}&page=${products.number+1}">다음 페이지</a>
+				  			<!-- <a href="#none" class="last">마지막 페이지</a> -->
+				  		</c:when>
+				  		<c:otherwise>
+				  			<a href="?page=${products.number+1}">다음 페이지</a>
+				  		</c:otherwise>
+				  	</c:choose>
+				  	
+				  	
+						<!-- <a href="#none" class="first">첫 페이지</a> <a href="#none">이전 페이지</a>
 						<ol>
 							<li class="xans-record-"><a href="?page=1" class="this">1</a></li>
 						</ol>
-						<a href="#none">다음 페이지</a> <a href="#none" class="last">마지막
-							페이지</a>
+						<a href="#none">다음 페이지</a> <a href="#none" class="last">마지막 페이지</a> -->
 					</div>
 				</div>
 				<!-- //product_list -->
@@ -927,6 +949,8 @@
 		<!--#ez="1/1"-->
 	</div>
 </div>
-
-<script type="text/javascript" src="/js/board.js"></script>
+<script type="text/javascript">
+ let pageable = ${products.number};
+</script>
+<script type="text/javascript" src="/js/product.js"></script>
 <%@ include file="../layout/footer.jsp" %>

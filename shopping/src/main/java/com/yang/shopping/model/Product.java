@@ -33,13 +33,27 @@ public class Product{
 	private int productSeq;
 	
 	@Column(nullable = false, length = 100)
-	private String title;
+	private String productName;
+
+	@Column(nullable = false, length = 100)
+	private String price;
+
+	@Column(length = 100)
+	private String color;
+	
+	@Column(length = 100)
+	private String colorRGB;
 
 	@Column(nullable = false, length = 100)
 	private String category;
 	
 	@Lob
 	private String content;
+	
+	@ManyToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.
+	@JoinColumn(name = "fileSeq") //userId라는 컬럼명으로 외래키를 만든다. 
+	private FileInfo fileInfo;
+	
 	/*
 	 * @ManyToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.
 	 * 
@@ -51,6 +65,10 @@ public class Product{
 	 * @OneToMany(mappedBy = "board", fetch = FetchType.EAGER) //하나의 게시판에 여러 답글이
 	 * 존재하니 OneToMany로 사용한다. private List<Reply> reply;
 	 */
+
+	@Column(nullable = false)
+	@ColumnDefault("'N'")
+	private String delYn;
 	
 	@CreationTimestamp
 	private Timestamp createDate;

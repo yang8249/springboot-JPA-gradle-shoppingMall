@@ -197,7 +197,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -246,7 +246,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -295,7 +295,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -360,7 +360,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -409,7 +409,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -464,7 +464,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -513,7 +513,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -562,7 +562,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -647,7 +647,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -712,7 +712,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -761,7 +761,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -810,7 +810,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -865,7 +865,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -920,7 +920,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -985,7 +985,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1034,7 +1034,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1103,7 +1103,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1158,7 +1158,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1213,7 +1213,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1262,7 +1262,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1311,7 +1311,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1360,7 +1360,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1425,7 +1425,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1490,7 +1490,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1559,7 +1559,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1608,7 +1608,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1657,7 +1657,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1722,7 +1722,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1787,7 +1787,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1836,7 +1836,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1885,7 +1885,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -1940,7 +1940,7 @@
 													<strong></strong>
 												</button>
 											</div>
-											<div class="badge">
+											<div class="custom_badge">
 												<span></span>
 											</div>
 											<div class="icon__box">
@@ -2042,7 +2042,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										<span></span>
 									</div>
 									<div class="icon__box">
@@ -2097,7 +2097,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										<span></span>
 									</div>
 									<div class="icon__box">
@@ -2152,7 +2152,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										<span></span>
 									</div>
 									<div class="icon__box">
@@ -2200,7 +2200,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										<span></span>
 									</div>
 									<div class="icon__box">
@@ -2248,7 +2248,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										<span></span>
 									</div>
 									<div class="icon__box">
@@ -2313,7 +2313,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										<span></span>
 									</div>
 									<div class="icon__box">
@@ -2437,7 +2437,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										BEST<span></span>
 									</div>
 									<div class="icon__box">
@@ -2486,7 +2486,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										BEST<span></span>
 									</div>
 									<div class="icon__box">
@@ -2536,7 +2536,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										BEST<span></span>
 									</div>
 									<div class="icon__box">
@@ -2601,7 +2601,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										BEST<span></span>
 									</div>
 									<div class="icon__box">
@@ -2650,7 +2650,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										BEST<span></span>
 									</div>
 									<div class="icon__box">
@@ -2705,7 +2705,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										BEST<span></span>
 									</div>
 									<div class="icon__box">
@@ -2753,7 +2753,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										BEST<span></span>
 									</div>
 									<div class="icon__box">
@@ -2801,7 +2801,7 @@
 											<strong></strong>
 										</button>
 									</div>
-									<div class="badge">
+									<div class="custom_badge">
 										BEST<span></span>
 									</div>
 									<div class="icon__box">
@@ -2917,5 +2917,6 @@
 	</div>
 </div>
 
+<script type="text/javascript" src="/js/main.js"></script>
 
 <%@ include file="layout/footer.jsp"%>

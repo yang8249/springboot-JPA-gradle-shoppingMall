@@ -1,5 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <sec:authorize access="isAuthenticated()">
@@ -83,7 +85,6 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
   
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
    <link href="https://cdn.jsdelivr.net/npm/summernote@0.9.0/dist/summernote-bs4.min.css" rel="stylesheet">
@@ -145,22 +146,41 @@
       <span class="navbar-brand logo" >Logo</span>
     </div>
     <div class="collapse navbar-collapse" id="myNavbar">
-      <ul class="nav navbar-nav">
-        <li class="active"><a href="/">Home</a></li>
-        <li><a href="/products?category=outerwear">Outerwear</a></li>
-        <li><a href="#">Tops</a></li>
-        <li><a href="#">Dresses</a></li>
-        <li><a href="#">Bottoms</a></li>
-        <li><a href="#">Accessories</a></li>
+      <ul id="menuClick" class="nav navbar-nav">
+        <li><a href="/">Home</a></li>
+        <li class="outerwear"><a href="/products?category=outerwear">Outerwear</a></li>
+        <li class="tops"><a href="/products?category=tops">Tops</a></li>
+        <li class="dresses"><a href="/products?category=dresses">Dresses</a></li>
+        <li class="bottoms"><a href="/products?category=bottoms">Bottoms</a></li>
+        <li class="accessories"><a href="/products?category=accessories">Accessories</a></li>
       </ul>
+      
       <ul class="nav navbar-nav navbar-right">
         <li><a href="#"><img class="searchIcon" alt="" src="/img/free-icon-magnifier-2866321.png">검색</a></li>
-        <li><a href="/auth/loginForm"><span class="glyphicon glyphicon-user"></span> 로그인/회원가입</a></li>
-        <li><a href="#"><span style="margin-right:5px" class="glyphicon glyphicon-shopping-cart"></span>장바구니</a></li>
+		  <c:choose>
+			  <c:when test="${empty principal}">
+			        <li><a href="/auth/loginForm"><span class="glyphicon glyphicon-user"></span> 로그인/회원가입</a></li>
+			        <li><a href="#"><span style="margin-right:5px" class="glyphicon glyphicon-shopping-cart"></span>장바구니</a></li>
+			  </c:when>
+			  <c:otherwise>
+			        <li>
+						<c:if test="${empty principal.user.oauth}">
+					       <a class="nav-link" href="/logout"><span class="glyphicon glyphicon-user"></span> 로그아웃</a>
+					     </c:if>
+						<c:if test="${principal.user.oauth eq 'kakao'}">
+					       <a class="nav-link" href="/auth/kakao/logout"><span class="glyphicon glyphicon-user"></span> 로그아웃</a>
+					     </c:if>
+				     </li>
+			  </c:otherwise>
+		  </c:choose>
       </ul>
     </div>
   </div>
 </nav>
+<script>
+	const category = `${category}`;
+</script>
+<script type="text/javascript" src="/js/header.js"></script>
 <%-- <nav class="navbar navbar-expand-md bg-dark navbar-dark">
   <a class="navbar-brand" href="/">홈</a>
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
