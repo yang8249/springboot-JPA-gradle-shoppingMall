@@ -14,6 +14,7 @@
 <meta charset="utf-8">
 <meta name="viewport"
 	content="width=device-width, height=device-height, initial-scale=1, minimum-scale=1, user-scalable=no">
+
 <link rel="stylesheet" href="/_next/static/css/2755837d60974b48.css"
 	data-precedence="next">
 <link rel="stylesheet" href="/_next/static/css/6696421566b36ddc.css"
@@ -160,9 +161,10 @@
 		  <c:choose>
 			  <c:when test="${empty principal}">
 			        <li><a href="/auth/loginForm"><span class="glyphicon glyphicon-user"></span> 로그인/회원가입</a></li>
-			        <li><a href="#"><span style="margin-right:5px" class="glyphicon glyphicon-shopping-cart"></span>장바구니</a></li>
 			  </c:when>
 			  <c:otherwise>
+			        <li><a href="/user/mypageForm"><span class="glyphicon glyphicon-user"></span> 내 정보</a></li>
+			        <li><a href="/user/mypageForm"><span style="margin-right:5px" class="glyphicon glyphicon-shopping-cart"></span>장바구니</a></li>
 			        <li>
 						<c:if test="${empty principal.user.oauth}">
 					       <a class="nav-link" href="/logout"><span class="glyphicon glyphicon-user"></span> 로그아웃</a>

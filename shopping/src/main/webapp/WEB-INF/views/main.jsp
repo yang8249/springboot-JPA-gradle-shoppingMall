@@ -12,8 +12,7 @@
 	<path
 						d="M7.29976 12.5L14.9998 20.1C15.3998 20.5 15.9998 20.5 16.3998 20.1C16.7998 19.7 16.7998 19.1 16.3998 18.7L9.49976 11.7L16.3998 4.7C16.7998 4.3 16.7998 3.7 16.3998 3.3C16.1998 3.1 15.9998 3 15.6998 3C15.3998 3 15.1998 3.1 14.9998 3.3L7.29976 10.9C6.89976 11.4 6.89976 12 7.29976 12.5C7.29976 12.4 7.29976 12.4 7.29976 12.5Z"
 						fill="#000000"></path>
-</svg> 뒤로가기</a> </span>
-
+		</svg> 뒤로가기</a> </span>
 
 
 		<div app4you-smart-banner="smart-banner-admin-RES00003"
@@ -31,43 +30,35 @@
 				data-banner-size-height="654">
 				<div class="smart-banner-bx-wrapper">
 					<div class="bx-viewport"
-						style="width: 100%; overflow: hidden; position: relative; height: 666.203px;">
+						style="width: 100vw; overflow: hidden; position: relative; height: 60vh;">
 						<ul style="width: auto; position: relative; visibility: visible;"
 							class="smart-banner-bxslider">
-							<li
-								style="float: none; list-style: none; position: absolute; width: 1903px; z-index: 50; display: block;"><a
-								href="javascript:void(0)\;" style="cursor: default"> <picture>
+							<li 
+								style="float: none; width: 100vw; list-style: none; position: absolute; z-index: 51;  ">
+								<a href="javascript:void(0)\;" style="cursor: default"> 
+								<picture style=" width: 100vw;">
 									<source media="(max-width: 720px)"
 										srcset="https://file.cafe24cos.com/banner-admin-live/upload/ecudemo276583/cc53d05c-c143-4a08-8fe0-27af521e497b.png">
-									<img
+									<img style=" width: 100vw;"
 										src="https://file.cafe24cos.com/banner-admin-live/upload/ecudemo276583/318a4473-5ec9-4e2a-a6f0-231da9e4dec5.png"
-										loading="lazy" ez-prevent="img"> &nbsp;</picture></a></li>
-							<li
-								style="float: none; list-style: none; position: absolute; width: 1903px; z-index: 0; display: none;"><a
+										loading="lazy" ez-prevent="img"> &nbsp;
+								</picture>
+								</a>
+							</li>
+							<!-- <li
+								style="float: none; list-style: none; position: absolute; z-index: 0; opacity: 0.496858;"><a
 								href="javascript:void(0)\;" style="cursor: default"> <picture>
-									<source media="(max-width: 720px)"
+									<source 
 										srcset="https://file.cafe24cos.com/banner-admin-live/upload/ecudemo276583/70f5b6d5-27f3-4763-a186-5222f5ff84e5.png">
 									<img
 										src="https://file.cafe24cos.com/banner-admin-live/upload/ecudemo276583/ad6f9563-7a72-42ff-879e-02eb714e48d8.png"
-										loading="lazy" ez-prevent="img"> &nbsp;</picture></a></li>
+										loading="lazy" ez-prevent="img"> &nbsp;</picture></a></li> -->
 						</ul>
-					</div>
-					<div class="bx-controls bx-has-pager bx-has-controls-direction">
-						<div class="bx-pager bx-default-pager">
-							<div class="bx-pager-item">
-								<a href="" data-slide-index="0" class="bx-pager-link active">1</a>
-							</div>
-							<div class="bx-pager-item">
-								<a href="" data-slide-index="1" class="bx-pager-link">2</a>
-							</div>
-						</div>
-						<div class="bx-controls-direction">
-							<a class="bx-prev" href=""></a><a class="bx-next" href=""></a>
-						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+		
 		<section class="section main_image_text_gallery"
 			data-ez-module="image-gallery/2" data-ez-role="style.background"
 			data-ez-item-length="3" data-ez="contents-1aveo5n-1">

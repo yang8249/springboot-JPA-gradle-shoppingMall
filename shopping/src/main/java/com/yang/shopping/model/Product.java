@@ -70,6 +70,10 @@ public class Product{
 	@ColumnDefault("'N'")
 	private String delYn;
 	
+	@Column(nullable = false)
+	@ColumnDefault("'N'")
+	private String wishYn;
+	
 	@CreationTimestamp
 	private Timestamp createDate;
 }

@@ -13,10 +13,12 @@ import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -222,5 +224,13 @@ public class UsersController {
       System.out.println("response2 !! " + response2);
 	        
         return "redirect:/logout";
+	}
+	
+	@GetMapping("/user/mypageForm")
+	public String mypageForm(Model model) {
+		
+		model.addAttribute("isBootCss", true);
+		
+		return "user/mypageForm";
 	}
 }
