@@ -25,6 +25,7 @@
 <script type="text/javascript" src="https://unpkg.com/tabulator-tables/dist/js/tabulator.min.js"></script>
 <link href="/css/tabulator.css" rel="stylesheet">
 <script type="text/javascript" src="/js/tabulator.js"></script>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 
     <!-- Favicons -->
 <link rel="apple-touch-icon" href="/docs/5.3/assets/img/favicons/apple-touch-icon.png" sizes="180x180">
@@ -125,6 +126,8 @@
     <!-- Custom styles for this template -->
     <link href="/css/dashboard.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.7.1/dist/jquery.slim.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
   
   
@@ -271,13 +274,13 @@
             <li class="nav-item">
               <a value="orderList" class="nav-link d-flex align-items-center gap-2" href="#">
                 <svg class="bi"><use xlink:href="#file-earmark"/></svg>
-                주문목록
+                주문목록/반품현황
               </a>
             </li>
             <li class="nav-item">
               <a value="shopBasket" class="nav-link d-flex align-items-center gap-2" href="#">
                 <svg class="bi"><use xlink:href="#cart"/></svg>
-                장바구니
+                장바구니/찜목록
               </a>
             </li>
             <li class="nav-item">
@@ -292,9 +295,6 @@
                 구매현황
               </a>
             </li>
-          </ul>
-
-          <ul class="mypage-nav-button nav flex-column mb-auto">
             <li class="nav-item">
               <a value="inquiry" class="nav-link d-flex align-items-center gap-2" href="#">
                 <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
@@ -319,24 +319,24 @@
 
 	<!-- include -->
 	<main id="ableContent" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
-	<div class="dashBoard">
-		<%@ include file="dashBoard.jsp"%>
-	</div>
-	<div class="orderList mypage-disabled">
-		<%@ include file="orderList.jsp"%>
-	</div>
-	<div class="shopBasket mypage-disabled">
-		<%@ include file="shopBasket.jsp"%>
-	</div>
-	<div class="account mypage-disabled">
-		<%@ include file="account.jsp"%>
-	</div>
-	<div class="purchStat mypage-disabled">
-		<%@ include file="purchStat.jsp"%>
-	</div>
-	<div class="inquiry mypage-disabled">
-		<%@ include file="inquiry.jsp"%>
-	</div>
+		<div class="dashBoard">
+			<%@ include file="dashBoard.jsp"%>
+		</div>
+		<div class="orderList mypage-disabled">
+			<%@ include file="orderList.jsp"%>
+		</div>
+		<div class="shopBasket mypage-disabled">
+			<%@ include file="shopBasket.jsp"%>
+		</div>
+		<div class="account mypage-disabled">
+			<%@ include file="account.jsp"%>
+		</div>
+		<div class="purchStat mypage-disabled">
+			<%@ include file="purchStat.jsp"%>
+		</div>
+		<div class="inquiry mypage-disabled">
+			<%@ include file="inquiry.jsp"%>
+		</div>
     </main>
   </div>
 </div>

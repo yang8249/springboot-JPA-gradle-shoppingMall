@@ -229,7 +229,6 @@ public class UsersController {
 	@GetMapping("/user/mypageForm")
 	public String mypageForm(Model model) {
 		
-		model.addAttribute("isBootCss", true);
 		
 		return "user/mypageForm";
 	}

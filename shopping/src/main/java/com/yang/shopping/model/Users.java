@@ -45,6 +45,17 @@ public class Users{
 	@Column(nullable = false, length = 50)
 	private String email;
 
+	//주소
+	@Column(length = 200)
+	private String mainAddr;
+	//상세주소
+	@Column(length = 200)
+	private String detailAddr;
+	//우편번호
+	@Column(nullable = false)
+	@ColumnDefault("0")
+	private int zoneCode;
+
 	@Enumerated(EnumType.STRING)
 	private RoleType role;
 

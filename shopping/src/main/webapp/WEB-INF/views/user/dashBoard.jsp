@@ -15,7 +15,7 @@
         </div>
       </div>
 
-      <canvas class="my-4 w-100" id="chartJS-myChart" width="900" height="380px" style="height: 380px; overflow: hidden;"></canvas>
+      <canvas class="chartJS-myChart1 my-4 w-100" id="chartJS-myChart" width="900" height="380px" style="height: 380px; overflow: hidden;"></canvas>
 
       <h2>최근 구매 목록 (10개)</h2>
       <div class="table-responsive small">

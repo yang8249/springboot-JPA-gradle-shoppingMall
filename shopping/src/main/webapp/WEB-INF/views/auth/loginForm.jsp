@@ -23,11 +23,11 @@
 	 -->
   	<form action="/auth/loginProc" method="post" class="was-validated">
 	  <div class="form-group">
-	    <label for="username">Username</label>
+	    <label for="username">아이디</label>
 	    <input type="text" name="username" class="form-control" id="username" placeholder="Enter username" name="username" required>
 	  </div>
 	  <div class="form-group">
-	    <label for="password">Password</label>
+	    <label for="password">비밀번호</label>
 	    <input type="password" name="password" class="form-control" id="password" placeholder="Enter password" name="password" required>
 	  </div>
 	  <div class="btn-div">

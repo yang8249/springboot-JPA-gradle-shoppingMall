@@ -84,7 +84,7 @@
 						<li id="anchorBoxId_11" class="xans-record-">
 							<div class="prdList__item">
 								<div class="thumbnail">
-									<a href="/product/그물-가방/11/category/42/display/3/"><img
+									<a href="/product/detailProduct?id=${newProduct.productSeq }"><img
 										src="//ecudemo276583.cafe24.com/web/product/medium/202304/753ffefd58ccde2991b998ac39c8a49b.png"
 										id="eListPrdImage11_3" alt="그물 가방" loading="lazy"></a>
 									<div class="likeButton displaynone">

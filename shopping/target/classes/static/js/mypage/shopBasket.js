@@ -10,7 +10,7 @@
 	 ];
 	 
 	 //create Tabulator on DOM element with id "example-table"
-	 var table = new Tabulator("#example-table1", {
+	 var table = new Tabulator("#example-table3", {
 	  	height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
 	  	data:tabledata, //assign data to table
 	  	layout:"fitColumns", //fit columns to width of table (optional)
@@ -39,7 +39,7 @@
 	  ];
 	  
 	  //create Tabulator on DOM element with id "example-table"
-	  var table = new Tabulator("#example-table2", {
+	  var table = new Tabulator("#example-table4", {
 	   	height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
 	   	data:tabledata, //assign data to table
 	   	layout:"fitColumns", //fit columns to width of table (optional)
@@ -55,4 +55,3 @@
 	  table.on("rowClick", function(e, row){ 
 	  	alert("Row " + row.getData().id + " Clicked!!!!");
 	  });
-
