@@ -5,15 +5,23 @@
 
 <style>
 	.container { position:relative; } 
-	.img_wrap { position: relative; width: 300px; height:300px; } 
+	.img_wrap { position: relative; width: 400px; height:400px; } 
 	.img_wrap .img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; } 
 	.zoom_lens { display: none; position:absolute; width:150px; height:150px; background: #000; border: 1px solid #fff; z-index: 2; opacity: 0.2; } 
-	.zoom_result { display: none; position: absolute; top: 0; left:320px; width:300px; height:300px; } 
+	.zoom_result { display: none; position: absolute; top: 0; left:520px; width:400px; height:400px; } 
 	.img_wrap:hover ~ .zoom_result,
 	.img_wrap:hover .zoom_lens { display: block; } 
+	#btn-update{
+		position: absolute;
+	    right: 20%;
+    }
 </style>
 
 <div id="container" data-ez="layout-06i7law-1">
+
+      	<c:if test="${principal.user.role eq 'ADMIN'}">
+			<a href="/product/modifyProduct?id=${productSeq}"><button id="btn-update" class="btn btn-primary">제품 수정</button></a>
+      	</c:if>
 	<div id="contents" style="margin-top: 0px;">
 		<span class="xans-element- xans-layout xans-layout-mobileaction RTMB "><a
 			href="#none" onclick="history.go(-1);return false;"><svg
@@ -49,37 +57,17 @@
 			<div class="detailArea ">
 				<div class="xans-element- xans-product xans-product-image imgArea">
 					<div class="RW ">
-						<div class="prdImg">
-							<div class="thumbnail">
-								<a
-									href="/product/image_zoom2.html?product_no=14&amp;cate_no=42&amp;display_group=1"
-									alt="P000000O"
-									onclick="window.open(this.href, 'image_zoom2', 'toolbar=no,scrollbars=auto,resizable=yes,width=450,height=693,left=0,top=0', this);return false;">
-									<img
-									src="//ecudemo276583.cafe24.com/web/product/big/202304/e366d126ee2a0e92a6946993f101d633.png"
-									alt="살구색 후드티" class="BigImage" loading="lazy" ez-prevent="img">
-									<span id="zoomMouseGiude"
-									style="display: block; position: relative; width: 170px; margin: 0 auto;"><img
-										src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/txt_product_zoom.gif"
-										id="zoomGuideImage" alt="마우스를 올려보세요."
-										style="position: absolute; top: -27px; right: 0px;"></span>
-								</a> <span class="wish"><img
-									src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/btn_wish_before.png"
-									class="icon_img ec-product-listwishicon" alt="관심상품 등록 전"
-									productno="14" categoryno="42" icon_status="off"
-									login_status="F" individual-set="F"></span>
-								<div id="zoom_wrap">
-									<p class="image_zoom_large" style="display: none;">
-										<span class="image_zoom_large_relative"><img
-											id="zoom_image" alt="확대 이미지"
-											src="//ecudemo276583.cafe24.com/web/product/big/202304/e366d126ee2a0e92a6946993f101d633.png"
-											style="width: 716.624px; height: 970.906px;"></span>
-									</p>
-								</div>
+									
+						<div class="prdImg ">
+							<div class="img_wrap thumbnail" style="width: 500px;">
+								<img src="//ecudemo276583.cafe24.com/web/product/big/202304/e366d126ee2a0e92a6946993f101d633.png"
+									alt="살구색 후드티" class="img" loading="lazy" ez-prevent="img"
+										style="height: auto; width: 100%;">
 							</div>
+							<div class="zoom_result" style="z-index: 100;"></div>
 						</div>
-
-						<div
+						<hr>
+						<div style="margin-top: 300px;"
 							class="xans-element- xans-product xans-product-addimage listImg">
 							<div class="inner">
 								<ul class="list">
@@ -280,8 +268,8 @@
 									<td>살구색 후드티</td>
 									<td><span class="quantity"> <input id="quantity"
 											name="quantity_opt[]" style="" value="1" type="text">
-											<a href="javascript:;" class="up QuantityUp">수량증가</a> <a
-											href="javascript:;" class="down QuantityDown">수량감소</a>
+											<a href="javascript:;" class="up QuantityUp countEvent">수량증가</a> <a
+											href="javascript:;" class="down QuantityDown countEvent">수량감소</a>
 									</span></td>
 									<td class="right"><span class="quantity_price">80,000원<input
 											type="hidden" name="option_box_price"
@@ -356,15 +344,15 @@
 							<span class="sub_sold displaynone">SOLD OUT</span> <a
 								href="#none" class="btnSubmit sizeL "
 								onclick="product_submit(1, '/exec/front/order/basket/', this)"><span
-								id="actionBuy">BUY IT NOW</span><span class="displaynone"
+								id="actionBuy">구매하기</span><span class="displaynone"
 								id="actionReserve">예약주문</span><span id="" class="displaynone">REGULAR
 									DELIVERY</span></a>
 							<button type="button" class="btnNormal sizeL actionCart "
 								onclick="product_submit(2, '/exec/front/order/basket/', this)"
-								id="actionCart">CART</button>
+								id="actionCart">장바구니 담기</button>
 							<button type="button" class="btnNormal sizeL actionWish "
 								onclick="add_wishlist_nologin('/member/login.html');"
-								id="actionWish">WISH LIST</button>
+								id="actionWish">찜하기</button>
 						</div>
 						<div class="ec-base-button soldout displaynone ">
 							<button type="button" class="btnSubmit gFull sizeL displaynone">SOLD
@@ -630,8 +618,5 @@
 		<!--#ez="1/1"-->
 	</div>
 </div>
-<script type="text/javascript">
- let pageable = ${products.number};
-</script>
 <script type="text/javascript" src="/js/product/detailProduct.js"></script>
 <%@ include file="../layout/footer.jsp" %>

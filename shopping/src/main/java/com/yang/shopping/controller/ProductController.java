@@ -59,8 +59,27 @@ public class ProductController {
 		 * model.addAttribute("products", productService.selectProduct(category,
 		 * pageable)); model.addAttribute("category", category);
 		 */
+		model.addAttribute("productSeq",id);
 		
 		return "product/detailProduct";
+	}
+
+	// 제품 등록
+	@GetMapping("/product/addProduct")
+	public String addProduct() {
+		
+		return "product/addProduct";
+	}
+
+	// 제품 수정
+	@GetMapping("/product/modifyProduct")
+	public String modifyProduct(@RequestParam("id") int id, Model model) {
+		
+		Product product = productService.productInfo(id);
+
+		model.addAttribute("product", product);
+		
+		return "product/modifyProduct";
 	}
 
 	/*

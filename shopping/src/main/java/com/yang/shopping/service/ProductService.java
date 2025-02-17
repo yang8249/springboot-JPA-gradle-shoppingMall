@@ -1,6 +1,7 @@
 package com.yang.shopping.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -33,10 +34,15 @@ public class ProductService {
         return productRepository.findByCategory(category, pageable);
 	}
 
-
+	//최근에 등록한 제품 4개 불러오기
 	public List<Product> selectNewProduct() {
 		// TODO Auto-generated method stub
 		return productRepository.findByNewProduct();
+	}
+
+	//수정할 제품 정보 불러오기
+	public Product productInfo(int id) {
+		return productRepository.findById(id).orElse(null);
 	}
 	
 	/*
