@@ -36,7 +36,7 @@ public class Product{
 	private String productName;
 
 	@Column(nullable = false, length = 100)
-	private String price;
+	private int price;
 
 	@Column(length = 100)
 	private String color;

@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yang.shopping.model.Product;
+import com.yang.shopping.model.Users;
 import com.yang.shopping.repository.ProductRepository;
 
 
@@ -43,6 +44,18 @@ public class ProductService {
 	//수정할 제품 정보 불러오기
 	public Product productInfo(int id) {
 		return productRepository.findById(id).orElse(null);
+	}
+
+	public void insertAddCart(Product product, Users user) {
+		try {
+			/*
+			 * Product product = productRepository.findById(id).orElse(null);
+			 * board.setUser(user); boardRepository.save(board);
+			 */
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("BoardService : 글쓰기() : "+e.getMessage());
+		}
 	}
 	
 	/*

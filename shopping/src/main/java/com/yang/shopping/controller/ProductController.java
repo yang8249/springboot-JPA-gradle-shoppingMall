@@ -1,6 +1,8 @@
 package com.yang.shopping.controller;
 
 import java.security.Principal;
+import java.text.NumberFormat;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -22,6 +24,7 @@ import com.yang.shopping.model.Board;
 import com.yang.shopping.model.Product;
 import com.yang.shopping.service.ProductService;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
@@ -59,7 +62,17 @@ public class ProductController {
 		 * model.addAttribute("products", productService.selectProduct(category,
 		 * pageable)); model.addAttribute("category", category);
 		 */
+		Product product = productService.productInfo(id);
+
+		model.addAttribute("product", product);
 		model.addAttribute("productSeq",id);
+        // 천 단위 콤마 추가
+        NumberFormat formatter = NumberFormat.getNumberInstance(Locale.KOREA);
+        String formattedAmount = formatter.format(product.getPrice()) + "원";
+
+		model.addAttribute("productPrice",formattedAmount);
+		
+
 		
 		return "product/detailProduct";
 	}

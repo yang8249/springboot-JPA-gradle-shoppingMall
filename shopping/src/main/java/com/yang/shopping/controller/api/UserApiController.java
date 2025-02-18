@@ -17,6 +17,7 @@ import com.yang.shopping.dto.ResponseDto;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.service.UserService;
 
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
@@ -46,7 +47,7 @@ public class UserApiController {
 		//컨텍스트홀더 객체를 선언하고 그안에 있는 컨텍스트를 꺼낸뒤
 		//인증정보를 set해주어서 수정한 user정보로 생성한 authentication 객체를 넣어준다.
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
-		
+
 		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}

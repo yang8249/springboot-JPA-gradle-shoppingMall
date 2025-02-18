@@ -16,6 +16,7 @@
 	    right: 20%;
     }
 </style>
+	  <input type="hidden" id="userId" value="${principal.user.id}">
 
 <div id="container" data-ez="layout-06i7law-1">
 
@@ -84,7 +85,7 @@
 								data-param="?product_no=14&amp;cate_no=42&amp;display_group=1"
 								class="thumbnail"> <img
 								src="//ecudemo276583.cafe24.com/web/product/big/202304/e366d126ee2a0e92a6946993f101d633.png"
-								class="bigImage" alt="살구색 후드티" loading="lazy" ez-prevent="img">
+								class="bigImage" alt="살구색 후드티" ez-prevent="img">
 								<span class="wish"><img
 									src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/btn_wish_before.png"
 									class="icon_img ec-product-listwishicon" alt="관심상품 등록 전"
@@ -98,7 +99,7 @@
 				<div class="infoArea" data-ez-role="ez-discount-tag">
 					<div class="headingArea">
 						<div class="icon"></div>
-						<h1>살구색 후드티</h1>
+						<h1>${product.productName}</h1>
 						<span class="delivery displaynone">(해외배송 가능상품)</span>
 					</div>
 					<div class="topLogo displaynone">
@@ -124,7 +125,7 @@
 										style="font-size: 13px; color: #000000; font-weight: bold;">판매가</span></th>
 									<td><span
 										style="font-size: 13px; color: #000000; font-weight: bold;"><strong
-											id="span_product_price_text">80,000원</strong><input
+											id="span_product_price_text">${productPrice}</strong><input
 											id="product_price" name="product_price" value=""
 											type="hidden"></span></td>
 								</tr>
@@ -224,15 +225,6 @@
 						<!--
                 $use_per_add_option = yes
                 -->
-						<caption>상품 옵션</caption>
-						<tbody>
-						</tbody>
-						<tbody>
-							<tr class="displaynone" id="">
-								<td colspan="2" class="selectButton"><a href="#none"
-									class="btnSubmit sizeS" onclick="">옵션선택</a></td>
-							</tr>
-						</tbody>
 					</table>
 
 
@@ -271,7 +263,7 @@
 											<a href="javascript:;" class="up QuantityUp countEvent">수량증가</a> <a
 											href="javascript:;" class="down QuantityDown countEvent">수량감소</a>
 									</span></td>
-									<td class="right"><span class="quantity_price">80,000원<input
+									<td class="right"><span class="quantity_price">${productPrice}<input
 											type="hidden" name="option_box_price"
 											class="option_box_price" value="80000"
 											item_code="P000000O000A"></span> <span
@@ -331,7 +323,7 @@
 					<div id="totalPrice" class="totalPrice">
 						<p class="ec-base-help txtWarn txt11 displaynone">단독구매상품</p>
 						<strong class="title">TOTAL <span class="qty">(QUANTITY)</span></strong><span
-							class="total"><strong><em>80,000원</em></strong> (1개)</span>
+							class="total"><strong><em>${productPrice}</em></strong> <em>(1개)</em></span>
 					</div>
 					<p class="ec-base-help displaynone EC-price-warning">할인가가 적용된
 						최종 결제예정금액은 주문 시 확인할 수 있습니다.</p>
@@ -618,5 +610,11 @@
 		<!--#ez="1/1"-->
 	</div>
 </div>
+<script type="text/javascript">
+	let defaultPrice = ${product.price};
+	let stringPrice = "";
+	let price = defaultPrice;
+	const productSeq = `${productSeq}`;
+</script>
 <script type="text/javascript" src="/js/product/detailProduct.js"></script>
 <%@ include file="../layout/footer.jsp" %>

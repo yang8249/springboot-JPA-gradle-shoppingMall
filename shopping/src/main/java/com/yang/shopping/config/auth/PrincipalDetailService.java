@@ -12,11 +12,17 @@ import org.springframework.stereotype.Service;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.repository.UserRepository;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+
 @Service
 public class PrincipalDetailService implements UserDetailsService{
 
 	@Autowired
 	private UserRepository userRepository;
+	
+	@Autowired
+	private HttpServletResponse response;
 	
 	/*
 	 * 스프링이 로그인 요청을 가로챌때, username과 password 변수 2개를 가로채는데
@@ -36,6 +42,13 @@ public class PrincipalDetailService implements UserDetailsService{
 		
 		//위에서 검색 후 찾은 사용자 정보를 PrincipalDatil에 있는 user 객체 생성으로 만든다.
 		//그리고 찾은 유저정보는 시큐리티 세션에 담아지게된다.
+
+		  Cookie userCookie = new Cookie("username", username); // 쿠키 생성 (이름, 값)
+	        userCookie.setMaxAge(3600); // 1일 동안 유지
+	        userCookie.setPath("/"); // 모든 경로에서 쿠키 사용 가능
+	        userCookie.setHttpOnly(false); // JavaScript에서 접근 불가능 (보안 강화)
+	        response.addCookie(userCookie); // 응답에 쿠키 추가
+	        
 		return new PrincipalDetail(principal);
 	}
 

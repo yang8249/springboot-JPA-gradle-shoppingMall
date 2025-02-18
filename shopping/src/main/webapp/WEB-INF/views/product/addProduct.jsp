@@ -20,6 +20,37 @@
 	    <label for="title">제품명</label>
 	    <input type="text" class="form-control" id="title" placeholder="Enter title" name="title" required>
 	  </div>
+	  
+  	<div class="form-inline">
+		  <div class="form-group">
+		    <label>가격</label>
+		    <input type="number" class="form-control" id="price" value="${product.price}">
+		  </div>
+	   <!-- (옵션 동적 세팅 기능 추가 필요) -->
+		  <div class="form-group">
+		    <label for="pwd">색상</label>
+		    <input type="text" class="form-control" id="pwd" value="${product.color}">
+		  </div>
+		  <br>
+		  <div class="sort">
+			<select id="selArray" name="selArray"
+				class="xans-element- xans-product xans-product-orderby"><option
+					value="">- 카테고리 -</option>
+				<option value="outerwear"
+					class="xans-record-">Outerwear</option>
+				<option value="tops"
+					class="xans-record-">Tops</option>
+				<option value="dresses"
+					class="xans-record-">Dresses</option>
+				<option value="bottoms"
+					class="xans-record-">Bottoms</option>
+				<option value="accessories"
+					class="xans-record-">Accessories</option>
+			</select>
+		</div>
+  	</div>
+	
+		
 	  <div class="form-group">
 		  <label for="content">제품상세정보:</label>
 		  <textarea class="form-control summernote" rows="5" id="content"></textarea>

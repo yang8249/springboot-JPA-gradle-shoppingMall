@@ -1,6 +1,21 @@
-$(function(){
+
+//쿠키가져오기
+function getCookie(name) {
+    let cookies = document.cookie.split("; "); // 쿠키 문자열을 배열로 변환
+    for (let cookie of cookies) {
+        let [key, value] = cookie.split("="); // key-value 분리
+        if (key === name) {
+            return decodeURIComponent(value); // 값 디코딩 후 반환
+        }
+    }
+    return null; // 쿠키가 없을 경우
+}
+
+$(function(){	
 	
-		
+
+			
+	//상품 자세히보기
     function imageZoom(imgSelector, resultSelector) {
         // 필요한 요소들을 선택 또는 생성합니다.
         const img = $(imgSelector);
@@ -54,26 +69,79 @@ $(function(){
         imageZoom(".img", ".zoom_result");
     });
 	
+	
+	//상품 갯수 추가
 	$(".countEvent").click((e)=>{
 		console.log(e.target.classList[0]);
 		const arrow = e.target.classList[0];
 		const quanti = $("#quantity").val();
 		
-		//가격은 DB에서 가져온걸로 뿌려주기
-		const price = $(".option_box_price").val();
 		
 		if(arrow == "up"){
+			//숫자카운팅
 			$("#quantity").val(Number(quanti)+1);
 
-			//가격은 DB에서 가져온걸로 뿌려주기
-			$(".quantity_price").text(Number(price)*2);
+			//가격 증가		
+			price += defaultPrice;
+			stringPrice = price.toLocaleString('ko-KR') + "원";
+
+			$(".quantity_price").text(stringPrice);
 		}else if(arrow == "down"){
 			if($("#quantity").val() <= 1){return;}
+			
+			//숫자카운팅
 			$("#quantity").val(Number(quanti)-1);
 
-			//가격은 DB에서 가져온걸로 뿌려주기
-			$(".quantity_price").text(Number(price)/2);
+			//가격 인하	
+			price -= defaultPrice;
+			stringPrice = price.toLocaleString('ko-KR') + "원";
+			$(".quantity_price").text(stringPrice);
 		}
+		
+		//최종 금액과 카운트 적용
+		$($(".total").children()[0])[0].innerText = stringPrice;
+		$($(".total").children()[1])[0].innerText = "("+$("#quantity").val()+"개)";
 	});
+	
+	//장바구니 담기
+	$("#actionCart").on("click", ()=>{
+		addCart();
+	});	
+	function addCart(){
+			if($("#userId").val() == null || $("#userId").val() == ""){
+				return alert("로그인을 해주세요.");
+			}
+			
+			// Product와 Users 객체
+			const product = {
+			    productSeq: productSeq
+			};
+			const user = {
+			   	id : $("#userId").val()
+			};
+
+			// 두 객체를 하나의 JSON 객체로 묶기
+			let data = {
+				product: product,
+				user: user
+			};
+		
+			$.ajax({
+				headers: {
+			        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
+			    },
+				type:"POST",
+				url:"/api/Product/addCart",
+				data:JSON.stringify(data),
+				contentType:"application/json; charset=utf-8",
+				dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
+			}).done((result)=>{
+				alert("장바구니 담기 완료 : "+result);
+				console.log("result : "+result);
+				location.href = "/";
+			}).fail((error)=>{
+				alert(JSON.stringify(error));
+			});
+		}
 });
 
