@@ -2,6 +2,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
 <%@ include file="../layout/header.jsp" %>
+<link rel="stylesheet" href="/css/cafe24_4.css">
 
 <style>
 	.container { position:relative; } 
@@ -15,16 +16,50 @@
 		position: absolute;
 	    right: 20%;
     }
-    #payMenuDiv{
+    .hideATag{
+  		text-decoration-line: none;
+  		color: white;
+    }
+    #payMenuDiv1{
+    	width: 50%;
+	  	height: 800px;
+	  	position: relative;
+	    display: flex;
+	    justify-content: center;
+	    align-items: center;
+	    position: absolute;
+	    left: 50%;
+	    transform: translate(-50%, -50%); 
+		overflow: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
+  		border: 1px solid #000;
+	    z-index: 10000;
+        margin-top: 500px;
+    	width: 918px;
+   	  	overflow-x: hidden; /* 가로 스크롤 제거 */
+	  	overflow-y: auto; /* 넘치는 부분 숨김 */
+    	
+    }
+    #payMenuDiv2{
+    	display: block;
 	    position: absolute;
 	    z-index: 10000;
-	    width: 50%;
-	    height: auto;
+    	padding-top: 2285px;
     }
+    #closeBtn{
+        width: 50px;
+	    height: 50px;
+	    position: absolute;
+	    right: -12px;
+	    z-index: 1;
+	    background-color: white;
+    }
+    
 </style>
 	  <input type="hidden" id="userId" value="${principal.user.id}">
-<div id="payMenuDiv">
-	<%@ include file="../popup/payMenu.jsp" %>
+<div id="payMenuDiv1" style="display: none;">
+	<div id="payMenuDiv2">
+		<%@ include file="../popup/payMenu.jsp" %>
+	</div>
 </div>
 <div id="container" data-ez="layout-06i7law-1">
 
@@ -341,9 +376,8 @@
 						<div id="ec-product-price-info" class="displaynone"
 							ec-data-custom="0원" ec-data-price="80000"></div>
 						<div class=" action_button ">
-							<span class="sub_sold displaynone">SOLD OUT</span> <a
-								href="#none" class="btnSubmit sizeL "
-								onclick="product_submit(1, '/exec/front/order/basket/', this)"><span
+							<span class="sub_sold displaynone">SOLD OUT</span> <a 
+								href="#none" class="btnSubmit sizeL hideATag"><span
 								id="actionBuy">구매하기</span><span class="displaynone"
 								id="actionReserve">예약주문</span><span id="" class="displaynone">REGULAR
 									DELIVERY</span></a>

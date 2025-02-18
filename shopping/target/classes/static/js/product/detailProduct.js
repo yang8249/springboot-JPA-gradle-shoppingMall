@@ -240,5 +240,11 @@ $(function(){
 			});
 		}
 
+		//찜하기
+		$("#actionBuy").on("click", ()=>{
+			$("#payMenuDiv1").css("display", "");
+		});	
+		
+
 });
 
