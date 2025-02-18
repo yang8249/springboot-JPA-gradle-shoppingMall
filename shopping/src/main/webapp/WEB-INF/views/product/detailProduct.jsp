@@ -15,9 +15,17 @@
 		position: absolute;
 	    right: 20%;
     }
+    #payMenuDiv{
+	    position: absolute;
+	    z-index: 10000;
+	    width: 50%;
+	    height: auto;
+    }
 </style>
 	  <input type="hidden" id="userId" value="${principal.user.id}">
-
+<div id="payMenuDiv">
+	<%@ include file="../popup/payMenu.jsp" %>
+</div>
 <div id="container" data-ez="layout-06i7law-1">
 
       	<c:if test="${principal.user.role eq 'ADMIN'}">
@@ -615,6 +623,8 @@
 	let stringPrice = "";
 	let price = defaultPrice;
 	const productSeq = `${productSeq}`;
+	const productName = `${product.productName}`;
+	const isWish = `${wish.id}`;
 </script>
 <script type="text/javascript" src="/js/product/detailProduct.js"></script>
 <%@ include file="../layout/footer.jsp" %>

@@ -22,7 +22,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.yang.shopping.dto.ResponseDto;
 import com.yang.shopping.model.Board;
 import com.yang.shopping.model.Product;
+import com.yang.shopping.model.Wish;
 import com.yang.shopping.service.ProductService;
+import com.yang.shopping.service.WishService;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
@@ -32,6 +34,9 @@ public class ProductController {
 
 	@Autowired
 	private ProductService productService;
+
+	@Autowired
+	private WishService wishService;
 
 	// 제품 목록
 	@GetMapping("/products")
@@ -51,7 +56,7 @@ public class ProductController {
 	
 	// 제품 상세 정보
 	@GetMapping("/product/detailProduct")
-	public String detailProduct(@RequestParam("id") int id, Model model) {
+	public String detailProduct(@RequestParam("id") int id, @RequestParam("userId") String userId, Model model) {
 		// 스프링 시큐리티에서 작성한 로그인처리 로직이 끝난다음에 principal 객체에 정보가 담겨진다.
 		// System.out.println("로그인 사용자 : "+principal.getUsername());
 
@@ -62,10 +67,17 @@ public class ProductController {
 		 * model.addAttribute("products", productService.selectProduct(category,
 		 * pageable)); model.addAttribute("category", category);
 		 */
+		System.out.println("userId : "+userId);
 		Product product = productService.productInfo(id);
+		if(!userId.isEmpty()) {
+			Wish wish = wishService.wishInfo(id, Integer.parseInt(userId));
+			model.addAttribute("wish", wish);
+		}
 
 		model.addAttribute("product", product);
 		model.addAttribute("productSeq",id);
+		//model.addAttribute("wish", wish);
+		
         // 천 단위 콤마 추가
         NumberFormat formatter = NumberFormat.getNumberInstance(Locale.KOREA);
         String formattedAmount = formatter.format(product.getPrice()) + "원";

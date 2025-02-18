@@ -128,6 +128,8 @@
   </style>
 <body>
 
+	  <input type="hidden" id="userId" value="${principal.user.id}">
+	  
 <div class="jumbotron">
   <div class="container text-center">
     <h1>Online Store</h1>      
@@ -223,3 +225,6 @@
   </c:choose>
   </div>  
 </nav> --%>
+<script type="text/javascript">
+	const FINAL_USERID = `${principal.user.id}`;
+</script>

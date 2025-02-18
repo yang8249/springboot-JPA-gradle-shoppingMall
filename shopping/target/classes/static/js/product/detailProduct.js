@@ -1,3 +1,6 @@
+if(!!isWish){
+	$("#actionWish").addClass("btn-primary");
+}
 
 //쿠키가져오기
 function getCookie(name) {
@@ -112,20 +115,29 @@ $(function(){
 				return alert("로그인을 해주세요.");
 			}
 			
-			// Product와 Users 객체
+			// cart, Product와 Users 객체
+			const cart = {
+				productCount : $("#quantity").val(),
+				productName : productName,
+				totalPrice : price
+			};
 			const product = {
-			    productSeq: productSeq
+			    productSeq: productSeq,
+				productCount : $("#quantity").val(),
+				productName : productName,
+				totalPrice : price
 			};
 			const user = {
 			   	id : $("#userId").val()
 			};
-
+			
 			// 두 객체를 하나의 JSON 객체로 묶기
 			let data = {
+				cart : cart,
 				product: product,
 				user: user
 			};
-		
+			
 			$.ajax({
 				headers: {
 			        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
@@ -143,5 +155,90 @@ $(function(){
 				alert(JSON.stringify(error));
 			});
 		}
+
+		//찜하기
+		$("#actionWish").on("click", ()=>{
+			if(!$("#actionWish").hasClass("btn-primary")){
+				addWish();				
+			}else{
+				removeWish();
+			}
+		});	
+		function addWish(){
+			if($("#userId").val() == null || $("#userId").val() == ""){
+				return alert("로그인을 해주세요.");
+			}
+			
+			// cart, Product와 Users 객체
+			const wish = {
+				productName : productName
+			};
+			const product = {
+			    productSeq: productSeq
+			};
+			const user = {
+			   	id : $("#userId").val()
+			};
+			
+			// 두 객체를 하나의 JSON 객체로 묶기
+			let data = {
+				wish : wish,
+				product: product,
+				user: user
+			};
+			
+			$.ajax({
+				headers: {
+			        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
+			    },
+				type:"POST",
+				url:"/api/Product/addWish",
+				data:JSON.stringify(data),
+				contentType:"application/json; charset=utf-8",
+				dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
+			}).done((result)=>{
+				$("#actionWish").addClass("btn-primary");
+				alert("찜하기 완료 : "+result);
+			}).fail((error)=>{
+				alert(JSON.stringify(error));
+			});
+		}
+		function removeWish(){
+			
+			// cart, Product와 Users 객체
+			const wish = {
+				id : isWish
+			};
+			const product = {
+			    productSeq: productSeq
+			};
+			const user = {
+			   	id : $("#userId").val()
+			};
+			
+			// 두 객체를 하나의 JSON 객체로 묶기
+			let data = {
+				wish : wish,
+				product: product,
+				user: user
+			};
+			
+			$.ajax({
+				headers: {
+			        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
+			    },
+				type:"DELETE",
+				url:"/api/Product/removeWish",
+				data:JSON.stringify(data),
+				contentType:"application/json; charset=utf-8",
+				dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
+			}).done((result)=>{
+				$("#actionWish").removeClass("btn-primary")
+				alert("찜하기를 취소하였습니다. : "+result);
+			}).fail((error)=>{
+				alert(JSON.stringify(error));
+			});
+		}
+
 });
 

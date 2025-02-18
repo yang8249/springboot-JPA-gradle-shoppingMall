@@ -20,11 +20,14 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.yang.shopping.config.auth.PrincipalDetail;
 import com.yang.shopping.dto.CartDto;
 import com.yang.shopping.dto.ResponseDto;
+import com.yang.shopping.dto.WishDto;
 import com.yang.shopping.model.Board;
+import com.yang.shopping.model.Cart;
 import com.yang.shopping.model.Product;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.service.ProductService;
@@ -32,7 +35,7 @@ import com.yang.shopping.service.ProductService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 
-@Controller
+@RestController
 public class ProductApiController {
 
 	@Autowired
@@ -42,11 +45,33 @@ public class ProductApiController {
 	@PostMapping("/api/Product/addCart")
 	public ResponseDto<CartDto> addCart(@RequestBody CartDto cartDto) {
 		
-		productService.insertAddCart(cartDto.getProduct(), cartDto.getUser());
+		productService.insertAddCart(cartDto.getCart(), cartDto.getProduct(), cartDto.getUser());
+
+		System.out.println("cartDto : "+cartDto.getCart());
+		System.out.println("product : "+cartDto.getProduct());
+		System.out.println("user : "+cartDto.getUser());
 		
 		return new ResponseDto<CartDto>(HttpStatus.OK.value(), cartDto);
 	}
 
+	//찜 등록
+	@PostMapping("/api/Product/addWish")
+	public ResponseDto<WishDto> addWish(@RequestBody WishDto wishDto) {
+		
+		productService.insertAddWish(wishDto.getWish(), wishDto.getProduct(), wishDto.getUser());
+		
+		return new ResponseDto<WishDto>(HttpStatus.OK.value(), wishDto);
+	}
+
+	//찜 삭제
+	@DeleteMapping("/api/Product/removeWish")
+	public ResponseDto<WishDto> removeWish(@RequestBody WishDto wishDto) {
+		
+		productService.deleteAddWish(wishDto.getWish(), wishDto.getProduct(), wishDto.getUser());
+		
+		return new ResponseDto<WishDto>(HttpStatus.OK.value(), wishDto);
+	}
+	
 	/*
 	 * @PutMapping("/api/board/{id}") public ResponseDto<Integer>
 	 * updateBoard(@PathVariable int id, @RequestBody Board board){

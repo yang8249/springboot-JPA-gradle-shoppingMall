@@ -10,9 +10,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yang.shopping.model.Cart;
 import com.yang.shopping.model.Product;
 import com.yang.shopping.model.Users;
+import com.yang.shopping.model.Wish;
+import com.yang.shopping.repository.CartRepository;
 import com.yang.shopping.repository.ProductRepository;
+import com.yang.shopping.repository.UserRepository;
+import com.yang.shopping.repository.WishRepository;
 
 
 
@@ -27,6 +32,15 @@ public class ProductService {
 
 	@Autowired
 	private ProductRepository productRepository;
+	
+	@Autowired
+	private UserRepository userRepository;
+
+	@Autowired
+	private CartRepository cartRepository;
+
+	@Autowired
+	private WishRepository wishRepository;
 	
 
 	//제품 목록 불러오기
@@ -46,12 +60,53 @@ public class ProductService {
 		return productRepository.findById(id).orElse(null);
 	}
 
-	public void insertAddCart(Product product, Users user) {
+	public void insertAddCart(Cart cart, Product product, Users user) {
 		try {
-			/*
-			 * Product product = productRepository.findById(id).orElse(null);
-			 * board.setUser(user); boardRepository.save(board);
-			 */
+			Product selectProduct = productRepository.findById(product.getProductSeq()).orElseThrow();
+			Users selectUser = userRepository.findById(user.getId()).orElseThrow();
+			 cart.setProduct(product);
+			 cart.setUser(user); 
+			 cartRepository.save(cart);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("BoardService : 글쓰기() : "+e.getMessage());
+		}
+	}
+
+	public void insertAddWish(Wish wish, Product product, Users user) {
+		try {
+			Optional<Wish> entity = wishRepository.customFindByWish(product.getProductSeq(), user.getId());
+			if (!entity.isPresent()) {
+				// 엔티티가 존재하지 않음
+				Product selectProduct = productRepository.findById(product.getProductSeq()).orElseThrow();
+				Users selectUser = userRepository.findById(user.getId()).orElseThrow();
+				
+				wish.setProduct(product);
+				wish.setUser(user); 
+				
+				wishRepository.save(wish);
+			} else {
+				// 엔티티가 존재함
+				System.out.println("찜하기를 이미 했습니다!!!");
+			}
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("BoardService : 글쓰기() : "+e.getMessage());
+		}
+	}
+
+	public void deleteAddWish(Wish wish, Product product, Users user) {
+		try {
+			Optional<Wish> entity = wishRepository.customFindByWish(product.getProductSeq(), user.getId());
+			if (entity.isPresent()) {
+				// 엔티티가 존재함
+				wishRepository.deleteById(entity.get().getId());
+			} else {
+				// 엔티티가 존재하지 않음
+				System.out.println("찜하지 않은제품입니다!!!");
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("BoardService : 글쓰기() : "+e.getMessage());
