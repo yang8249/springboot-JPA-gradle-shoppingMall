@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.yang.shopping.config.auth.PrincipalDetail;
-import com.yang.shopping.dto.CartDto;
+import com.yang.shopping.dto.PayDto;
 import com.yang.shopping.dto.ResponseDto;
 import com.yang.shopping.dto.WishDto;
 import com.yang.shopping.model.Board;
@@ -36,51 +36,23 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 
 @RestController
-public class ProductApiController {
+public class PayApiController {
 
 	@Autowired
 	private ProductService productService;
 	
-	//장바구니 등록
-	@PostMapping("/api/Product/addCart")
-	public ResponseDto<CartDto> addCart(@RequestBody CartDto cartDto) {
+	//결제하기
+	@PostMapping("/api/pay/insertPay")
+	public ResponseDto<PayDto> addCart(@RequestBody PayDto payDto) {
 		
-		productService.insertAddCart(cartDto.getCart(), cartDto.getProduct(), cartDto.getUser());
+		//productService.insertAddCart(payDto.getCart(), payDto.getProduct(), payDto.getUser());
 
-		System.out.println("cartDto : "+cartDto.getCart());
-		System.out.println("product : "+cartDto.getProduct());
-		System.out.println("user : "+cartDto.getUser());
+		System.out.println("users : "+payDto.getUsers());
+		System.out.println("delivery : "+payDto.getDelivery());
+		System.out.println("cart : "+payDto.getCart());
+		System.out.println("product : "+payDto.getProduct());
 		
-		return new ResponseDto<CartDto>(HttpStatus.OK.value(), cartDto);
+		return new ResponseDto<PayDto>(HttpStatus.OK.value(), payDto);
 	}
-
-	//찜 등록
-	@PostMapping("/api/Product/addWish")
-	public ResponseDto<WishDto> addWish(@RequestBody WishDto wishDto) {
-		
-		productService.insertAddWish(wishDto.getWish(), wishDto.getProduct(), wishDto.getUser());
-		
-		return new ResponseDto<WishDto>(HttpStatus.OK.value(), wishDto);
-	}
-
-	//찜 삭제
-	@DeleteMapping("/api/Product/removeWish")
-	public ResponseDto<WishDto> removeWish(@RequestBody WishDto wishDto) {
-		
-		productService.deleteAddWish(wishDto.getWish(), wishDto.getProduct(), wishDto.getUser());
-		
-		return new ResponseDto<WishDto>(HttpStatus.OK.value(), wishDto);
-	}
-	
-	/*
-	 * @PutMapping("/api/board/{id}") public ResponseDto<Integer>
-	 * updateBoard(@PathVariable int id, @RequestBody Board board){
-	 * productService.updateBoard(id, board); return new
-	 * ResponseDto<Integer>(HttpStatus.OK.value(), 1); }
-	 * 
-	 * @DeleteMapping("/api/board/{id}") public ResponseDto<Integer>
-	 * deleteById(@PathVariable int id){ productService.deleteBoard(id); return new
-	 * ResponseDto<Integer>(HttpStatus.OK.value(), 1); }
-	 */
 	
 }

@@ -1,6 +1,7 @@
 <%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<div id="mCafe24Order"
 		class="xans-element- xans-order xans-order-form typeHeader xans-record-">
 		<!-- 이값은 지우면 안되는 값입니다. ($move_order_after 주문완료페이지 주소 / $move_basket 장바구니페이지 주소)
@@ -219,7 +220,7 @@
 										<tr class="ec-shippingInfo-newAddress-name">
 											<th scope="row">받는사람 <span class="icoRequired">필수</span>
 											</th>
-											<td><input id="rname" name="rname" fw-filter="isFill"
+											<td><input id="rname" data-info="받는사람" name="rname" fw-filter="isFill"
 												fw-label="수취자 성명" fw-msg="" class="inputTypeText"
 												placeholder="" size="15" value="" type="text"></td>
 										</tr>
@@ -506,7 +507,7 @@
 													</li>
 	
 													<li id="receiver_zipcode_wrap" class="ec-address-zipcode"
-														style=""><input id="rzipcode1" name="rzipcode1"
+														style=""><input id="rzipcode1" name="rzipcode1" data-info="주소"
 														placeholder="우편번호" fw-filter="isLengthRange[1][14]"
 														class="inputTypeText" type="text" maxlength="14"
 														readonly="" fw-label="우편번호" style="">
@@ -523,13 +524,13 @@
 														class="ec-base-label displaynone"> 우편번호가 정확하지 않습니다.
 															다시 확인해 주세요. </span></li>
 													<li id="receiver_baseAddr_wrap" class="" style=""><input
-														id="raddr1" name="raddr1" placeholder="기본주소"
+														id="raddr1" name="raddr1" placeholder="기본주소" data-info="주소"
 														fw-filter="isFill" class="inputTypeText" type="text"
 														size="60" maxlength="100" readonly="" fw-label="기본주소"
 														style=""></li>
 													<li id="receiver_detailAddr_wrap" class="" style=""><input
 														id="raddr2" name="raddr2" placeholder="나머지 주소(선택 입력 가능)"
-														fw-filter="" class="inputTypeText" type="text" size="60"
+														fw-filter="" class="inputTypeText" type="text" size="60" 
 														maxlength="255" fw-label="나머지 주소(선택 입력 가능)" style="">
 													</li>
 												</ul>
@@ -555,10 +556,10 @@
 														<option value="017">017</option>
 														<option value="018">018</option>
 														<option value="019">019</option>
-													</select>-<input id="rphone2_2" name="rphone2_[]" maxlength="4"
+													</select>-<input id="rphone2_2" data-info="휴대전화" name="rphone2_[]" maxlength="4"
 														fw-filter="isNumber&amp;isFill" fw-label="수취자 핸드폰번호"
 														fw-alone="N" fw-msg="" placeholder="" size="4" value=""
-														type="text">-<input id="rphone2_3"
+														type="text">-<input id="rphone2_3" data-info="휴대전화"
 														name="rphone2_[]" maxlength="4"
 														fw-filter="isNumber&amp;isFill" fw-label="수취자 핸드폰번호"
 														fw-alone="N" fw-msg="" placeholder="" size="4" value=""
@@ -571,10 +572,10 @@
 											</th>
 											<td>
 												<div class="ec-base-mail">
-													<input id="oemail1" name="oemail1" fw-filter="isFill"
+													<input id="oemail1" data-info="이메일" name="oemail1" fw-filter="isFill"
 														fw-label="주문자 이메일" fw-alone="N" fw-msg="" class="mailId"
 														value="" type="text">@ <span class="mailAddress">
-														<select id="oemail3" fw-filter="isFill" fw-label="주문자 이메일"
+														<select id="oemail3" data-info="이메일" fw-filter="isFill" fw-label="주문자 이메일"
 														fw-alone="N" fw-msg="">
 															<option value="" selected="selected">-이메일 선택-</option>
 															<option value="naver.com">naver.com</option>
@@ -588,7 +589,7 @@
 															<option value="gmail.com">gmail.com</option>
 															<option value="etc">직접입력</option>
 													</select> <span class="directInput ec-compact-etc"><input
-															id="oemail2" name="oemail2" fw-filter="isFill"
+															id="oemail2" name="oemail2" data-info="이메일" fw-filter="isFill"
 															fw-label="주문자 이메일" fw-alone="N" fw-msg=""
 															placeholder="직접입력" value="" type="text"></span>
 													</span>
@@ -735,7 +736,7 @@
 	
 					<!-- 국내배송 메시지 -->
 					<div class="ec-shippingInfo-shippingMessage segment unique  ">
-						<select id="omessage_select" name="omessage_select" fw-filter=""
+						<select id="omessage_select" data-info="배송지" name="omessage_select" fw-filter=""
 							fw-label="배송 메세지" fw-msg="">
 							<option value="oMessage-0" selected="selected">-- 메시지 선택
 								(선택사항) --</option>
@@ -746,19 +747,11 @@
 							<option value="oMessage-5">택배함에 보관해 주세요.</option>
 							<option value="oMessage-input">직접 입력</option>
 						</select>
-						<div class="ec-shippingInfo-omessageInput gBlank10"
+						<div id="messageInput" class="ec-shippingInfo-omessageInput gBlank10"
 							style="display: none;">
 							<textarea id="omessage" name="omessage" fw-filter=""
-								fw-label="배송 메세지" fw-msg="" maxlength="255" cols="70"></textarea>
-							<div class="gBlank10 displaynone">
-								<label><input id="omessage_autosave0"
-									name="omessage_autosave[]" fw-filter="" fw-label="배송 메세지 저장"
-									fw-msg="" value="T" type="checkbox" disabled=""><label
-									for="omessage_autosave0"></label>[]에 자동 저장</label>
-								<ul class="ec-base-help">
-									<li>게시글은 비밀글로 저장되며 비밀번호는 주문번호 뒷자리로 자동 지정됩니다.</li>
-								</ul>
-							</div>
+								fw-label="배송 메세지" data-info="배송 메세지" fw-msg="" maxlength="255" cols="70"></textarea>
+							
 						</div>
 					</div>
 	
@@ -777,13 +770,13 @@
 					</div>
 	
 					<!-- 국내배송 기본 배송지 사용 -->
-					<div class="ec-shippingInfo-newAddress-setMain segment displaynone"
+	<!-- 				<div class="ec-shippingInfo-newAddress-setMain segment displaynone"
 						style="display: block;">
 						<input id="set_main_address0" name="set_main_address[]"
 							fw-filter="" fw-label="기본 배송지로 저장" fw-msg="" value="T"
 							type="checkbox" disabled=""><label for="set_main_address0">기본
 							배송지로 저장</label>
-					</div>
+					</div> -->
 	
 					<!-- app tag -->
 					<div id="ec-orderform-billingNshipping-tail"></div>
@@ -796,7 +789,7 @@
 	                이 파일은 기능 업그레이드 시, 자동으로 개선된 소스가 적용되어 별도로 디자인 수정을 하지 않아도 됩니다 .
 	                원터치 주문서 조각 html 파일을 수정할 경우, 작성한 정보가 유실되거나 주문서 최신 기능이 자동 업그레이드되지 않을 수 있으니 유의해 주세요.
 	        --> <!-- 주문서 간편 회원가입 -->
-					<div id="eSimpleJoinByOrderForm"
+					<!-- <div id="eSimpleJoinByOrderForm"
 						class="xans-element- xans-member xans-member-simplejoin joinArea ">
 						<div class="agreeJoin">
 							<input type="checkbox" id="simple_join_is_check" value="F"><label
@@ -885,12 +878,12 @@
 								</tbody>
 							</table>
 						</div>
-					</div>
+					</div> -->
 					</ec-jigsawpiece> <ec-jigsawpiece print="always"> <!-- app tag -->
 					<div id="ec-orderform-guest-head"></div>
 	
 					<!-- 비회원 주문조회 -->
-					<div class="pannelArea ec-orderform-NoMemberPasswdRow ">
+					<!-- <div class="pannelArea ec-orderform-NoMemberPasswdRow ">
 						<div class="title">
 							<h2>비회원 주문조회 비밀번호</h2>
 						</div>
@@ -927,7 +920,7 @@
 								</table>
 							</div>
 						</div>
-					</div>
+					</div> -->
 	
 					<!-- app tag -->
 					<div id="ec-orderform-guest-tail"></div>
@@ -1630,16 +1623,64 @@
 								<tr>
 									<th scope="row">입금은행 <span class="icoRequired">필수</span>
 									</th>
-									<td><select id="bankaccount" name="bankaccount"
+									<td><select id="bankaccount" data-info="입금은행" name="bankaccount"
 										fw-filter="" fw-label="무통장 입금은행" fw-msg="">
-											<option value="-1">::: 선택해 주세요. :::</option>
+											<option value="">::: 선택해 주세요. :::</option>
+											<option value='SC제일은행'>SC제일은행</option>       
+											<option value='경남은행'>경남은행</option>       
+											<option value='광주은행'>광주은행</option>       
+											<option value='국민은행'>국민은행</option>       
+											<option value='굿모닝신한증권'>굿모닝신한증권</option>       
+											<option value='기업은행'>기업은행</option>       
+											<option value='농협중앙회'>농협중앙회</option>       
+											<option value='농협회원조합'>농협회원조합</option>       
+											<option value='대구은행'>대구은행</option>       
+											<option value='대신증권'>대신증권</option>       
+											<option value='대우증권'>대우증권</option>       
+											<option value='동부증권'>동부증권</option>       
+											<option value='동양종합금융증권'>동양종합금융증권</option>       
+											<option value='메리츠증권'>메리츠증권</option>       
+											<option value='미래에셋증권'>미래에셋증권</option>       
+											<option value='뱅크오브아메리카(BOA)'>뱅크오브아메리카(BOA)</option>       
+											<option value='부국증권'>부국증권</option>       
+											<option value='부산은행'>부산은행</option>       
+											<option value='산림조합중앙회'>산림조합중앙회</option>       
+											<option value='산업은행'>산업은행</option>       
+											<option value='삼성증권'>삼성증권</option>       
+											<option value='상호신용금고'>상호신용금고</option>       
+											<option value='새마을금고'>새마을금고</option>       
+											<option value='수출입은행'>수출입은행</option>       
+											<option value='수협중앙회'>수협중앙회</option>       
+											<option value='신영증권'>신영증권</option>       
+											<option value='신한은행'>신한은행</option>       
+											<option value='신협중앙회'>신협중앙회</option>       
+											<option value='에스케이증권'>에스케이증권</option>       
+											<option value='에이치엠씨투자증권'>에이치엠씨투자증권</option>       
+											<option value='엔에이치투자증권'>엔에이치투자증권</option>       
+											<option value='엘아이지투자증권'>엘아이지투자증권</option>       
+											<option value='외환은행'>외환은행</option>       
+											<option value='우리은행'>우리은행</option>       
+											<option value='우리투자증권'>우리투자증권</option>       
+											<option value='우체국'>우체국</option>       
+											<option value='유진투자증권'>유진투자증권</option>       
+											<option value='전북은행'>전북은행</option>       
+											<option value='제주은행'>제주은행</option>       
+											<option value='키움증권'>키움증권</option>       
+											<option value='하나대투증권'>하나대투증권</option>       
+											<option value='하나은행'>하나은행</option>       
+											<option value='하이투자증권'>하이투자증권</option>       
+											<option value='한국씨티은행'>한국씨티은행</option>       
+											<option value='한국투자증권'>한국투자증권</option>       
+											<option value='한화증권'>한화증권</option>       
+											<option value='현대증권'>현대증권</option>       
+											<option value='홍콩상하이은행'>홍콩상하이은행</option>
 									</select></td>
 								</tr>
 								<tr>
 									<th scope="row">입금자명 <span class="icoRequired">필수</span>
 									</th>
 									<td><input id="pname" name="pname" fw-filter=""
-										fw-label="무통장 입금자명" fw-msg="" class="inputTypeText"
+										fw-label="무통장 입금자명" data-info="입금자명" fw-msg="" class="inputTypeText"
 										placeholder="" size="15" maxlength="20" value="" type="text"></td>
 								</tr>
 							</tbody>
@@ -1817,7 +1858,7 @@
 						</div>
 					</div>
 	
-					<div id="tax_request_display_area" class="receiptArea displaynone"
+					<!-- <div id="tax_request_display_area" class="receiptArea displaynone"
 						style="display: block;">
 						<div class="title">
 							<h3>세금계산서</h3>
@@ -2237,7 +2278,7 @@
 								</div>
 							</div>
 						</div>
-					</div>
+					</div> -->
 				</div>
 	
 				<!-- 결제수단 저장 -->
@@ -2328,9 +2369,9 @@
 							style="display: list-item;">
 							<div class="agree">
 								<span class="check" style=""><input
-									id="chk_purchase_agreement0" name="chk_purchase_agreement"
+									id="chk_purchase_agreement0" data-info="이용약관" name="chk_purchase_agreement"
 									fw-filter="" fw-label="구매진행 동의" fw-msg="" value="T"
-									type="checkbox" disabled="" style=""><label
+									type="checkbox" style=""><label
 									for="chk_purchase_agreement0"><span class="txtEm">[필수]</span>
 										구매조건 확인 및 결제진행 동의</label></span>
 							</div>
@@ -2340,7 +2381,7 @@
 							style="display: none;">
 							<div class="agree">
 								<span class="check"><input type="checkbox"
-									id="directpay_card_agree_financial"
+									id="directpay_card_agree_financial" 
 									class="directpay_card_agree_checkbox" disabled=""><label
 									for="directpay_card_agree_financial"><span class="txtEm">[필수]</span>
 										결제대행서비스 약관 동의</label></span>
@@ -2351,10 +2392,10 @@
 						<!-- 쇼핑몰 이용약관 동의 -->
 						<li class="">
 							<div class="agree">
-								<span class="check"><input id="mallAgree" name="mallAgree"
+								<span class="check"><input id="mallAgree" name="mallAgree" data-info="이용약관"
 									type="checkbox"><label for="mallAgree"><span
 										class="txtEm">[필수]</span> 쇼핑몰 이용약관 동의</label></span> <span
-									style="display: none;"><input id="mall_agreement_radio0"
+									style="display: none;"><input id="mall_agreement_radio0" 
 									name="mall_agreement" fw-filter="isFill" fw-label="쇼핑몰 이용약관 동의"
 									fw-msg="" value="T" type="radio" autocomplete="off"><label
 									for="mall_agreement_radio0">동의함</label> <input
@@ -2369,10 +2410,10 @@
 						<li id="ec-orderform-OrderAgreementRow" class="">
 							<div class="agree">
 								<span class="check"><input id="personAgree"
-									name="personAgree" type="checkbox"><label
+									name="personAgree" data-info="이용약관" type="checkbox"><label
 									for="personAgree"><span class="txtEm">[필수]</span> 개인정보
 										수집 및 이용 동의</label></span> <span style="display: none;"><input
-									id="nm_agreement0" name="nm_agreement" fw-filter="isFill"
+									id="nm_agreement0" name="nm_agreement" fw-filter="isFill" 
 									fw-label="개인정보 수집 및 이용 동의" fw-msg="" value="T" type="radio"
 									autocomplete="off"><label for="nm_agreement0">동의함</label>
 									<input id="nm_agreement1" name="nm_agreement" fw-filter="isFill"

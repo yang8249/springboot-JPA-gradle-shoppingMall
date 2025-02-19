@@ -1,5 +1,15 @@
 window.onload = function() {
 	
+	if(page == "orderList"){
+		ableContent = $("#ableContent").children(":not(.mypage-disabled)")[0].className;
+				
+		$("#ableContent").children("."+ableContent).addClass("mypage-disabled");
+		$("#ableContent").children(".orderList").removeClass("mypage-disabled");
+
+		// 쿼리스트링이 있으면, 쿼리스트링을 제거한 URL로 바꿉니다.
+		let newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+		window.history.replaceState({}, document.title, newUrl);
+	}
 
 	/**
 	 * 회원가입 js입니다.

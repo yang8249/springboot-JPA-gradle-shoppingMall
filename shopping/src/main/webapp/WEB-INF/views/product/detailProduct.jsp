@@ -43,26 +43,28 @@
     	display: block;
 	    position: absolute;
 	    z-index: 10000;
-    	padding-top: 2285px;
+    	padding-top: 1109px;
     }
     #closeBtn{
         width: 50px;
 	    height: 50px;
 	    position: absolute;
-	    right: -12px;
+	    right: 5px;
 	    z-index: 1;
 	    background-color: white;
+	    margin-top: -12px;
+        text-align: center;
+    	padding-top: 15px;
     }
     
 </style>
-	  <input type="hidden" id="userId" value="${principal.user.id}">
+<div id="container" data-ez="layout-06i7law-1">
+
 <div id="payMenuDiv1" style="display: none;">
 	<div id="payMenuDiv2">
 		<%@ include file="../popup/payMenu.jsp" %>
 	</div>
 </div>
-<div id="container" data-ez="layout-06i7law-1">
-
       	<c:if test="${principal.user.role eq 'ADMIN'}">
 			<a href="/product/modifyProduct?id=${productSeq}"><button id="btn-update" class="btn btn-primary">제품 수정</button></a>
       	</c:if>
@@ -376,9 +378,12 @@
 						<div id="ec-product-price-info" class="displaynone"
 							ec-data-custom="0원" ec-data-price="80000"></div>
 						<div class=" action_button ">
-							<span class="sub_sold displaynone">SOLD OUT</span> <a 
-								href="#none" class="btnSubmit sizeL hideATag"><span
-								id="actionBuy">구매하기</span><span class="displaynone"
+							<span class="sub_sold displaynone">SOLD OUT</span> <a  id="actionBuy"
+								href="#none" class="btnSubmit sizeL hideATag" style="
+								    text-decoration-line: none;
+								    color: white;
+								"><span
+								>구매하기</span><span class="displaynone"
 								id="actionReserve">예약주문</span><span id="" class="displaynone">REGULAR
 									DELIVERY</span></a>
 							<button type="button" class="btnNormal sizeL actionCart "

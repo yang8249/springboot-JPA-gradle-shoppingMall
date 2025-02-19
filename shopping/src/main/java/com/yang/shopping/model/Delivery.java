@@ -19,6 +19,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -30,21 +31,12 @@ import lombok.NoArgsConstructor;
 @Builder
 @DynamicInsert // insert시 null인 데이터들을 제외해서 인서트해준다. (그래야 디폴트값을 넣을수있음.)
 @Entity //ORM -> Java Obejct -> 테이블로 매핑해주는 기술이다.
-public class Users{
+public class Delivery{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(nullable = false, length = 30)
-	private String username;
-
-	@Column(nullable = false, length = 100)
-	private String password;
-
-	@Column(nullable = false, length = 50)
-	private String email;
-
 	//주소
 	@Column(length = 200)
 	private String mainAddr;
@@ -55,16 +47,31 @@ public class Users{
 	@Column(nullable = false)
 	@ColumnDefault("0")
 	private int zoneCode;
-
+	
 	//연락처
 	@Column(length = 200)
 	private String phone;
 
-	@Enumerated(EnumType.STRING)
-	private RoleType role;
+	//은행명
+	@Column(length = 100)
+	private String bank;
 
-    private String oauth; // kakao, google, ...
-    
+	//입금자명
+	@Column(length = 100)
+	private String payCustomer;
+	
+
+	//요청사항
+	@Column(length = 200)
+	private String detailInfo1;
+	//요청사항
+	@Column(length = 200)
+	private String detailInfo2;
+
+	@OneToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.
+	@JoinColumn(name = "userId") //userId라는 컬럼명으로 외래키를 만든다.
+	private Users user;
+
 	@CreationTimestamp
 	private Timestamp createDate;
 	

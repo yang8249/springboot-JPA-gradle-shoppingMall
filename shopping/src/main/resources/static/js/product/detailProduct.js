@@ -240,11 +240,180 @@ $(function(){
 			});
 		}
 
-		//찜하기
+		//구매 팝업열기
 		$("#actionBuy").on("click", ()=>{
+			if(!userId.value){
+				alert("로그인 후 이용해주세요.");
+				return;
+			}
 			$("#payMenuDiv1").css("display", "");
 		});	
+				
+		//구매 팝업닫기
+		$("#closeBtn").on("click", ()=>{
+			$("#payMenuDiv1").css("display", "none");
+		});	
+
+		//주소찾기 API호출
+		$("#btn_search_rzipcode").click((e)=>{
+			addressApi.open();
+		});
+
+		//주소찾기 API
+		const addressApi = new daum.Postcode({
+		    oncomplete: function(data) {
+		        // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분입니다.
+		        // 예제를 참고하여 다양한 활용법을 확인해 보세요.
+				console.log("주소 : "+data.address);
+				console.log("시,도 : "+data.sido);
+				console.log("시,군,구 : "+data.sigungu);
+				console.log("도로명 : "+data.query);
+				console.log("동 : "+data.bname);
+				console.log("우편번호 : "+data.zonecode);
+				
+				$("#raddr1").val(data.address);
+				$("#rzipcode1").val(data.zonecode);
+		    }
+		});
+
+		$("#oemail3").change((e)=>{
+			
+			console.log(e.target.value);
+			if(e.target.value == "etc"){
+				$("#oemail2").css("display", "block");
+			}else{
+				$("#oemail2").css("display", "none");
+				$("#oemail2").val("");
+			}
+		});
+
+		$("#omessage_select").change((e)=>{
+			if(e.target.value == "oMessage-input"){
+				$("#messageInput").css("display", "block");
+			}else{
+				$("#messageInput").css("display", "none");
+			}
+		});
+		
+		$("#allAgree").click((e)=>{
+			console.log(e.target.checked);
+			if(e.target.checked){
+				$("#chk_purchase_agreement0").prop("checked", true);
+				$("#mallAgree").prop("checked", true);
+				$("#personAgree").prop("checked", true);
+			}else{
+				$("#chk_purchase_agreement0").prop("checked", false);
+				$("#mallAgree").prop("checked", false);
+				$("#personAgree").prop("checked", false);
+			}
+			
+		});
+		
+		$("#btn_payment").click((e)=>{
+			const arrList = {};  // 빈 객체 생성
+			
+			arrList.rname = $("#rname").val();    
+			arrList.rzipcode1 = $("#rzipcode1").val();
+			arrList.raddr1 = $("#raddr1").val();
+			arrList.raddr2 = $("#raddr2").val();
+			arrList.omessage_select = $("#omessage_select").val();
+			arrList.omessage = $("#omessage").val();
+			arrList.rphone2_1 = $("#rphone2_1").val();	
+			arrList.rphone2_2 = $("#rphone2_2").val();
+			arrList.rphone2_3 = $("#rphone2_3").val();
+			arrList.oemail1 = $("#oemail1").val();
+			if($("#oemail2").css("display") == "none"){
+				arrList.oemail2 = $("#oemail3").val();
+			}else{
+				arrList.oemail2 = $("#oemail2").val();
+			}
+			arrList.bankaccount = $("#bankaccount").val();
+			arrList.pname = $("#pname").val();
+			arrList.chk_purchase_agreement0 = $("#chk_purchase_agreement0").prop("checked");
+			arrList.mallAgree = $("#mallAgree").prop("checked");
+			arrList.personAgree = $("#personAgree").prop("checked");  
+
+			for (const key in arrList) {
+				const value = arrList[key];
+			  	console.log(`${key}: ${value}`);  // 키와 값을 출력
+				//조건문 나중에 다시처리하기
+				if(key != "raddr2" || (key == "omessage_select" && value != "oMessage-input")){					
+				  if(!value){
+					alert($("#"+`${key}`).data("info")+"정보를 입력해주세요.")
+	
+					e.preventDefault();  // 기본 동작을 막음
+					e.stopPropagation(); // 이벤트 전파를 막음
+					return false;
+				  }
+				}
+			  }
+			
+			const users = {
+				id : userId.value,
+				username : arrList.rname,
+				email : arrList.oemail1+"@"+oemail2,
+				mainAddr : arrList.raddr1,
+				detailAddr : arrList.raddr2,
+				phone : arrList.rphone2_1+"-"+arrList.rphone2_2+"-"+arrList.rphone2_3
+			};
+			const delivery = {
+				mainAddr : arrList.raddr1,
+				detailAddr : arrList.raddr2,
+				phone : arrList.rphone2_1+"-"+arrList.rphone2_2+"-"+arrList.rphone2_3,
+				detailInfo1 : arrList.omessage_select, 
+				detailInfo2 : arrList.omessage,
+				bank : arrList.bankaccount,
+				payCustomer : arrList.pname
+			};
+			const product ={
+				productSeq: productSeq
+			}
+			const cart = {
+				productCount : $("#quantity").val(),
+				productName : productName,
+				totalPrice : price
+			} 
+			
+			
+			const data = {
+				users : users,
+				delivery : delivery,
+				product : product,
+				cart : cart
+			}
+			
+			  
+			//여기 밑에 결제가 완료되었습니다. 알람띄어주고
+			//마이페이지 구매정보로 옮겨주기
+
+			$.ajax({
+				headers: {
+			        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
+			    },
+				type:"POST",
+				url:"/api/pay/insertPay",
+				data:JSON.stringify(data),
+				contentType:"application/json; charset=utf-8",
+				dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
+			}).done((result)=>{
+				alert("결제되었습니다!");
+				console.log("result : "+result);
+				location.href = "/user/mypageForm?page=orderList";
+			}).fail((error)=>{
+				alert(JSON.stringify(error));
+			});
+			
+		});
 		
 
 });
 
+
+//쇼핑몰 이용약관 동의
+function viewMallAgree() {
+    window.open('https://ecudemo276583.cafe24.com/order/ec_orderform/agreement/mallagree.html?basket_type=A0000&delvtype=A'	, "PopupWin", "width=500,height=600");
+}
+//비회원 구매시 개인정보수집이용동의
+function viewPersonAgree() {
+	window.open('https://ecudemo276583.cafe24.com/order/ec_orderform/agreement/personagree.html?basket_type=A0000&delvtype=A'	, "PopupWin", "width=500,height=600");
+}

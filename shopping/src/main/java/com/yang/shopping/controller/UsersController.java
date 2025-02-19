@@ -227,8 +227,12 @@ public class UsersController {
 	}
 	
 	@GetMapping("/user/mypageForm")
-	public String mypageForm(Model model) {
+	public String mypageForm(String page, Model model) {
 		
+		System.out.println("page : "+page);
+		if(page != null || page != "") {
+			model.addAttribute("page", page);
+		}
 		
 		return "user/mypageForm";
 	}
