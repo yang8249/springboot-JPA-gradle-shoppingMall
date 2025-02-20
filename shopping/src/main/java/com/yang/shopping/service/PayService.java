@@ -11,10 +11,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yang.shopping.model.Cart;
+import com.yang.shopping.model.Delivery;
 import com.yang.shopping.model.Product;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.model.Wish;
 import com.yang.shopping.repository.CartRepository;
+import com.yang.shopping.repository.PayRepository;
 import com.yang.shopping.repository.ProductRepository;
 import com.yang.shopping.repository.UserRepository;
 import com.yang.shopping.repository.WishRepository;
@@ -28,25 +30,33 @@ import com.yang.shopping.repository.WishRepository;
 */
 //service 어노테이션을 붙이면 컴포넌트 스캔을 통해 Bean에 등록을 해준다.
 @Service
-public class WishService {
+public class PayService {
 
 	@Autowired
-	private WishRepository wishRepository;
+	private PayRepository payRepository;
 	
 
-	//제품 목록 불러오기
-//	@Transactional(readOnly = true)
-//	public Page<Product> selectProduct(String category, Pageable pageable) {
-//        return productRepository.findByCategory(category, pageable);
-//	}
 
-
-	//찜했는지 여부 불러오기
-	@Transactional(readOnly = true)
-	public Wish wishInfo(int id, int i) {
-		return wishRepository.customFindByWish(id, i).orElse(null);
+	@Transactional
+	public void insertPay(Users user, Delivery delivery, Cart cart, Product product) {
+		try {
+				delivery.setMainAddr(delivery.getMainAddr());
+				delivery.setDetailAddr(delivery.getDetailAddr());
+				delivery.setZoneCode(delivery.getZoneCode());
+				delivery.setPhone(delivery.getPhone());
+				delivery.setBank(delivery.getBank());
+				delivery.setPayCustomer(delivery.getPayCustomer());
+				delivery.setDetailInfo1(delivery.getDetailInfo1());
+				delivery.setDetailInfo2(delivery.getDetailInfo2());
+				delivery.setUser(user);
+			 
+				payRepository.save(delivery);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("BoardService : 글쓰기() : "+e.getMessage());
+		}
 	}
-
 	
 	
 }

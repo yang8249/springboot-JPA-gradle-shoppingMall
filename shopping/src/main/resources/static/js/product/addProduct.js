@@ -47,4 +47,92 @@ $(document).ready(function(){
             img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
         }
     });
+	
+		//제품 저장
+		$("#btn-save").click((e)=>{
+			
+			const arrList = {};  // 빈 객체 생성
+			
+			const fileInput = $('#input_file')[0];
+		  	const files = fileInput.files;  // FileList 객체
+
+			  // arrList 객체 안에 fileList 배열을 생성하여 파일 정보를 담을 준비
+			  arrList.fileList = [];
+
+			  if (files.length > 0) {
+			      // 선택된 파일들에 대해 반복문 처리
+			      for (let i = 0; i < files.length; i++) {
+			          const file = files[i];  // 각 파일 정보
+
+			          // arrList.fileList[i]에 파일 정보를 객체 형태로 저장
+			          arrList.fileList[i] = {
+			              fileName: file.name,  // 파일 이름
+			              fileSize: file.size,  // 파일 크기 (바이트 단위)
+			              fileType: file.type   // 파일 MIME 타입
+			          };
+			      }
+
+			      // 파일 정보 출력 (디버깅용)
+			      console.log(arrList);
+			  } else {
+			      console.log("파일이 선택되지 않았습니다.");
+				alert("파일을 등록해주세요.");
+				return;
+			  }
+			
+			arrList.productName = $("#productName").val();  
+			arrList.price = $("#price").val();  
+			arrList.color = $("#color").val();  
+			arrList.category = $("#category").val(); 
+			arrList.content = $("#content").val();  
+			for (const key in arrList) {
+				const value = arrList[key];
+			  	console.log(`${key}: ${value}`);  // 키와 값을 출력
+			  if(!value){
+				alert($("#"+`${key}`).data("info")+"정보를 입력해주세요.")
+
+				e.preventDefault();  // 기본 동작을 막음
+				e.stopPropagation(); // 이벤트 전파를 막음
+				return false;
+			  }
+			  }
+			  
+			  console.log(arrList);
+		  
+			const product ={
+				productName: arrList.productName,
+				price: arrList.price,
+				color: arrList.color,
+				category: arrList.category,
+				content: arrList.content
+			};
+			const fileInfo = arrList.fileList;
+			
+			
+			const data = {
+				product : product,
+				fileInfo : fileInfo
+			};
+			
+			  
+			//여기 밑에 결제가 완료되었습니다. 알람띄어주고
+			//마이페이지 구매정보로 옮겨주기
+			$.ajax({
+				headers: {
+			        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
+			    },
+				type:"POST",
+				url:"/api/Product/addProduct",
+				data:JSON.stringify(data),
+				contentType:"application/json; charset=utf-8",
+				dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
+			}).done((result)=>{
+				alert("제픔등록 완료!");
+				console.log("result : "+result);
+			}).fail((error)=>{
+				alert(JSON.stringify(error));
+			});
+			
+		});
+		
 });

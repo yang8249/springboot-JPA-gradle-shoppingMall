@@ -10,6 +10,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yang.shopping.dto.ProductDto;
 import com.yang.shopping.model.Cart;
 import com.yang.shopping.model.Product;
 import com.yang.shopping.model.Users;
@@ -42,7 +43,22 @@ public class ProductService {
 	@Autowired
 	private WishRepository wishRepository;
 	
-
+	//제품 저장
+	@Transactional
+	public void insertAddProduct(ProductDto productDto) {
+		try {
+			
+			//productDto.setProduct(product);
+			
+			
+			//productRepository.save(productDto);
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("BoardService : 글쓰기() : "+e.getMessage());
+		}
+	}
+	
 	//제품 목록 불러오기
 	@Transactional(readOnly = true)
 	public Page<Product> selectProduct(String category, Pageable pageable) {
@@ -50,16 +66,19 @@ public class ProductService {
 	}
 
 	//최근에 등록한 제품 4개 불러오기
+	@Transactional(readOnly = true)
 	public List<Product> selectNewProduct() {
 		// TODO Auto-generated method stub
 		return productRepository.findByNewProduct();
 	}
 
 	//수정할 제품 정보 불러오기
+	@Transactional(readOnly = true)
 	public Product productInfo(int id) {
 		return productRepository.findById(id).orElse(null);
 	}
 
+	@Transactional
 	public void insertAddCart(Cart cart, Product product, Users user) {
 		try {
 			Product selectProduct = productRepository.findById(product.getProductSeq()).orElseThrow();
@@ -74,6 +93,7 @@ public class ProductService {
 		}
 	}
 
+	@Transactional
 	public void insertAddWish(Wish wish, Product product, Users user) {
 		try {
 			Optional<Wish> entity = wishRepository.customFindByWish(product.getProductSeq(), user.getId());
@@ -84,6 +104,7 @@ public class ProductService {
 				
 				wish.setProduct(product);
 				wish.setUser(user); 
+				wish.setWishYn("Y"); 
 				
 				wishRepository.save(wish);
 			} else {
@@ -97,6 +118,7 @@ public class ProductService {
 		}
 	}
 
+	@Transactional
 	public void deleteAddWish(Wish wish, Product product, Users user) {
 		try {
 			Optional<Wish> entity = wishRepository.customFindByWish(product.getProductSeq(), user.getId());
@@ -112,44 +134,6 @@ public class ProductService {
 			System.out.println("BoardService : 글쓰기() : "+e.getMessage());
 		}
 	}
-	
-	/*
-	 * //이 트랜잭션 어노테이션으로 해당 서비스를 하나의 트랜잭션 단위로 묶었다.
-	 * 
-	 * @Transactional public void saveContent(Product product, Users user) { try {
-	 * product.setUser(user); productRepository.save(product); } catch (Exception e)
-	 * { e.printStackTrace();
-	 * System.out.println("ProductService : 글쓰기() : "+e.getMessage()); } }
-	 * 
-	 * //상세보기 select
-	 * 
-	 * @Transactional(readOnly = true) public Product productDetail(int id) { return
-	 * productRepository.findById(id) .orElseThrow(()->{ return new
-	 * IllegalArgumentException("글 상세보기 실패 : 아이디를 찾을수 없습니다."); }) ; }
-	 * 
-	 * //글 삭제하기
-	 * 
-	 * @Transactional public void deleteProduct(int id) {
-	 * productRepository.deleteById(id); }
-	 * 
-	 * //전체 글 불러오기
-	 * 
-	 * @Transactional(readOnly = true) public Page<Product>
-	 * selectAllProduct(Pageable pageable) { return
-	 * productRepository.findAll(pageable); }
-	 * 
-	 * //글 수정하기
-	 * 
-	 * @Transactional public void updateProduct(int id, Product product) { Product
-	 * PersistenceProduct = productRepository.findById(id).orElseThrow(()->{ return
-	 * new IllegalArgumentException("글 수정 실패 : 아이디를 찾을 수 없음."); }); //select하여 영속화
-	 * 한다.
-	 * 
-	 * PersistenceProduct.setTitle(product.getTitle());
-	 * PersistenceProduct.setContent(product.getContent()); //영속화 후 set해주면
-	 * 함수(service)종료 시 트랜잭션이 종료된다. //이때에 더티체킹(영속 컨테이너와 DB와 비교)하여 자동 업뎃이 된다. }
-	 */
-
 	
 	
 }

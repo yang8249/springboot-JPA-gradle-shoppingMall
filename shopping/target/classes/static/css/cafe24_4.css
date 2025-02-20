@@ -37,26 +37,14 @@ select::-ms-expand {
 }
 
 html,body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,code,form,fieldset,legend,input,textarea,p,blockquote,th,td,img {
-    margin: 0;
-    padding: 0;
+
     -webkit-tap-highlight-color: rgba(0,0,0,0);
 }
 
 html {
-    width: 100%;
-    height: 100%;
 }
 
 body,code {
-    min-width: 320px;
-    font-size: 16px;
-    font-family: 'NotoSansKR',"맑은 고딕",Malgun Gothic,AppleSDGothicNeo,"돋움",Dotum,sans-serif;
-    font-weight: 400;
-    line-height: 1.4em;
-    letter-spacing: -0.4px;
-    color: #666;
-    background: #EDEDED;
-    -webkit-text-size-adjust: none;
 }
 
 ul,ol,dl,li {

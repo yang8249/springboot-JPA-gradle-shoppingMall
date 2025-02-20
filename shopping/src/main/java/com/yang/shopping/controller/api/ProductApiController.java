@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.yang.shopping.config.auth.PrincipalDetail;
 import com.yang.shopping.dto.CartDto;
+import com.yang.shopping.dto.ProductDto;
 import com.yang.shopping.dto.ResponseDto;
 import com.yang.shopping.dto.WishDto;
 import com.yang.shopping.model.Board;
@@ -40,6 +41,18 @@ public class ProductApiController {
 
 	@Autowired
 	private ProductService productService;
+
+	//제품 등록
+	@PostMapping("/api/Product/addProduct")
+	public ResponseDto<ProductDto> addProduct(@RequestBody ProductDto productDto) {
+		
+		System.out.println("product : "+productDto.getProduct());
+		System.out.println("fileInfo : "+productDto.getFileInfo());
+		
+		productService.insertAddProduct(productDto);
+		
+		return new ResponseDto<ProductDto>(HttpStatus.OK.value(), productDto);
+	}
 	
 	//장바구니 등록
 	@PostMapping("/api/Product/addCart")

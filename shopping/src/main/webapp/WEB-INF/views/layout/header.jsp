@@ -123,7 +123,7 @@
 	#nav-header {
 	  top: 0;
 	  position: sticky;
-	  z-index: 1000;
+	  z-index: 999999;
 	}
   </style>
 <body>

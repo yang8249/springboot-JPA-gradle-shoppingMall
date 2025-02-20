@@ -33,7 +33,7 @@
 		overflow: auto; /* 내용이 넘칠 경우 스크롤바 표시 */
   		border: 1px solid #000;
 	    z-index: 10000;
-        margin-top: 500px;
+        margin-top: 433px;
     	width: 918px;
    	  	overflow-x: hidden; /* 가로 스크롤 제거 */
 	  	overflow-y: auto; /* 넘치는 부분 숨김 */
@@ -43,7 +43,7 @@
     	display: block;
 	    position: absolute;
 	    z-index: 10000;
-    	padding-top: 1109px;
+    	padding-top: 1161px;
     }
     #closeBtn{
         width: 50px;
@@ -400,7 +400,7 @@
 								onclick="add_wishlist_nologin('/member/login.html');"
 								id="actionWishSoldout">WISH LIST</button>
 						</div>
-						<a href="/board/inquiry/write.html"
+						<a onclick="alert('기능 개발 예정입니다!')" id="largeAmountPay"
 							class="btnNormal gFull sizeL mrt10 displaynone">대량구매문의</a>
 						<!-- 네이버 체크아웃 구매 버튼  -->
 						<div id="NaverChk_Button"></div>

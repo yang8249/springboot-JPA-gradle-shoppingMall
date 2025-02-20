@@ -30,6 +30,7 @@ import com.yang.shopping.model.Board;
 import com.yang.shopping.model.Cart;
 import com.yang.shopping.model.Product;
 import com.yang.shopping.model.Users;
+import com.yang.shopping.service.PayService;
 import com.yang.shopping.service.ProductService;
 
 import jakarta.servlet.http.Cookie;
@@ -39,18 +40,19 @@ import jakarta.servlet.http.HttpSession;
 public class PayApiController {
 
 	@Autowired
-	private ProductService productService;
+	private PayService payService;
 	
 	//결제하기
 	@PostMapping("/api/pay/insertPay")
 	public ResponseDto<PayDto> addCart(@RequestBody PayDto payDto) {
 		
-		//productService.insertAddCart(payDto.getCart(), payDto.getProduct(), payDto.getUser());
-
 		System.out.println("users : "+payDto.getUsers());
 		System.out.println("delivery : "+payDto.getDelivery());
 		System.out.println("cart : "+payDto.getCart());
 		System.out.println("product : "+payDto.getProduct());
+		
+		payService.insertPay(payDto.getUsers(), payDto.getDelivery(), payDto.getCart(), payDto.getProduct());
+
 		
 		return new ResponseDto<PayDto>(HttpStatus.OK.value(), payDto);
 	}

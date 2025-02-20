@@ -291,6 +291,7 @@ $(function(){
 			if(e.target.value == "oMessage-input"){
 				$("#messageInput").css("display", "block");
 			}else{
+				$("#messageInput").val("");
 				$("#messageInput").css("display", "none");
 			}
 		});
@@ -333,11 +334,22 @@ $(function(){
 			arrList.mallAgree = $("#mallAgree").prop("checked");
 			arrList.personAgree = $("#personAgree").prop("checked");  
 
+
+			if(arrList.omessage_select == "oMessage-input"){
+			  if(!arrList.omessage){
+				alert($("#omessage_select").data("info")+"정보를 입력해주세요.")
+
+				e.preventDefault();  // 기본 동작을 막음
+				e.stopPropagation(); // 이벤트 전파를 막음
+				return false;
+			  }
+			}
+			
 			for (const key in arrList) {
 				const value = arrList[key];
 			  	console.log(`${key}: ${value}`);  // 키와 값을 출력
 				//조건문 나중에 다시처리하기
-				if(key != "raddr2" || (key == "omessage_select" && value != "oMessage-input")){					
+				if(key != "raddr2" && key != "omessage_select" && key != "omessage"){
 				  if(!value){
 					alert($("#"+`${key}`).data("info")+"정보를 입력해주세요.")
 	
@@ -354,6 +366,7 @@ $(function(){
 				email : arrList.oemail1+"@"+oemail2,
 				mainAddr : arrList.raddr1,
 				detailAddr : arrList.raddr2,
+				zoneCode : arrList.rzipcode1,
 				phone : arrList.rphone2_1+"-"+arrList.rphone2_2+"-"+arrList.rphone2_3
 			};
 			const delivery = {
@@ -385,7 +398,6 @@ $(function(){
 			  
 			//여기 밑에 결제가 완료되었습니다. 알람띄어주고
 			//마이페이지 구매정보로 옮겨주기
-
 			$.ajax({
 				headers: {
 			        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
@@ -404,7 +416,9 @@ $(function(){
 			});
 			
 		});
-		
+		$("#btn_payment").click((e)=>{
+			alert("기능 개발 예정입니다!");
+		});
 
 });
 

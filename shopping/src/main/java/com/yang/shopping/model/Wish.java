@@ -36,6 +36,10 @@ public class Wish{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+
+	@Column(nullable = false)
+	@ColumnDefault("'N'")
+	private String wishYn;
 	
 	@Column(nullable = false, length = 30)
 	private String productName;

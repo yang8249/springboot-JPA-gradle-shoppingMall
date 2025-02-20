@@ -68,7 +68,7 @@ public class Delivery{
 	@Column(length = 200)
 	private String detailInfo2;
 
-	@OneToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.
+	@ManyToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.
 	@JoinColumn(name = "userId") //userId라는 컬럼명으로 외래키를 만든다.
 	private Users user;
 
