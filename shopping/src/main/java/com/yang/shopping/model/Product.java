@@ -6,6 +6,7 @@ import java.util.List;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,13 +26,13 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Entity //ORM -> Java Obejct -> 테이블로 매핑해주는 기술이다.
-public class Product{
-	
+@Entity // ORM -> Java Obejct -> 테이블로 매핑해주는 기술이다.
+public class Product {
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int productSeq;
-	
+
 	@Column(nullable = false, length = 100)
 	private String productName;
 
@@ -40,24 +41,23 @@ public class Product{
 
 	@Column(length = 100)
 	private String color;
-	
+
 	@Column(length = 100)
 	private String colorRGB;
 
 	@Column(nullable = false, length = 100)
 	private String category;
-	
+
 	@Lob
 	private String content;
-	
-	@ManyToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.
-	@JoinColumn(name = "fileSeq") //userId라는 컬럼명으로 외래키를 만든다. 
-	private FileInfo fileInfo;
+
+	@OneToMany(mappedBy = "product", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	private List<FileInfo> fileInfo;
 
 	@Column(nullable = false)
 	@ColumnDefault("'N'")
 	private String delYn;
-	
+
 	@CreationTimestamp
 	private Timestamp createDate;
 }

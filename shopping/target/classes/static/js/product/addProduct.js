@@ -111,11 +111,34 @@ $(document).ready(function(){
 			
 			const data = {
 				product : product,
-				fileInfo : fileInfo
+				file : fileInfo
 			};
 			
-			  
-			//여기 밑에 결제가 완료되었습니다. 알람띄어주고
+			const formData = new FormData();
+			formData.append("product", JSON.stringify(product));
+			const fileInfoList = $("#input_file")[0].files; // 파일 리스트를 가져옴
+
+			// 파일을 하나씩 FormData에 추가
+			for (let i = 0; i < fileInfoList.length; i++) {
+			    formData.append("file", fileInfoList[i]); // 각 파일을 "file" 필드로 추가
+			}
+			
+			$.ajax({
+				url:"/api/Product/addProduct",
+			    type: 'POST',
+				enctype: 'multipart/form-data',	// 필수
+			    data: formData,
+			    processData: false, // 자동으로 데이터 처리를 하지 않음
+			    contentType: false, // content-type을 자동으로 설정하지 않음
+			    success: function(response) {
+			        console.log("Upload Success: ", response);
+			    },
+			    error: function(xhr, status, error) {
+			        console.log("Upload Failed: ", error);
+			    }
+			});
+
+			/*//여기 밑에 결제가 완료되었습니다. 알람띄어주고
 			//마이페이지 구매정보로 옮겨주기
 			$.ajax({
 				headers: {
@@ -131,7 +154,7 @@ $(document).ready(function(){
 				console.log("result : "+result);
 			}).fail((error)=>{
 				alert(JSON.stringify(error));
-			});
+			});*/
 			
 		});
 		

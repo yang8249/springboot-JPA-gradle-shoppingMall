@@ -2,6 +2,7 @@ package com.yang.shopping.controller;
 
 import java.security.Principal;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +45,9 @@ public class ProductController {
 			@PageableDefault(size = 10, sort = "productSeq", direction = Direction.DESC) Pageable pageable) {
 		// 스프링 시큐리티에서 작성한 로그인처리 로직이 끝난다음에 principal 객체에 정보가 담겨진다.
 		// System.out.println("로그인 사용자 : "+principal.getUsername());
-
+		
 		model.addAttribute("newProducts", productService.selectNewProduct());
+		model.addAttribute("files", productService.selectNewProduct());
 		//여기다 최대 4개만 뽑는 최신등록 제품 가져오기
 		
 		model.addAttribute("products", productService.selectProduct(category, pageable));

@@ -84,8 +84,8 @@
 						<li id="anchorBoxId_11" class="xans-record-">
 							<div class="prdList__item">
 								<div class="thumbnail">
-									<a href="/product/detailProduct?id=${newProduct.productSeq}&userId=${principal.user.id}"><img
-										src="//ecudemo276583.cafe24.com/web/product/medium/202304/753ffefd58ccde2991b998ac39c8a49b.png"
+									<a href="/product/detailProduct?id=${newProduct[0].productSeq}&userId=${principal.user.id}"><img
+										src="http://localhost:9000${newProduct[1].filePath}"
 										id="eListPrdImage11_3" alt="그물 가방" loading="lazy"></a>
 									<div class="likeButton displaynone">
 										<button type="button">
@@ -111,7 +111,7 @@
 								<div class="description" ec-data-custom="" ec-data-price="39000">
 									<div class="name">
 										<a href="/product/그물-가방/11/category/42/display/3/" class="">
-										 	<span style="font-size: 13px; color: #555555;">${newProduct.productName}</span>
+										 	<span style="font-size: 13px; color: #555555;">${newProduct[0].productName}</span>
 									 	</a>
 									</div>
 									<p class="ec-base-help txtWarn txt11 displaynone">단독구매상품</p>
