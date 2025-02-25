@@ -3,6 +3,7 @@ package com.yang.shopping.dto;
 import java.util.List;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.yang.shopping.model.Cart;
 import com.yang.shopping.model.FileInfo;
@@ -21,4 +22,5 @@ import lombok.NoArgsConstructor;
 public class ProductDto{
     private Product product;
     private List<FileInfo> fileInfo;
+    private List<MultipartFile> file;
 }

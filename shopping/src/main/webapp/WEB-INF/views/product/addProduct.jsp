@@ -15,7 +15,7 @@
 </style>
 
 <div class="container">
-  	<form action="/auth/loginProc" method="post" class="was-validated">
+  	<form action="/auth/loginProc" method="post" class="was-validated" enctype="multipart/form-data">
 	  <div class="form-group">
 	    <label for="title">제품명</label>
 	    <input type="text" data-info="제품명" class="form-control" id="productName" placeholder="Enter title" name="title" required>
@@ -55,7 +55,6 @@
 		  <label for="content">제품상세정보:</label>
 		  <textarea data-info="제품상세" class="form-control summernote" rows="5" id="content"></textarea>
 	  </div>
-	</form>
 	<!-- 파일업로드 폼 -->
 	<div class="filebox bs3-primary preview-image">
        <input class="upload-name" value="파일선택" disabled="disabled" style="width: 200px;">
@@ -63,7 +62,7 @@
        <label for="input_file">업로드</label> 
        <input type="file" id="input_file" multiple class="upload-hidden"> 
      </div>
-	<a href="http://webdir.tistory.com/435" target="_blank" class="where">posted in webdir</a>
+	</form>
 	
 	<button id="btn-save" class="btn btn-primary">글쓰기</button>
 </div>

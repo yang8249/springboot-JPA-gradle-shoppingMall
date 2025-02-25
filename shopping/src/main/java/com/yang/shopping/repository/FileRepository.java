@@ -9,21 +9,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
+import com.yang.shopping.model.Cart;
+import com.yang.shopping.model.FileInfo;
 import com.yang.shopping.model.Product;
+import com.yang.shopping.model.Users;
+import com.yang.shopping.model.Wish;
 
 
 //DAO를 여기서 처리한다.
 //자동으로 Bean등록이 된다. (@Repository 어노테이션을 생략가능함)
-public interface ProductRepository extends JpaRepository<Product, Integer>{
+public interface FileRepository extends JpaRepository<FileInfo, Integer>{
 	
-    @Query("SELECT p FROM Product p WHERE p.category = :category")
-    Page<Product> findByCategory(@Param("category") String category, Pageable pageable);
 
-	/*
-	 * @Query("SELECT p, fi FROM Product p " +
-	 * "LEFT JOIN FileInfo fi on p.productSeq = fi.productSeq" +
-	 * "ORDER BY p.createDate DESC ") List<Product> findByNewProduct();
-	 */
 
 	
 }

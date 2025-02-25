@@ -43,7 +43,10 @@ public class FileInfo{
     private Long fileSize;   // 파일 크기
 	@Column(length = 200)
     private String fileType; // MIME 타입 (예: image/jpeg, application/pdf 등)
-	
+
+    @ManyToOne
+    @JoinColumn(name = "productSeq", nullable = false)  // 외래 키 설정
+	private Product product;
 	
 	@CreationTimestamp
 	private Timestamp createDate;

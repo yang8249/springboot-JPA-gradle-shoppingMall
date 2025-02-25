@@ -2,6 +2,7 @@ package com.yang.shopping.controller.api;
 
 import java.security.Principal;
 import java.text.NumberFormat;
+import java.util.List;
 import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,13 +16,18 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yang.shopping.config.auth.PrincipalDetail;
 import com.yang.shopping.dto.CartDto;
 import com.yang.shopping.dto.ProductDto;
@@ -44,14 +50,25 @@ public class ProductApiController {
 
 	//제품 등록
 	@PostMapping("/api/Product/addProduct")
-	public ResponseDto<ProductDto> addProduct(@RequestBody ProductDto productDto) {
-		
+	public ResponseDto<ProductDto> addProduct(
+		    @RequestParam("product") String productJson, 
+						@RequestParam("file") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
+
+	    // JSON 문자열을 Product 객체로 변환
+	    ObjectMapper objectMapper = new ObjectMapper();
+	    Product product = objectMapper.readValue(productJson, Product.class);
+
+	    // ProductDto 생성
+	    ProductDto productDto = new ProductDto();
+	    productDto.setProduct(product);
+	    productDto.setFile(file);
+	    
 		System.out.println("product : "+productDto.getProduct());
-		System.out.println("fileInfo : "+productDto.getFileInfo());
+		System.out.println("fileInfo : "+productDto.getFile());
 		
 		productService.insertAddProduct(productDto);
 		
-		return new ResponseDto<ProductDto>(HttpStatus.OK.value(), productDto);
+		return new ResponseDto<ProductDto>(HttpStatus.OK.value(), null);
 	}
 	
 	//장바구니 등록

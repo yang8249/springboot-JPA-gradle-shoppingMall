@@ -9,6 +9,7 @@
   <groupId>shopping</groupId>
   <artifactId>shopping</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
   <url/>
 	<licenses>
 		<license/>
@@ -111,9 +112,25 @@
 		    <artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.4</version>
+		</dependency>
+		<dependency>
 		    <groupId>commons-io</groupId>
 		    <artifactId>commons-io</artifactId>
 		    <version>2.11.0</version>
+		</dependency>
+		<dependency> 
+		    <groupId>org.apache.commons</groupId>
+		    <artifactId>commons-fileupload2-jakarta-servlet6</artifactId>
+		    <version>2.0.0-M2</version>
+		</dependency>
+		<dependency>
+		    <groupId>javax.servlet</groupId>
+		    <artifactId>javax.servlet-api</artifactId>
+		    <version>4.0.1</version>
+		    <scope>provided</scope>
 		</dependency>
 
 	</dependencies>
@@ -144,6 +161,10 @@
 					</excludes>
 				</configuration>
 			</plugin>
+	        <plugin>
+	            <groupId>org.apache.maven.plugins</groupId>
+	            <artifactId>maven-war-plugin</artifactId>
+	        </plugin>
 		</plugins>
 	</build>
 
