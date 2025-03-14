@@ -24,6 +24,9 @@ public interface WishRepository extends JpaRepository<Wish, Integer>{
 
     @Query("SELECT p FROM Wish p WHERE p.product.id = :id and p.user.id = :userId")
     Optional<Wish> customFindByWish(@Param("id") int productId, @Param("userId") int userId);
+    
+    @Query("SELECT p FROM Wish p WHERE p.user.id = :userId")
+    Optional<List<Wish>> findUserIdWishList(@Param("userId") int userId);
 
 
 	

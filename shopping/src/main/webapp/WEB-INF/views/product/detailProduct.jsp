@@ -12,7 +12,7 @@
 	.zoom_result { display: none; position: absolute; top: 0; left:520px; width:400px; height:400px; } 
 	.img_wrap:hover ~ .zoom_result,
 	.img_wrap:hover .zoom_lens { display: block; } 
-	#btn-update{
+	#btnDiv{
 		position: absolute;
 	    right: 20%;
     }
@@ -66,7 +66,10 @@
 	</div>
 </div>
       	<c:if test="${principal.user.role eq 'ADMIN'}">
-			<a href="/product/modifyProduct?id=${productSeq}"><button id="btn-update" class="btn btn-primary">제품 수정</button></a>
+      		<div id="btnDiv">
+				<a href="/product/modifyProduct?id=${productSeq}"><button id="btn-update" class="btn btn-primary">제품 수정</button></a>
+				<button id="btn-delete" class="btn btn-danger">제품 삭제</button>
+      		</div>
       	</c:if>
 	<div id="contents" style="margin-top: 0px;">
 		<span class="xans-element- xans-layout xans-layout-mobileaction RTMB "><a
@@ -106,7 +109,7 @@
 									
 						<div class="prdImg ">
 							<div class="img_wrap thumbnail" style="width: 500px;">
-								<img src="//ecudemo276583.cafe24.com/web/product/big/202304/e366d126ee2a0e92a6946993f101d633.png"
+								<img src="http://localhost:9000/upload/img/${product.fileInfo[0].uuid}"
 									alt="살구색 후드티" class="img" loading="lazy" ez-prevent="img"
 										style="height: auto; width: 100%;">
 							</div>
@@ -118,7 +121,7 @@
 							<div class="inner">
 								<ul class="list">
 									<li class="xans-record-"><img
-										src="//ecudemo276583.cafe24.com/web/product/small/202304/5cd910e271dfa7e7ef4fd49ed5f5487f.png"
+										src="http://localhost:9000/upload/img/${product.fileInfo[0].uuid}"
 										class="ThumbImage" alt=""></li>
 								</ul>
 							</div>
@@ -302,7 +305,7 @@
 							</thead>
 							<tbody class="">
 								<tr>
-									<td>살구색 후드티</td>
+									<td>${product.productName}</td>
 									<td><span class="quantity"> <input id="quantity"
 											name="quantity_opt[]" style="" value="1" type="text">
 											<a href="javascript:;" class="up QuantityUp countEvent">수량증가</a> <a

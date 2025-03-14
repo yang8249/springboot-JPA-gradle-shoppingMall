@@ -64,7 +64,7 @@ public class ProductService {
 	private EntityManager entityManager;
 
     // 파일 저장 경로 (예시로 "uploads" 폴더에 저장)
-    private static final String UPLOAD_DIR = "/upload/img/";
+    private static final String UPLOAD_DIR = "E:/upload/img/";
     
 	//제품 저장
 	@Transactional
@@ -111,7 +111,8 @@ public class ProductService {
 	//수정할 제품 정보 불러오기
 	@Transactional(readOnly = true)
 	public Product productInfo(int id) {
-		return productRepository.findById(id).orElse(null);
+		return productRepository.getProductWithFileInfo(id).orElse(null);
+		//return productRepository.findById(id).orElse(null);
 	}
 
 	@Transactional
@@ -154,6 +155,16 @@ public class ProductService {
 		}
 	}
 
+	@Transactional
+	public void deleteProduct(Product product) {
+		try {
+			productRepository.deleteById(product.getProductSeq());
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("ProductService : 제품삭제() : "+e.getMessage());
+		}
+	}
+	
 	@Transactional
 	public void deleteAddWish(Wish wish, Product product, Users user) {
 		try {

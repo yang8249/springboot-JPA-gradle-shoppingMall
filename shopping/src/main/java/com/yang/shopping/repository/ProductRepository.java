@@ -16,8 +16,11 @@ import com.yang.shopping.model.Product;
 //자동으로 Bean등록이 된다. (@Repository 어노테이션을 생략가능함)
 public interface ProductRepository extends JpaRepository<Product, Integer>{
 	
-    @Query("SELECT p FROM Product p WHERE p.category = :category")
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.fileInfo WHERE p.category = :category order by p.productSeq desc")
     Page<Product> findByCategory(@Param("category") String category, Pageable pageable);
+
+    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.fileInfo WHERE p.productSeq = :productSeq")
+    Optional<Product> getProductWithFileInfo(@Param("productSeq") int id);
 
 	/*
 	 * @Query("SELECT p, fi FROM Product p " +

@@ -1,5 +1,11 @@
 <%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page import="java.text.DecimalFormat" %>
+
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%
+    java.text.DecimalFormat df = new java.text.DecimalFormat("#,###");
+%>
 
 <%@ include file="../layout/header.jsp" %>
 <div id="container" data-ez="layout-06i7law-1">
@@ -85,8 +91,9 @@
 							<div class="prdList__item">
 								<div class="thumbnail">
 									<a href="/product/detailProduct?id=${newProduct[0].productSeq}&userId=${principal.user.id}"><img
-										src="http://localhost:9000${newProduct[1].filePath}"
+										src="http://localhost:9000/upload/img/${newProduct[1].uuid}"
 										id="eListPrdImage11_3" alt="그물 가방" loading="lazy"></a>
+										
 									<div class="likeButton displaynone">
 										<button type="button">
 											<strong></strong>
@@ -103,14 +110,14 @@
 											login_status="F" individual-set="F">WISH</span> <span
 											class="cart"><img
 											src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/btn_list_cart.gif"
-											onclick="category_add_basket('11','42', '3', 'A0000', false, '1', 'P000000L', 'A', 'F', '0');"
+											
 											alt="장바구니 담기" class="ec-admin-icon cart">ADD</span> <span
 											class="option" style="display: none;">OPTION</span>
 									</div>
 								</div>
 								<div class="description" ec-data-custom="" ec-data-price="39000">
 									<div class="name">
-										<a href="/product/그물-가방/11/category/42/display/3/" class="">
+										<a href="/product/detailProduct?id=${product.productSeq}&userId=${principal.user.id}" class="">
 										 	<span style="font-size: 13px; color: #555555;">${newProduct[0].productName}</span>
 									 	</a>
 									</div>
@@ -121,7 +128,8 @@
 											class="title displaynone"><span
 												style="font-size: 13px; color: #000000; font-weight: bold;">판매가</span>
 												:</strong> <span
-											style="font-size: 13px; color: #000000; font-weight: bold;">39,000원</span><span
+											style="font-size: 13px; color: #000000; font-weight: bold;">
+											<fmt:formatNumber value="${newProduct[0].price}" type="number" />원</span><span
 											id="span_product_tax_type_text" style=""> </span></li>
 									</ul>
 									<div class="icon"></div>
@@ -367,11 +375,12 @@
 ※ 상품진열 공통소스
 -->
 						<c:forEach var="product" items="${products.content}" varStatus="status">
+								
 							<li id="anchorBoxId_14" class="xans-record-">
 								<div class="prdList__item">
 									<div class="thumbnail">
-										<a href="/product/살구색-후드티/14/category/42/display/1/"><img
-											src="//ecudemo276583.cafe24.com/web/product/medium/202304/7f6d96fcf6ea8d7d2e5dac05339bdad4.png"
+										<a href="/product/detailProduct?id=${product.productSeq}&userId=${principal.user.id}"><img
+											src="http://localhost:9000/upload/img/${product.fileInfo[0].uuid}"
 											id="eListPrdImage14_1" alt="살구색 후드티" loading="lazy"></a>
 										<div class="likeButton displaynone">
 											<button type="button">
@@ -382,25 +391,30 @@
 											<span></span>
 										</div>
 										<div class="icon__box">
-											<span class="wish"><img
+											<span class="wish" data-productSeq="${product.productSeq}"><img
 												src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/btn_wish_before.png"
 												class="icon_img ec-product-listwishicon" alt="관심상품 등록 전"
+												data-productSeq="${product.productSeq}"
 												productno="14" categoryno="42" icon_status="off"
-												login_status="F" individual-set="F">WISH</span> <span
-												class="cart"><img
+												login_status="F" individual-set="F">WISH</span> 
+												
+												<span class="cart" data-productSeq="${product.productSeq}"
+												data-productName="${product.productName}"
+												data-productPrice="${product.price}">
+												<img data-productSeq="${product.productSeq}"
 												src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/btn_list_cart.gif"
-												onclick="category_add_basket('14','42', '1', 'A0000', false, '1', 'P000000O', 'A', 'F', '0');"
-												alt="장바구니 담기" class="ec-admin-icon cart">ADD</span> <span
+												
+												alt="장바구니 담기" class="ec-admin-icon">ADD</span> <span
 												class="option" style="display: none;">OPTION</span>
 										</div>
 									</div>
 									<div class="description" ec-data-custom=""
 										ec-data-price="80000">
 										<div class="name">
-											<a href="/product/살구색-후드티/14/category/42/display/1/" class=""><span
+											<a href="/product/detailProduct?id=${product.productSeq}&userId=${principal.user.id}" class=""><span
 												class="title displaynone"><span
 													style="font-size: 13px; color: #555555;">상품명</span> :</span> <span
-												style="font-size: 13px; color: #555555;">살구색 후드티</span></a>
+												style="font-size: 13px; color: #555555;">${product.productName}</span></a>
 										</div>
 										<p class="ec-base-help txtWarn txt11 displaynone">단독구매상품</p>
 										<ul
@@ -409,13 +423,16 @@
 												class="title displaynone"><span
 													style="font-size: 13px; color: #000000; font-weight: bold;">판매가</span>
 													:</strong> <span
-												style="font-size: 13px; color: #000000; font-weight: bold;">80,000원</span><span
+												style="font-size: 13px; color: #000000; font-weight: bold;">
+								
+                    						<fmt:formatNumber value="${product.price}" type="number" />원</span><span
 												id="span_product_tax_type_text" style=""> </span></li>
 										</ul>
 										<div class="icon"></div>
 									</div>
 								</div>
 							</li>
+							<input type="hidden" id="hiddenPrice" value="${product.price}"/>
 						</c:forEach>
 							<!-- <li id="anchorBoxId_15" class="xans-record-">
 								<div class="prdList__item">
@@ -949,8 +966,33 @@
 		<!--#ez="1/1"-->
 	</div>
 </div>
+
+
 <script type="text/javascript">
+	// 배열 객체 직접 생성
+	let myWishArr = new Array();
  let pageable = ${products.number};
-</script>
+ let wishList = [
+	 <c:if test="${not empty wishs}">
+		<c:forEach var="wish" items="${wishs}" varStatus="status">
+		      {
+		        id: ${wish.id},
+		        productId: ${wish.product.productSeq},
+		        wishYn: "${wish.wishYn}"
+		      }<c:if test="${!status.last}">,</c:if>
+		</c:forEach>
+ 	</c:if>
+	];
+ let productList = [
+	 <c:if test="${not empty products}">
+		<c:forEach var="product" items="${products.content}" varStatus="status">
+		      {
+		        id: ${product.productSeq}
+		      }<c:if test="${!status.last}">,</c:if>
+		</c:forEach>
+ 	</c:if>
+	];
+ </script>
+ 
 <script type="text/javascript" src="/js/product.js"></script>
 <%@ include file="../layout/footer.jsp" %>

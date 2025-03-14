@@ -132,6 +132,7 @@ $(document).ready(function(){
 			    contentType: false, // content-type을 자동으로 설정하지 않음
 			    success: function(response) {
 			        console.log("Upload Success: ", response);
+					location.href = "/";
 			    },
 			    error: function(xhr, status, error) {
 			        console.log("Upload Failed: ", error);

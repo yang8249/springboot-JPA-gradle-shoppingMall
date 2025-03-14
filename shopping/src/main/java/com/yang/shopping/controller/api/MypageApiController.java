@@ -29,15 +29,32 @@ public class MypageApiController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
+	//구매현황 (최근7일) 정보 가져오기
+	@PostMapping("/api/mypage/weekBuyData")
+	public ResponseDto<Integer> getWeekBuyList(@RequestBody Users user) {
+		
+//		//사용자 id값으로 정보 가져오기 **비밀번호는 빼고!
+//		int result = mypageService.findUser(user);
+//		return new ResponseDto<Integer>(HttpStatus.OK.value(), result);
+		return null;
+	}
+
+	//여기다 최근구매목록 10개 데이터 가져오기
+	@PostMapping("/api/mypage/newBuyData")
+	public ResponseDto<Integer> getNewBuyList(@RequestBody Users user) {
+		
+		return null;
+	}
+	
 
 	//사용자 정보 가져오기
-	@PostMapping("/mypage/selectAccountInfo{id}")
-	public ResponseDto<Integer> selectAccountInfo(@RequestBody Users user) {
-		
-		//사용자 id값으로 정보 가져오기 **비밀번호는 빼고!
-		int result = mypageService.findUser(user);
-		return new ResponseDto<Integer>(HttpStatus.OK.value(), result);
-	}
+//	@PostMapping("/mypage/selectAccountInfo{id}")
+//	public ResponseDto<Integer> selectAccountInfo(@RequestBody Users user) {
+//		
+//		//사용자 id값으로 정보 가져오기 **비밀번호는 빼고!
+//		int result = mypageService.findUser(user);
+//		return new ResponseDto<Integer>(HttpStatus.OK.value(), result);
+//	}
 
 	
 	

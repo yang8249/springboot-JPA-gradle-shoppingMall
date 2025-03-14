@@ -1,3 +1,49 @@
+const user = {
+	id : $("#userId").val()
+}
+
+async function getBuyList(){
+	//최근 7일간 구매내역
+	const weekBuyList = new Promise((resolve, reject) => {
+	  $.ajax({
+		url:"/api/mypage/weekBuyData",
+		type:"POST",
+		data:JSON.stringify(user),
+		contentType:"application/json; charset=utf-8",
+	    dataType: "json",
+	    success: function(response) {
+	      resolve(response);  // 성공적으로 데이터를 받으면 resolve 호출
+	    },
+	    error: function(xhr, status, error) {
+	      reject(error);  // 에러 발생 시 reject 호출
+	    }
+	  });
+	});
+	
+	//최근 10개 구매내역
+	const newBuyList = new Promise((resolve, reject) => {
+	  $.ajax({
+		url:"/api/mypage/newBuyData",
+		type:"POST",
+		data:JSON.stringify(user),
+		contentType:"application/json; charset=utf-8",
+	    dataType: "json",
+	    success: function(response) {
+	      resolve(response);  // 성공적으로 데이터를 받으면 resolve 호출
+	    },
+	    error: function(xhr, status, error) {
+	      reject(error);  // 에러 발생 시 reject 호출
+	    }
+	  });
+	});
+}
+
+getBuyList();
+
+
+
+
+
 window.onload = function() {
 	
 	if(page == "orderList"){
@@ -33,16 +79,25 @@ window.onload = function() {
 	
 	//대시보드 전용 차트
 	const ctx = document.getElementsByClassName('chartJS-myChart1');
-
+	
+	console.log("weekBuyList : "+weekBuyList);
+	console.log("newBuyList : "+newBuyList);
+	
 	new Chart(ctx, {
 	  type: 'line',
 	  data: {
-	    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+	    labels: ['Sunday', 'Monday', 'Yellow', 'Green', 'Purple', 'Orange'],
 	    datasets: [{
-	      label: '# of Votes',
-	      data: [12, 19, 3, 5, 2, 3],
-	      borderWidth: 1
-	    }]
+		      label: '아우터',
+		      data: [12, 19, 3, 5, 2, 3],
+		      borderWidth: 1
+		    }, 	  
+			{
+	  	      label: '바지',
+	  	      data: [10, 16, 1, 5, 2, 3],
+	  	      borderWidth: 1
+	  	    }
+		]
 	  },
 	  options: {
 	    scales: {

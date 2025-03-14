@@ -48,6 +48,7 @@ public class ProductApiController {
 	@Autowired
 	private ProductService productService;
 
+	
 	//제품 등록
 	@PostMapping("/api/Product/addProduct")
 	public ResponseDto<ProductDto> addProduct(
@@ -92,7 +93,16 @@ public class ProductApiController {
 		
 		return new ResponseDto<WishDto>(HttpStatus.OK.value(), wishDto);
 	}
-
+	
+	//제품 삭제
+	@DeleteMapping("/api/Product/removeProduct")
+	public ResponseDto<ProductDto> removeProduct(@RequestBody ProductDto productDto) {
+		
+		productService.deleteProduct(productDto.getProduct());
+		
+		return new ResponseDto<ProductDto>(HttpStatus.OK.value(), productDto);
+	}
+	
 	//찜 삭제
 	@DeleteMapping("/api/Product/removeWish")
 	public ResponseDto<WishDto> removeWish(@RequestBody WishDto wishDto) {

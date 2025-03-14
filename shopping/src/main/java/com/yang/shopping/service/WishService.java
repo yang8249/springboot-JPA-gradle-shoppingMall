@@ -47,6 +47,12 @@ public class WishService {
 		return wishRepository.customFindByWish(id, i).orElse(null);
 	}
 
+	//현재 로그인된 계정에 대한 찜목록 불러오기
+	@Transactional(readOnly = true)
+	public List<Wish> userWishList(int id) {
+		return wishRepository.findUserIdWishList(id).orElse(null);
+	}
+
 	
 	
 }

@@ -11,7 +11,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,9 +23,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.yang.shopping.config.auth.PrincipalDetail;
 import com.yang.shopping.dto.ResponseDto;
 import com.yang.shopping.model.Board;
 import com.yang.shopping.model.Product;
+import com.yang.shopping.model.Users;
 import com.yang.shopping.model.Wish;
 import com.yang.shopping.service.ProductService;
 import com.yang.shopping.service.WishService;
@@ -41,7 +46,7 @@ public class ProductController {
 
 	// 제품 목록
 	@GetMapping("/products")
-	public String productList(@RequestParam String category, Model model,
+	public String productList(@RequestParam String category, Model model, HttpSession session,
 			@PageableDefault(size = 10, sort = "productSeq", direction = Direction.DESC) Pageable pageable) {
 		// 스프링 시큐리티에서 작성한 로그인처리 로직이 끝난다음에 principal 객체에 정보가 담겨진다.
 		// System.out.println("로그인 사용자 : "+principal.getUsername());
@@ -52,6 +57,19 @@ public class ProductController {
 		
 		model.addAttribute("products", productService.selectProduct(category, pageable));
 		model.addAttribute("category", category);
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		
+		if (authentication.getPrincipal() instanceof String && authentication.getPrincipal().equals("anonymousUser")) {
+			System.out.println("사용자가 로그인하지 않았습니다."); 
+	    } else {
+	    	PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
+	    	System.out.println("사용자가 로그인했습니다."); 
+	    	int userId = principal.getUser().getId();
+		  	System.out.println(principal.getUser().getId());
+		  	model.addAttribute("wishs", wishService.userWishList(userId)); 
+	    }
+		 
 		
 		return "product/products";
 	}

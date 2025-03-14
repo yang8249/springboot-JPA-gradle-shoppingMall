@@ -17,6 +17,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Lob;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -41,16 +42,16 @@ public class Wish{
 	@ColumnDefault("'N'")
 	private String wishYn;
 	
-	@Column(nullable = false, length = 30)
+	@Column(length = 30)
 	private String productName;
 
 	//찜한 제품 정보
-	@OneToOne //Many = Cart, One = product 테이블을 뜻한다. 1대다 관계임.
+	@ManyToOne //Many = Cart, One = product 테이블을 뜻한다. 1대다 관계임.
 	@JoinColumn(name = "productId") //productId라는 컬럼명으로 외래키를 만든다.
 	private Product product;
 	
 	//찜한 유저 정보
-	@OneToOne //Many = Cart, One = users 테이블을 뜻한다. 1대다 관계임.
+	@ManyToOne //Many = Cart, One = users 테이블을 뜻한다. 1대다 관계임.
 	@JoinColumn(name = "userId") //userId라는 컬럼명으로 외래키를 만든다.
 	private Users user;
 	

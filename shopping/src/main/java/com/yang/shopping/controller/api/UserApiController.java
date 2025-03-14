@@ -48,6 +48,7 @@ public class UserApiController {
 		//인증정보를 set해주어서 수정한 user정보로 생성한 authentication 객체를 넣어준다.
 		SecurityContextHolder.getContext().setAuthentication(authentication); 
 
+		session.setAttribute("user", user);
 		
 		return new ResponseDto<Integer>(HttpStatus.OK.value(), 1);
 	}
