@@ -64,11 +64,8 @@ public class ProductService {
 	private EntityManager entityManager;
 
     // 파일 저장 경로 (예시로 "uploads" 폴더에 저장)
-<<<<<<< HEAD
     private static final String UPLOAD_DIR = "E:/upload/img/";
-=======
-    private static final String UPLOAD_DIR = "/upload/img/";
->>>>>>> refs/remotes/origin/master
+    //private static final String UPLOAD_DIR = "/upload/img/";
     
 	//제품 저장
 	@Transactional

@@ -19,12 +19,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.fileInfo WHERE p.category = :category order by p.productSeq desc")
     Page<Product> findByCategory(@Param("category") String category, Pageable pageable);
 
-<<<<<<< HEAD
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.fileInfo WHERE p.productSeq = :productSeq")
     Optional<Product> getProductWithFileInfo(@Param("productSeq") int id);
 
-=======
->>>>>>> refs/remotes/origin/master
 	/*
 	 * @Query("SELECT p, fi FROM Product p " +
 	 * "LEFT JOIN FileInfo fi on p.productSeq = fi.productSeq" +
