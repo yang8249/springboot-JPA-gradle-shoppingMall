@@ -7,5 +7,5 @@
 
 
 적용 예정 기술
-<Elastic search>
-<JWT>
+- <Elastic search>
+- <JWT>
