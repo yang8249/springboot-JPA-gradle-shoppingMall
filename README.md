@@ -8,4 +8,6 @@
 
 적용 예정 기술
 - Elastic search
+- 챗봇AI
+- WebSocket
 - JWT
