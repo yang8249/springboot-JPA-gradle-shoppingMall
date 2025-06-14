@@ -393,7 +393,7 @@ $(function(){
 			
 		});
 		$("#btn_payment").click((e)=>{
-			alert("기능 개발 예정입니다!");
+			//alert("기능 개발 예정입니다!");
 		});
 
 });

@@ -91,11 +91,8 @@
 							<div class="prdList__item">
 								<div class="thumbnail">
 									<a href="/product/detailProduct?id=${newProduct[0].productSeq}&userId=${principal.user.id}"><img
-<<<<<<< HEAD
 										src="http://localhost:9000/upload/img/${newProduct[1].uuid}"
-=======
 										src="http://localhost:9000${newProduct[1].filePath}"
->>>>>>> refs/remotes/origin/master
 										id="eListPrdImage11_3" alt="그물 가방" loading="lazy"></a>
 										
 									<div class="likeButton displaynone">
@@ -121,11 +118,8 @@
 								</div>
 								<div class="description" ec-data-custom="" ec-data-price="39000">
 									<div class="name">
-<<<<<<< HEAD
 										<a href="/product/detailProduct?id=${product.productSeq}&userId=${principal.user.id}" class="">
-=======
 										<a href="/product/그물-가방/11/category/42/display/3/" class="">
->>>>>>> refs/remotes/origin/master
 										 	<span style="font-size: 13px; color: #555555;">${newProduct[0].productName}</span>
 									 	</a>
 									</div>

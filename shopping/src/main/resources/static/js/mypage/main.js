@@ -1,18 +1,22 @@
 const user = {
 	id : $("#userId").val()
 }
+let weekBuyList;
+let newBuyList;
 
 async function getBuyList(){
 	//최근 7일간 구매내역
-	const weekBuyList = new Promise((resolve, reject) => {
+	await new Promise((resolve, reject) => {
 	  $.ajax({
 		url:"/api/mypage/weekBuyData",
 		type:"POST",
 		data:JSON.stringify(user),
 		contentType:"application/json; charset=utf-8",
 	    dataType: "json",
-	    success: function(response) {
+	    success: async function(response) {
 	      resolve(response);  // 성공적으로 데이터를 받으면 resolve 호출
+		  weekBuyList = response.data;
+		  await chartDataLoad();
 	    },
 	    error: function(xhr, status, error) {
 	      reject(error);  // 에러 발생 시 reject 호출
@@ -21,7 +25,7 @@ async function getBuyList(){
 	});
 	
 	//최근 10개 구매내역
-	const newBuyList = new Promise((resolve, reject) => {
+	newBuyList = new Promise((resolve, reject) => {
 	  $.ajax({
 		url:"/api/mypage/newBuyData",
 		type:"POST",
@@ -41,42 +45,7 @@ async function getBuyList(){
 getBuyList();
 
 
-
-
-
-window.onload = function() {
-	
-	if(page == "orderList"){
-		ableContent = $("#ableContent").children(":not(.mypage-disabled)")[0].className;
-				
-		$("#ableContent").children("."+ableContent).addClass("mypage-disabled");
-		$("#ableContent").children(".orderList").removeClass("mypage-disabled");
-
-		// 쿼리스트링이 있으면, 쿼리스트링을 제거한 URL로 바꿉니다.
-		let newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
-		window.history.replaceState({}, document.title, newUrl);
-	}
-
-	/**
-	 * 회원가입 js입니다.
-	 */
-	// 쿠키에서 특정 이름의 값을 가져오는 함수
-	function getCsrfToken() {
-	    // 쿠키 문자열을 세미콜론(;) 기준으로 분리하여 배열로 저장
-	    let cookies = document.cookie.split(';');
-
-	    // 배열에서 'XSRF-TOKEN='으로 시작하는 쿠키를 찾아 값을 반환
-	    let csrfToken = cookies.find(cookie => cookie.trim().startsWith('XSRF-TOKEN='));
-
-	    // 'XSRF-TOKEN=' 이후의 값을 반환, 없으면 null 반환
-	    return csrfToken ? csrfToken.split('=')[1] : null;
-	}
-	
-	/*
-	* 초기세팅 
-	* - chart, grid, account정보 등
-	*/
-	
+async function chartDataLoad(){
 	//대시보드 전용 차트
 	const ctx = document.getElementsByClassName('chartJS-myChart1');
 	
@@ -129,6 +98,43 @@ window.onload = function() {
 	    }
 	  }
 	});
+}
+
+
+window.onload = function() {
+	
+	if(page == "orderList"){
+		ableContent = $("#ableContent").children(":not(.mypage-disabled)")[0].className;
+				
+		$("#ableContent").children("."+ableContent).addClass("mypage-disabled");
+		$("#ableContent").children(".orderList").removeClass("mypage-disabled");
+
+		// 쿼리스트링이 있으면, 쿼리스트링을 제거한 URL로 바꿉니다.
+		let newUrl = window.location.protocol + "//" + window.location.host + window.location.pathname;
+		window.history.replaceState({}, document.title, newUrl);
+	}
+
+	/**
+	 * 회원가입 js입니다.
+	 */
+	// 쿠키에서 특정 이름의 값을 가져오는 함수
+	function getCsrfToken() {
+	    // 쿠키 문자열을 세미콜론(;) 기준으로 분리하여 배열로 저장
+	    let cookies = document.cookie.split(';');
+
+	    // 배열에서 'XSRF-TOKEN='으로 시작하는 쿠키를 찾아 값을 반환
+	    let csrfToken = cookies.find(cookie => cookie.trim().startsWith('XSRF-TOKEN='));
+
+	    // 'XSRF-TOKEN=' 이후의 값을 반환, 없으면 null 반환
+	    return csrfToken ? csrfToken.split('=')[1] : null;
+	}
+	
+	/*
+	* 초기세팅 
+	* - chart, grid, account정보 등
+	*/
+	
+	
 		
 	
 	//사이드바 메뉴 이동 이벤트	

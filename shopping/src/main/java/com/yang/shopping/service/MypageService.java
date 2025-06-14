@@ -1,12 +1,16 @@
 package com.yang.shopping.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.yang.shopping.model.Delivery;
 import com.yang.shopping.model.RoleType;
 import com.yang.shopping.model.Users;
+import com.yang.shopping.repository.MypageRepository;
 import com.yang.shopping.repository.UserRepository;
 
 
@@ -21,6 +25,9 @@ public class MypageService {
 
 	@Autowired
 	private UserRepository userRepository;
+
+	@Autowired
+	private MypageRepository mypageRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
@@ -42,6 +49,11 @@ public class MypageService {
 			});
 		Persistence.setPassword(encoder.encode(user.getPassword()));
 		Persistence.setEmail(user.getEmail());
+	}
+
+	public List<Delivery> getWeekBuyList(Users user) {
+		List<Delivery> result = mypageRepository.getWeekBuyList(user.getId()).orElse(null);
+		return result;
 	}
 
 	

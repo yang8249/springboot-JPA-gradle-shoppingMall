@@ -234,6 +234,17 @@ public class UsersController {
 			model.addAttribute("page", page);
 		}
 		
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+		
+		if (authentication.getPrincipal() instanceof String && authentication.getPrincipal().equals("anonymousUser")) {
+			System.out.println("사용자가 로그인하지 않았습니다."); 
+			return "main";
+	    } else {
+	    	System.out.println("사용자가 로그인했습니다."); 
+		  	model.addAttribute("principal", authentication.getPrincipal()); 
+	    }
+		
 		return "user/mypageForm";
 	}
 }

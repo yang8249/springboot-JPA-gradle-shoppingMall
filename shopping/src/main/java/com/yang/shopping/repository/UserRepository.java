@@ -4,6 +4,7 @@ import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.yang.shopping.model.Users;
 
@@ -13,6 +14,7 @@ public interface UserRepository extends JpaRepository<Users, Integer>{
 	
 	//SELECT * FROM USER username = ?
 	Optional<Users> findByUsername(String username);
+
 	
 	
 	
