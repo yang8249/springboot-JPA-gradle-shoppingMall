@@ -1,0 +1,1490 @@
+input::placeholder {
+    font-size: 16px;
+    color: #999
+}
+
+input::-moz-placeholder {
+    font-size: 16px;
+    color: #999
+}
+
+input::-webkit-input-placeholder {
+    font-size: 16px;
+    color: #999
+}
+
+.designAIArea {
+    position: fixed;
+    z-index: 2
+}
+
+.designAIArea>.close {
+    overflow: hidden;
+    display: none;
+    position: absolute;
+    top: 40rem;
+    right: 40rem;
+    width: 40px;
+    height: 40px;
+    font-size: 1px;
+    color: transparent;
+    text-indent: 150%
+}
+
+.designAIArea>.close:after,.designAIArea>.close:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 40px;
+    height: 4px;
+    margin: -2px 0 0;
+    border-radius: 25px;
+    background: #fff;
+    transform: rotate(45deg)
+}
+
+.designAIArea>.close:after {
+    transform: rotate(-45deg)
+}
+
+.designAIArea.show {
+    top: 0;
+    left: 0;
+    z-index: 9999!important;
+    width: 100%;
+    height: 100%;
+    background: rgba(0,0,0,.65)
+}
+
+.designAIArea.show .designAITool {
+    display: none
+}
+
+.designAIArea.show .designAISearch {
+    display: flex
+}
+
+.designAIArea.show>.close {
+    display: block
+}
+
+.designAITool {
+    position: fixed;
+    right: 100px;
+    bottom: 80px
+}
+
+.designAITool .btnDesignAI {
+    display: none;
+    height: 50px;
+    padding: 0 16px;
+    border-radius: 100px;
+    font-size: 15px;
+    line-height: 50px;
+    color: #fff;
+    font-weight: 700;
+    background: linear-gradient(135deg,#188bff 30%,#6b53ff)
+}
+
+.designAITool .btnDesignAI:before {
+    content: "";
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: -2px 5px 0 0;
+    vertical-align: middle;
+    background: url(//img.cafe24.com/dcenter/image/front/design-ai/ico_stars.svg) no-repeat 0 0
+}
+
+.designAITool .toolWrap {
+    display: inline-block;
+    width: 300px;
+    height: 106px;
+    padding: 16px 42px;
+    box-sizing: border-box;
+    color: #fff;
+    background: url(//img.cafe24.com/dcenter/image/front/design-ai/bg_tool.png) no-repeat 0 0
+}
+
+.designAITool .toolWrap .title {
+    display: inline-block;
+    font-size: 15px;
+    line-height: 20px;
+    font-weight: 700
+}
+
+.designAITool .toolWrap .title .beta {
+    display: inline-block;
+    position: relative;
+    top: 2px;
+    margin: 0 0 0 2px;
+    padding: 0 3px;
+    border: 1px solid #fff;
+    border-radius: 16px;
+    font-size: 10px;
+    line-height: 14px;
+    vertical-align: top
+}
+
+.designAITool .toolWrap .desc {
+    margin: 4px 0;
+    font-size: 11px;
+    line-height: 15px
+}
+
+.designAITool .toolWrap .btnDesignAISearch {
+    font-size: 10px;
+    line-height: 14px;
+    color: #fff;
+    text-decoration: underline
+}
+
+.designAITool .toolWrap .close {
+    overflow: hidden;
+    position: absolute;
+    top: 16px;
+    right: 27px;
+    width: 16px;
+    height: 16px;
+    font-size: 1px;
+    line-height: 0;
+    color: transparent;
+    text-indent: 150%
+}
+
+.designAITool .toolWrap .close:after,.designAITool .toolWrap .close:before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 1px;
+    width: 14px;
+    height: 2px;
+    border-radius: 5px;
+    background: #fff;
+    transform: rotate(45deg)
+}
+
+.designAITool .toolWrap .close:after {
+    transform: rotate(-45deg)
+}
+
+.designAISearch {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    top: 50%;
+    max-width: 1078px;
+    margin: -196px auto 0;
+    padding: 0 24px
+}
+
+.designAISearch .searchTitle {
+    margin: 0 0 50px;
+    text-align: center
+}
+
+.designAISearch .searchTitle h2 {
+    display: inline-block;
+    font-size: 48px;
+    line-height: 72px;
+    color: #fff;
+    font-weight: 700
+}
+
+.designAISearch .searchTitle .desc {
+    font-size: 24px;
+    line-height: 40px;
+    color: #fff;
+    font-weight: 500
+}
+
+@media only screen and (orientation: landscape) {
+    .designAIArea.show .designAISearch {
+        margin:-130px auto 0
+    }
+}
+
+.designAISearch .deviceTab {
+    position: relative;
+    margin: 0 0 30px
+}
+
+.designAISearch .deviceTab ul {
+    display: flex;
+    width: 240px;
+    margin: 0 auto;
+    border-radius: 25px;
+    background: rgba(0,0,0,.35)
+}
+
+.designAISearch .deviceTab ul li {
+    flex: 1;
+    border-radius: 25px
+}
+
+.designAISearch .deviceTab ul li a {
+    display: block;
+    height: 40px;
+    font-size: 14px;
+    line-height: 40px;
+    color: #fff;
+    font-weight: 500;
+    text-align: center
+}
+
+.designAISearch .deviceTab ul li a img {
+    display: none;
+    margin: -2px 6px 0 0;
+    vertical-align: middle
+}
+
+.designAISearch .deviceTab ul li.selected {
+    background: linear-gradient(135deg,#188bff 30%,#6b53ff)
+}
+
+.designAISearch .deviceTab ul li.selected a img {
+    display: inline-block
+}
+
+.designAISearch .deviceTab .bubble {
+    position: absolute;
+    bottom: -40px;
+    left: 50%;
+    z-index: 1;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 6px 12px;
+    border-radius: 4px;
+    font-size: 11px;
+    line-height: 16px;
+    color: #fff;
+    font-weight: 500;
+    background: #000;
+    transform: translateX(-50%)
+}
+
+.designAISearch .deviceTab .bubble:after {
+    content: "";
+    position: absolute;
+    top: -4px;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-bottom: 5px solid #000;
+    border-right: 5px solid transparent;
+    border-left: 5px solid transparent;
+    transform: translateX(-50%)
+}
+
+.designAISearch .deviceTab .bubble.hide {
+    display: none
+}
+
+.designAISearch .searchWrap {
+    position: relative;
+    width: 100%
+}
+
+.designAISearch .searchInput {
+    overflow: hidden;
+    position: relative;
+    height: 70px;
+    border-radius: 50px;
+    background: #fff
+}
+
+.designAISearch .searchInput:before {
+    content: "";
+    position: absolute;
+    top: 25px;
+    left: 30px;
+    width: 20px;
+    height: 20px;
+    background: url(//img.cafe24.com/dcenter/image/front/design-ai/ico_search.svg) no-repeat 0 0
+}
+
+.designAISearch .searchInput .text {
+    width: 100%;
+    height: 100%;
+    padding: 0 58px;
+    border: none;
+    box-sizing: border-box;
+    font-size: 16px;
+    color: #121314
+}
+
+.designAISearch .searchInput .text:focus {
+    outline: none;
+    background: #f5f5f5f5
+}
+
+.designAISearch .searchInput .clear {
+    overflow: hidden;
+    position: absolute;
+    top: 27px;
+    right: 30px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    font-size: 1px;
+    line-height: 0;
+    color: transparent;
+    text-indent: 150%;
+    background: #bdbdbd
+}
+
+.designAISearch .searchInput .clear.hide {
+    display: none
+}
+
+.designAISearch .searchInput .clear:after,.designAISearch .searchInput .clear:before {
+    content: "";
+    position: absolute;
+    top: 7px;
+    left: 4px;
+    width: 8px;
+    height: 2px;
+    border-radius: 25px;
+    background: #fff;
+    transform: rotate(45deg)
+}
+
+.designAISearch .searchInput .clear:after {
+    transform: rotate(-45deg)
+}
+
+.designAISearch .searchList {
+    position: absolute;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    margin: 10px 0 0;
+    padding: 30px;
+    box-sizing: border-box;
+    border-radius: 30px;
+    background: #fff
+}
+
+.designAISearch .searchList .title {
+    display: inline-block;
+    margin: 0 0 11px;
+    font-size: 13px;
+    line-height: 18px;
+    color: #868686
+}
+
+.designAISearch .searchList .title img {
+    vertical-align: top
+}
+
+.designAISearch .searchList .list {
+    margin: 0 -30px
+}
+
+.designAISearch .searchList .list>li {
+    counter-increment: count;
+    position: relative;
+    padding: 7px 60px;
+    font-size: 16px;
+    line-height: 22px;
+    color: #121314;
+    cursor: pointer
+}
+
+.designAISearch .searchList .list>li:hover {
+    background: #f5fcff
+}
+
+.designAISearch .searchList .list>li:before {
+    content: counter(count);
+    position: absolute;
+    top: 7px;
+    left: 30px;
+    width: 24px;
+    text-align: center;
+    color: #1683f0;
+    font-weight: 700
+}
+
+.designAISearch .searchWrap.hide .searchList {
+    display: none
+}
+
+.designAIArea.result {
+    position: relative;
+    z-index: auto;
+    padding: 54px 28rem
+}
+
+.designAIArea.result:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 205px;
+    background: linear-gradient(135deg,#f1faff,#ece9ff)
+}
+
+.designAIArea.result .designAISearch {
+    display: block;
+    height: auto;
+    margin: 0 auto
+}
+
+.designAIArea.result .designAISearch .searchTitle h2 {
+    font-size: 30px;
+    line-height: 43px;
+    color: #121314
+}
+
+.designAIArea.result .designAISearch .searchTitle .desc {
+    margin: 0 0 8px;
+    font-size: 16px;
+    line-height: 23px;
+    color: #121314;
+    font-weight: 400
+}
+
+.designAIArea.result .designAISearch .searchTitle .beta {
+    display: inline-block;
+    width: 45px;
+    margin: 7px 0 0 10px;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    border-radius: 20px;
+    font-size: 14px;
+    line-height: 26px;
+    color: #1a83f0;
+    vertical-align: top;
+    background-image: linear-gradient(#fff,#fff),linear-gradient(135deg,#1683f0,#8a78e4);
+    background-clip: content-box,border-box
+}
+
+.designAIArea.result .designAISearch .searchInput {
+    box-shadow: 0 4px 10px rgba(0,0,0,.1)
+}
+
+.designAIArea.result .designAISearch .searchList {
+    border: 1px solid #f5f5f5
+}
+
+.designAIArea.result .designAISearch.gFixed:after {
+    content: "";
+    display: block;
+    height: 70px
+}
+
+.designAIArea.result:not(.v2) .designAISearch.gFixed .searchWrap {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    padding: 30px 28rem;
+    background: #fff;
+    box-shadow: 0 4px 4px rgba(0,0,0,.25);
+    animation: fadeInDown .2s
+}
+
+.designAIArea.result .designAISearch.gFixed .searchWrap .searchInput {
+    max-width: 856px;
+    height: 50px;
+    margin: 0 auto
+}
+
+.designAIArea.result .designAISearch.gFixed .searchWrap .searchList {
+    max-width: 856px;
+    margin: 10px auto 0
+}
+
+.designAIArea.result .designAISearch.gFixed .searchWrap .searchInput:before {
+    top: 15px
+}
+
+.designAIArea.result .designAISearch.gFixed .searchWrap .searchInput .clear {
+    top: 17px
+}
+
+@keyframes fadeInDown {
+    0% {
+        opacity: 0;
+        transform: translate3d(0,-100%,0)
+    }
+
+    to {
+        opacity: 1;
+        transform: none
+    }
+}
+
+.designAIResult {
+    display: flex;
+    max-width: 1384px;
+    margin: 100px auto 0
+}
+
+.designAIResult img {
+    max-width: 100%;
+    max-height: 100%
+}
+
+.designAIResult .gridExample {
+    width: 425px;
+    margin: 0 76rem 0 0
+}
+
+.designAIResult .gridExample .stickyBox {
+    position: sticky;
+    top: 120px
+}
+
+.designAIResult .gridResult {
+    flex: 1
+}
+
+.designAIResult .resultTitle {
+    margin: 0 0 30px
+}
+
+.designAIResult .resultTitle h3 {
+    display: inline-block;
+    font-size: 24px;
+    line-height: 34px;
+    color: #121314;
+    font-weight: 700;
+    vertical-align: middle
+}
+
+.designAIResult .resultTitle .desc {
+    margin: 4px 0 0;
+    font-size: 16px;
+    line-height: 24px;
+    color: rgba(18,19,20,.6)
+}
+
+.designAIResult .resultList {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 24px
+}
+
+.designAIResult .resultList>li {
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    border: 1px solid #dee1e6;
+    border-radius: 12px;
+    box-sizing: border-box;
+    background: #fff
+}
+
+.designAIResult .resultList .thumbBox {
+    overflow: hidden;
+    flex: 1;
+    position: relative;
+    min-height: 0;
+    padding: 0 0 157%
+}
+
+.designAIResult .resultList>li:hover .thumbBox .thumbImg:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    border-radius: 4rem 4rem 0 0;
+    background-color: rgba(0,0,0,.15);
+    cursor: pointer
+}
+
+.designAIResult .resultList .thumbBox img {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    max-height: none;
+    transform: translateX(-50%)
+}
+
+.designAIResult .resultList .infoBox {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 40px;
+    padding: 9px 20px;
+    border-top: 1px solid #dee1e6;
+    box-sizing: border-box
+}
+
+.designAIResult .resultList .ico {
+    display: inline-block;
+    position: relative;
+    top: auto;
+    margin: 0;
+    cursor: pointer
+}
+
+.designAIResult .resultList .btn-like .ico {
+    width: 19rem;
+    height: 19rem
+}
+
+.designAIResult .resultList .btn-like .ico:before {
+    width: 19rem;
+    height: 19rem;
+    background-position: -57rem -153rem;
+    background-size: 195rem auto
+}
+
+.designAIResult .resultList>li:hover .btn-like:not(.filled) .ico:before {
+    background-position: -114rem -153rem
+}
+
+.designAIResult .resultList .btn-like.filled .ico:before {
+    background-position: -114rem -134rem
+}
+
+.designAIResult .resultList .btn-sample {
+    font-size: 14px;
+    line-height: 22px;
+    color: #545b66;
+    font-weight: 700
+}
+
+.designAIResult .resultList .btn-sample .ico {
+    width: 14rem;
+    height: 14rem;
+    margin: 4px 0 0;
+    vertical-align: top
+}
+
+.designAIResult .resultList .btn-sample .ico:before {
+    width: 14rem;
+    height: 14rem;
+    background-size: 136rem auto;
+    background-position: -25rem -66rem;
+    opacity: .9
+}
+
+.designAIResult .resultList>li:hover .btn-sample {
+    color: #3261f6
+}
+
+.designAIResult .resultList>li:hover .btn-sample .ico:before {
+    background-position: -78rem -66rem
+}
+
+.designAIInfo {
+    display: inline-block;
+    position: sticky;
+    bottom: 70px;
+    left: 100%;
+    margin: 0 50px 0 0;
+    border: 1px solid transparent;
+    box-sizing: border-box;
+    border-radius: 20px;
+    background-image: linear-gradient(#fff,#fff),linear-gradient(90deg,#1683f0,#8a6ee4);
+    background-clip: content-box,border-box;
+    box-shadow: 0 4px 8px rgba(0,0,0,.1);
+    z-index: 2
+}
+
+.designAIInfo .info {
+    padding: 8px 15px;
+    font-size: 13px;
+    line-height: 22px;
+    color: #121314
+}
+
+.designAIInfo .icoDown {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin: -2px 4px 0 0;
+    vertical-align: middle;
+    background: url(//img.cafe24.com/dcenter/image/front/design-ai/ico_down.svg) no-repeat 0 0
+}
+
+.designAIInfo.hide {
+    display: none
+}
+
+.designAILoading {
+    display: none;
+    position: fixed;
+    top: 80rem;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 99;
+    background: rgba(0,0,0,.65)
+}
+
+.designAILoading .title {
+    margin: 0 0 50px;
+    text-align: center
+}
+
+.designAILoading .title h2 {
+    display: inline-block;
+    font-size: 48px;
+    line-height: 72px;
+    color: #fff;
+    font-weight: 700
+}
+
+.designAILoading .title .desc {
+    margin: 0 0 4px;
+    font-size: 24px;
+    line-height: 40px;
+    color: #fff;
+    font-weight: 500
+}
+
+.designAILoading .thumb {
+    width: 110px;
+    height: 111px;
+    text-align: center
+}
+
+.designAILoading .thumb img {
+    max-width: 100%
+}
+
+.designAILoading .thumb.isLoading {
+    animation: loading_run 3s linear infinite
+}
+
+.designAIArea.gLoading .designAILoading {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center
+}
+
+@keyframes loading_run {
+    0% {
+        transform: rotate(0)
+    }
+
+    to {
+        transform: rotate(1turn)
+    }
+}
+
+.designAIArea .mTooltip {
+    display: inline-block;
+    position: relative;
+    vertical-align: middle;
+    word-break: break-word
+}
+
+.designAIArea .mTooltip .icon {
+    overflow: hidden;
+    display: inline-block;
+    position: relative;
+    width: 24px;
+    height: 24px;
+    font-size: 1px;
+    line-height: 0;
+    white-space: nowrap;
+    text-indent: 150%
+}
+
+.designAIArea .mTooltip .icon:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 24px;
+    height: 24px;
+    background: url(//img.cafe24.com/dcenter/image/front/design-ai/ico_tooltip.svg) no-repeat 0 0
+}
+
+.designAIArea .mTooltip .tooltipWrap {
+    display: none;
+    position: absolute;
+    top: 34px;
+    left: 0;
+    z-index: 2;
+    padding: 12px 37px 12px 12px;
+    box-sizing: border-box;
+    border-radius: 8px;
+    text-align: left;
+    background: #fff;
+    box-shadow: 0 0 20px rgba(0,0,0,.12)
+}
+
+.designAIArea .mTooltip .tooltipContent ul.mList li {
+    position: relative;
+    padding: 0 0 0 16px;
+    font-size: 11px;
+    line-height: 20px;
+    color: #616161
+}
+
+.designAIArea .mTooltip .tooltipContent ul.mList li:before {
+    content: "";
+    position: absolute;
+    top: 8px;
+    left: 6px;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: #444b59
+}
+
+.designAIArea .mTooltip .tooltipWrap .close {
+    overflow: hidden;
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 20px;
+    height: 20px;
+    font-size: 1px;
+    line-height: 0;
+    color: transparent;
+    text-indent: 150%
+}
+
+.designAIArea .mTooltip .tooltipWrap .close:after,.designAIArea .mTooltip .tooltipWrap .close:before {
+    content: "";
+    position: absolute;
+    top: 9px;
+    left: 3px;
+    width: 16px;
+    height: 2px;
+    background: #757575;
+    transform: rotate(45deg)
+}
+
+.designAIArea .mTooltip .tooltipWrap .close:after {
+    transform: rotate(-45deg)
+}
+
+.designAIArea .mTooltip.show .tooltipWrap {
+    display: block
+}
+
+.designAIArea .mTooltip.small .tooltipWrap {
+    width: 220px
+}
+
+.designAIArea .mTooltip.medium .tooltipWrap {
+    width: 348px
+}
+
+.designAIArea .mTooltip.large .tooltipWrap {
+    width: 508px
+}
+
+.designAIArea.v2 .designAITool .btnDesignAI {
+    display: block
+}
+
+.designAIArea.v2 .designAITool .toolWrap {
+    display: none
+}
+
+.designAIArea.v2 .designAISearch .searchTitle {
+    margin: 0 0 40px
+}
+
+.designAIArea.v2.result {
+    padding-top: 44px
+}
+
+.designAIArea.v2.result:before {
+    height: 250px
+}
+
+.designAIArea.v2.result .designAISearch .searchTitle {
+    margin: 0 0 34px
+}
+
+.designAIArea.v2.result .designAISearch .deviceTab {
+    margin: 0 0 24px
+}
+
+.designAIArea.v2.result .designAISearch .deviceTab ul {
+    background: rgba(46,46,46,.1)
+}
+
+.designAIArea.v2.result .designAISearch.gFixed:after {
+    height: 134px
+}
+
+.designAIArea.v2.result .designAISearch.gFixed .searchFixed {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 1001;
+    padding: 30px 20px;
+    text-align: center;
+    background: #fff;
+    box-shadow: 0 4px 4px rgba(0,0,0,.25);
+    animation: fadeInDown .2s
+}
+
+.designAIArea.v2.result .designAISearch.gFixed .deviceTab {
+    display: inline-block;
+    margin: 0 20px 0 0
+}
+
+.designAIArea.v2.result .designAISearch.gFixed .deviceTab ul {
+    width: 200px
+}
+
+.designAIArea.v2.result .designAISearch.gFixed .deviceTab ul li a {
+    height: 50px;
+    line-height: 50px
+}
+
+.designAIArea.v2.result .designAISearch.gFixed .searchWrap {
+    display: inline-block;
+    max-width: 856px
+}
+
+.designAIArea.v2.result .designAIResult .gridExample {
+    width: auto;
+    max-width: 425px
+}
+
+.designAIArea.v2.result .designAIResult .exampleThumb {
+    position: relative;
+    border-radius: 16px;
+    border: 1px solid #dee1e6
+}
+
+.designAIArea.v2.result .designAIResult .exampleThumb img {
+    width: 100%;
+    border-radius: 16px
+}
+
+.designAIArea.v2.result .designAIResult .exampleThumb .bubble {
+    position: absolute;
+    top: 20px;
+    right: 20px
+}
+
+.designAIArea.v2.result .designAIResult .exampleThumb .bubble .text {
+    display: none;
+    position: absolute;
+    top: 55px;
+    left: 50%;
+    width: -moz-max-content;
+    width: max-content;
+    padding: 6px 12px;
+    border-radius: 25px;
+    font-size: 11px;
+    line-height: 16px;
+    color: #fff;
+    background: rgba(0,0,0,.5);
+    transform: translateX(-50%)
+}
+
+.designAIArea.v2.result .designAIResult .exampleThumb:hover .bubble .text {
+    display: block
+}
+
+.designAIArea.v2.result .designAIResult .exampleThumb .link {
+    overflow: hidden;
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    font-size: 1px;
+    line-height: 0;
+    color: transparent;
+    white-space: nowrap;
+    text-indent: 150%;
+    opacity: .8;
+    background: #fff
+}
+
+.designAIArea.v2.result .designAIResult .exampleThumb .link:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 24px;
+    height: 24px;
+    background: url(//img.cafe24.com/dcenter/image/front/design-ai/ico_target.svg) no-repeat 0 0;
+    transform: translate(-50%,-50%)
+}
+
+.designAIArea.v2.result .designAIResult .exampleThumb .link:hover {
+    opacity: 1
+}
+
+.eventArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 1100;
+    background: rgba(0,0,0,.65)
+}
+
+.eventArea .inner {
+    position: relative;
+    text-align: center
+}
+
+.eventArea .thumb {
+    position: relative;
+    width: 340px
+}
+
+.eventArea .thumb:before {
+    content: "";
+    position: absolute;
+    top: -30px;
+    left: 40px;
+    width: 72px;
+    height: 80px;
+    background: url(//img.cafe24.com/dcenter/image/front/design-ai/img_event1_1.png) no-repeat 0 0
+}
+
+.eventArea .thumb img {
+    width: 100%
+}
+
+.eventArea .close {
+    overflow: hidden;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    width: 24px;
+    height: 24px;
+    font-size: 1px;
+    color: transparent;
+    text-indent: 150%
+}
+
+.eventArea .close:after,.eventArea .close:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 24px;
+    height: 2px;
+    margin: -1px 0 0;
+    border-radius: 25px;
+    background: #fff;
+    transform: rotate(45deg)
+}
+
+.eventArea .close:after {
+    transform: rotate(-45deg)
+}
+
+.eventArea .chk-label {
+    margin: 20px 0 0
+}
+
+.eventArea .chk-label .chk-txt {
+    font-size: 14px;
+    line-height: 22px;
+    color: #fff
+}
+
+@media (max-width: 767px) {
+    .RTB,.RTI,.RTIB,.RWB,.RWI,.RWIB {
+        display:none!important
+    }
+
+    .RMI {
+        display: inline!important
+    }
+
+    .RMIB {
+        display: inline-block!important
+    }
+
+    .RMB {
+        display: block!important
+    }
+
+    input::placeholder {
+        font-size: 12px;
+        color: #999
+    }
+
+    input::-moz-placeholder {
+        font-size: 12px;
+        color: #999
+    }
+
+    input::-webkit-input-placeholder {
+        font-size: 12px;
+        color: #999
+    }
+
+    .designAIArea {
+        display: none
+    }
+
+    .designAIArea.v2 {
+        display: block
+    }
+
+    .designAIArea.v2>.close {
+        top: 30rem;
+        right: 30rem;
+        width: 24px;
+        height: 24px
+    }
+
+    .designAIArea.v2>.close:after,.designAIArea.v2>.close:before {
+        width: 24px;
+        height: 2px;
+        margin: -1px 0 0
+    }
+
+    .designAIArea.v2 .designAITool {
+        right: 16px;
+        bottom: 16px
+    }
+
+    .designAIArea.v2 .designAITool .btnDesignAI {
+        width: 50rem;
+        height: 50rem;
+        padding: 0;
+        font-size: 14px;
+        line-height: 38px
+    }
+
+    .designAIArea.v2 .designAITool .btnDesignAI:before {
+        width: 12px;
+        height: 12px;
+        margin: -2px 0 0 -2px;
+        background-size: 12px auto
+    }
+
+    .designAIArea.v2 .designAISearch .searchTitle {
+        margin: 0 0 30px
+    }
+
+    .designAIArea.v2 .designAISearch .searchTitle h2 {
+        display: inline;
+        font-size: 22px;
+        line-height: 30px
+    }
+
+    .designAIArea.v2 .designAISearch .searchTitle .desc {
+        margin: 0 0 4px;
+        font-size: 14px;
+        line-height: 20px
+    }
+
+    .designAIArea.v2 .designAISearch .deviceTab {
+        display: none
+    }
+
+    .designAIArea.v2 .designAISearch .searchInput {
+        height: 36px
+    }
+
+    .designAIArea.v2 .designAISearch .searchInput:before {
+        top: 10px;
+        left: 12px;
+        width: 16px;
+        height: 16px;
+        background-size: 16px auto
+    }
+
+    .designAIArea.v2 .designAISearch .searchInput .text {
+        padding: 0 36px;
+        font-size: 12px
+    }
+
+    .designAIArea.v2 .designAISearch .searchInput .clear {
+        top: 10px;
+        right: 12px
+    }
+
+    .designAIArea.v2.result {
+        padding: 30px 20px 100px
+    }
+
+    .designAIArea.v2.result:before {
+        height: 155px
+    }
+
+    .designAIArea.v2.result .designAISearch {
+        padding: 0
+    }
+
+    .designAIArea.v2.result .designAISearch .searchTitle {
+        margin: 0 0 24px
+    }
+
+    .designAIArea.v2.result .designAISearch .searchTitle h2 {
+        font-size: 20px
+    }
+
+    .designAIArea.v2.result .designAISearch .searchTitle .desc {
+        font-size: 12px;
+        line-height: 18px
+    }
+
+    .designAIArea.v2.result .designAISearch.gFixed:after {
+        height: 36px
+    }
+
+    .designAIArea.v2.result .designAISearch.gFixed .searchFixed {
+        top: 0;
+        padding: 15px 20px
+    }
+
+    .designAIArea.v2.result .designAISearch.gFixed .deviceTab {
+        display: none
+    }
+
+    .designAIArea.v2.result .designAISearch.gFixed .searchWrap .searchInput {
+        height: 36px
+    }
+
+    .designAIArea.v2.result .designAISearch.gFixed .searchWrap .searchInput .clear,.designAIArea.v2.result .designAISearch.gFixed .searchWrap .searchInput:before {
+        top: 10px
+    }
+
+    .designAIArea.v2.result .designAIResult {
+        flex-direction: column;
+        margin-top: 43px
+    }
+
+    .designAIArea.v2.result .designAIResult .resultTitle {
+        margin: 0 0 20px
+    }
+
+    .designAIArea.v2.result .designAIResult .resultTitle h3 {
+        font-size: 14px;
+        line-height: 20px
+    }
+
+    .designAIArea.v2.result .designAIResult .resultTitle .desc {
+        font-size: 12px;
+        line-height: 18px
+    }
+
+    .designAIArea.v2.result .designAIResult .gridExample {
+        position: relative;
+        max-width: none;
+        margin: 0 -20px;
+        padding: 0 20px 50px
+    }
+
+    .designAIArea.v2.result .designAIResult .gridExample:after {
+        content: "";
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        height: 20px;
+        background: #f8f8fb
+    }
+
+    .designAIArea.v2.result .designAIResult .exampleThumb {
+        margin: 0;
+        border: 1px solid #dee1e6
+    }
+
+    .designAIArea.v2.result .designAIResult .exampleThumb .bubble .text {
+        display: block;
+        top: 45px
+    }
+
+    .designAIArea.v2.result .designAIResult .exampleThumb .link {
+        top: 10px;
+        right: 10px;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%
+    }
+
+    .designAIArea.v2.result .designAIResult .gridResult {
+        padding: 30px 0 0
+    }
+
+    .designAIArea.v2.result .designAIResult .resultList {
+        display: block
+    }
+
+    .designAIArea.v2.result .designAIResult .resultList li {
+        margin: 20px 0 0
+    }
+
+    .designAIArea.v2.result .designAIResult .resultList li:first-child {
+        margin-top: 0
+    }
+
+    .designAIArea.v2.result .designAIResult .resultList .infoBox {
+        padding: 12px 20px
+    }
+
+    .designAIArea.v2.result .designAIInfo {
+        bottom: 20px;
+        left: 50%;
+        margin: 0;
+        transform: translateX(-50%)
+    }
+
+    .designAIArea.v2.result .designAIInfo .info {
+        padding: 4px 12px;
+        font-size: 10px;
+        line-height: 22px
+    }
+
+    .designAIArea.v2.result .designAIInfo .icoDown {
+        width: 12px;
+        height: 12px;
+        margin-right: 0;
+        background-size: 12px auto
+    }
+
+    .designAIArea.v2 .designAILoading {
+        top: 54rem
+    }
+
+    .designAIArea.v2 .designAILoading .title {
+        margin: 0 0 30px
+    }
+
+    .designAIArea.v2 .designAILoading .title h2 {
+        font-size: 22px;
+        line-height: 30px
+    }
+
+    .designAIArea.v2 .designAILoading .title .desc {
+        font-size: 14px;
+        line-height: 20px
+    }
+
+    .designAIArea.v2 .designAILoading .thumb {
+        width: 60px;
+        height: 60px
+    }
+
+    .designAIArea.v2 .mTooltip .icon {
+        width: 20px;
+        height: 20px
+    }
+
+    .designAIArea.v2 .mTooltip .icon:before {
+        width: 20px;
+        height: 20px;
+        background-size: 20px auto
+    }
+
+    .eventArea .thumb {
+        width: 244px
+    }
+
+    .eventArea .thumb:before {
+        top: -18px;
+        left: 29px;
+        width: 59px;
+        height: 66px;
+        background-size: 59px 66px
+    }
+
+    .eventArea .close {
+        width: 20px;
+        height: 20px
+    }
+
+    .eventArea .close:after,.eventArea .close:before {
+        width: 20px
+    }
+
+    .eventArea .chk-label .chk-txt {
+        font-size: 12px
+    }
+}
+
+@media (min-width: 768px) and (max-width:1024px) {
+    .RMB,.RMI,.RMIB,.RWB,.RWI,.RWIB {
+        display:none!important
+    }
+
+    .RTI {
+        display: inline!important
+    }
+
+    .RTIB {
+        display: inline-block!important
+    }
+
+    .RTB {
+        display: block!important
+    }
+
+    .designAIResult .resultList {
+        grid-template-columns: repeat(2,1fr)
+    }
+
+    .designAIArea.v2.result .designAIResult {
+        margin-top: 100rem
+    }
+
+    .designAIArea.v2.result .designAIResult .gridExample {
+        margin: 0 38rem 0 0
+    }
+
+    .designAIArea.v2.result .designAIResult .resultTitle {
+        margin: 0 0 30rem
+    }
+
+    .designAIArea.v2.result .designAIResult .resultTitle h3 {
+        font-size: 24rem;
+        line-height: 1.5
+    }
+
+    .designAIArea.v2.result .designAIResult .resultTitle .desc {
+        font-size: 20rem;
+        line-height: 1.5
+    }
+
+    .designAIArea.v2.result .designAIResult .exampleThumb .bubble .text {
+        display: block
+    }
+}
+
+@media (min-width: 1025px) {
+    .RMB,.RMI,.RMIB,.RTB,.RTI,.RTIB {
+        display:none!important
+    }
+
+    .RWI {
+        display: inline!important
+    }
+
+    .RWIB {
+        display: inline-block!important
+    }
+
+    .RWB {
+        display: block!important
+    }
+
+    .designAIArea.v2.result.resultPC .designAIResult .gridExample {
+        width: 540px;
+        max-width: none
+    }
+}

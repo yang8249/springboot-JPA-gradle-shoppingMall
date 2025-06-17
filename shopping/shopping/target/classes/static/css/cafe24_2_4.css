@@ -1,0 +1,469 @@
+#footer {
+    flex-shrink: 0;
+    background: #182036
+}
+
+#footer .wrap {
+    position: relative
+}
+
+#footer .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-top: 60rem;
+    padding-bottom: 48rem;
+    border-bottom: 1rem solid #3d4251
+}
+
+#footer .footer-top .left-box {
+    width: 214rem;
+    display: flex;
+    justify-content: flex-start
+}
+
+#footer .footer-logo-img {
+    width: 133rem;
+    margin-bottom: 26rem;
+    display: none
+}
+
+#footer .right-box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start
+}
+
+#footer .right-box dl {
+    width: 214rem;
+    padding-left: 20rem
+}
+
+#footer .right-box dt {
+    padding-bottom: 16rem;
+    font-weight: 700
+}
+
+#footer .right-box dd,#footer .right-box dt {
+    font-size: 14rem;
+    line-height: 22rem;
+    color: #fff;
+    letter-spacing: -.03em
+}
+
+#footer .right-box dd {
+    padding-bottom: 8rem
+}
+
+#footer .right-box dd a {
+    position: relative;
+    color: #a2a6b5
+}
+
+#footer .footer-bot {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 20rem
+}
+
+#footer .footer-link a {
+    padding-right: 15rem;
+    font-size: 12rem;
+    line-height: 18rem;
+    letter-spacing: -.03em;
+    color: #a2a6b5
+}
+
+.footer-bot-img {
+    width: 120rem;
+    height: 34rem
+}
+
+#footer .footer-noti {
+    display: flex;
+    justify-content: space-between;
+    padding: 11rem 0 60rem
+}
+
+#footer .footer-noti p,#footer .footer-noti span {
+    font-size: 12rem;
+    line-height: 20rem;
+    letter-spacing: -.01em;
+    color: #a2a6b5
+}
+
+#footer .footer-address {
+    width: 887rem;
+    padding-top: 16rem
+}
+
+#footer .footer-address span {
+    position: relative;
+    display: inline-block;
+    font-size: 12rem;
+    line-height: 20rem;
+    color: #a2a6b5;
+    letter-spacing: -.01em
+}
+
+#footer .footer-address a {
+    color: #a2a6b5
+}
+
+#footer.simple .footer-noti {
+    padding: 11rem 0
+}
+
+.layout-footer-wrap .wrap {
+    position: relative;
+    width: 100%;
+    max-width: 1440rem;
+    padding-left: 28rem;
+    padding-right: 28rem;
+    margin-left: auto;
+    margin-right: auto
+}
+
+@media (max-width: 1023px) {
+    #footer .footer-bot,#footer .footer-noti,#footer .footer-top {
+        display:block
+    }
+
+    #footer .right-box dl:first-child {
+        padding-left: 0
+    }
+
+    #footer .right-box {
+        padding-top: 37rem
+    }
+
+    #footer .footer-address {
+        width: 100%
+    }
+
+    .footer-bot-img {
+        margin-top: 20rem
+    }
+
+    #footer .footer-noti p,#footer .footer-noti span {
+        color: #8b929c
+    }
+}
+
+@media (max-width: 640px) {
+    #footer .footer-top {
+        padding-bottom:0
+    }
+
+    #footer .right-box {
+        display: block
+    }
+
+    #footer .right-box dl {
+        padding-bottom: 16rem;
+        padding-left: 0;
+        width: 100%
+    }
+
+    #footer .footer-link a:nth-child(4) {
+        padding-left: 0
+    }
+
+    #footer .footer-link a {
+        padding-bottom: 12rem;
+        display: inline-block
+    }
+}
+
+#footer .footer-top .left-box .select-box .in-txt {
+    padding: 0 48rem 0 0;
+    font-weight: 700
+}
+
+#footer .footer-top .left-box .select-box .in-option .line {
+    border-bottom: 1rem solid #dee1e6;
+    margin-bottom: 15rem
+}
+
+#footer .footer-top .left-box .select-box .in-option ul li {
+    padding-bottom: 15rem
+}
+
+#footer .footer-top .left-box .select-box .in-option ul {
+    -ms-overflow-style: none
+}
+
+#footer .footer-top .left-box .select-box .in-option ul::-webkit-scrollbar {
+    display: none;
+    width: 0!important
+}
+
+#footer .footer-top .left-box .select-box .in-option ul li:last-child {
+    padding-bottom: 0
+}
+
+#footer .footer-top .left-box .select-box .in-option {
+    padding: 25rem 30rem;
+    height: auto;
+    max-height: 529rem
+}
+
+#footer .footer-top .left-box .select-box .in-option ul {
+    max-height: 100%;
+    overflow-y: auto
+}
+
+#footer .footer-top .left-box .select-box.first {
+    margin-right: 15rem
+}
+
+#footer .footer-top .left-box .select-box.first:before {
+    content: "";
+    position: absolute;
+    top: 4rem;
+    right: 0;
+    width: 1rem;
+    height: 14rem;
+    background: #3d4251
+}
+
+.dropdown-box,.select-box {
+    position: relative
+}
+
+.dropdown-box .in-ipt,.select-box .in-ipt {
+    background: #fff;
+    border: 1rem solid #dee1e6;
+    box-sizing: border-box;
+    border-radius: 5rem;
+    cursor: pointer
+}
+
+.dropdown-box .in-ipt:active,.dropdown-box .in-ipt:focus,.dropdown-box .in-ipt:hover,.select-box .in-ipt:active,.select-box .in-ipt:focus,.select-box .in-ipt:hover {
+    border-color: #3261f6
+}
+
+.dropdown-box .in-ipt.disable,.select-box .in-ipt.disable {
+    background: #f9f9f9;
+    pointer-events: none
+}
+
+.select-box.bd-none .in-ipt {
+    background: transparent;
+    border: none;
+    border-radius: 0
+}
+
+.select-box.bd-none .in-ipt .in-txt {
+    color: #fff
+}
+
+.dropdown-box .in-ipt.disable .in-txt,.select-box .in-ipt.disable .in-txt {
+    color: #b8bec6
+}
+
+.dropdown-box .in-ipt.disable:active,.dropdown-box .in-ipt.disable:focus,.dropdown-box .in-ipt.disable:hover,.select-box .in-ipt.disable:active,.select-box .in-ipt.disable:focus,.select-box .in-ipt.disable:hover {
+    border-color: #dee1e6
+}
+
+.dropdown-box .in-txt,.select-box .in-txt {
+    display: block;
+    padding: 13rem 48rem 12rem 16rem;
+    font-size: 14rem;
+    line-height: 22rem;
+    letter-spacing: -.03em;
+    color: #121314;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden
+}
+
+.select-box .in-option .on *,.select-box .in-option .option-active {
+    color: #3261f6
+}
+
+.dropdown-box.sm .in-txt,.select-box.sm .in-txt {
+    padding: 10rem 20rem
+}
+
+.dropdown-box .ico-arro-bot,.select-box .ico-arro-bot {
+    right: 9rem
+}
+
+.dropdown-box .ico-arro-bot:before,.select-box .ico-arro-bot:before,.shop-srch-toggle-btn .ico-arro-bot:before {
+    background-position: -137rem -22rem
+}
+
+.dropdown-box.active .ico-arro-bot:before {
+    background-position: -137rem -68rem
+}
+
+.dropdown-box .in-ipt.disable .ico-arro-bot:before,.select-box .in-ipt.disable .ico-arro-bot:before {
+    background-position: -137rem 0
+}
+
+.dropdown-box .in-option,.select-box .in-option {
+    display: none;
+    position: absolute;
+    top: calc(100% + 8rem);
+    left: 0;
+    z-index: 100;
+    min-width: 100%;
+    max-height: 285rem;
+    padding: 25rem 12rem 25rem 30rem;
+    background: #fff;
+    border: 1rem solid #dee1e6;
+    box-sizing: border-box;
+    box-shadow: 0 1rem 10rem rgba(50,50,71,.15);
+    -webkit-box-shadow: 0 1rem 10rem rgba(50,50,71,.15);
+    -moz-box-shadow: 0 1rem 10rem rgba(50,50,71,.15);
+    border-radius: 7rem
+}
+
+.dropdown-box.up .in-option,.select-box.up .in-option {
+    top: auto;
+    bottom: calc(100% + 8rem)
+}
+
+.select-box .in-option ul {
+    max-height: 232rem;
+    overflow-y: auto
+}
+
+.select-box .in-option ul li {
+    position: relative;
+    padding-bottom: 13rem;
+    font-size: 14rem;
+    line-height: 22rem;
+    letter-spacing: -.03em;
+    color: #121314
+}
+
+.select-box .in-option ul li span {
+    cursor: pointer
+}
+
+.select-box .in-option ul li:last-child {
+    padding-bottom: 0
+}
+
+.select-box .in-option ul li:active a,.select-box .in-option ul li:active span,.select-box .in-option ul li:focus a,.select-box .in-option ul li:focus span,.select-box .in-option ul li:hover a,.select-box .in-option ul li:hover span {
+    color: #3261f6;
+    border-bottom: 1rem solid #3261f6
+}
+
+.select-box .in-option ul li:active .ico-arro-diagonal:before,.select-box .in-option ul li:focus .ico-arro-diagonal:before,.select-box .in-option ul li:hover .ico-arro-diagonal:before {
+    background-position: -16rem -30rem
+}
+
+.dropdown-box.visible .in-option,.select-box.visible .in-option {
+    display: block
+}
+
+.dropdown-box.visible .ico-arro-bot:before,.select-box.visible .ico-arro-bot:before,.shop-srch-toggle-btn.active .ico-arro-bot:before {
+    background-position: -137rem -46rem
+}
+
+@media (max-width: 1440px) {
+    .select-box.mobile .in-ipt {
+        border:none
+    }
+
+    .select-box.mobile .ico-arro-bot {
+        right: 0
+    }
+
+    .select-box.mobile .in-txt {
+        padding: 13rem 24rem 13rem 16rem
+    }
+
+    .select-box.mobile .in-option {
+        padding: 25rem 12rem;
+        left: auto;
+        right: 0
+    }
+}
+
+@media (max-width: 720px) {
+    .select-box.mobile .in-ipt {
+        border:none
+    }
+
+    .select-box.mobile .ico-arro-bot {
+        right: 0
+    }
+
+    .select-box.mobile .in-txt {
+        padding: 13rem 24rem 13rem 16rem
+    }
+
+    .select-box.mobile .in-option {
+        padding: 25rem 12rem;
+        left: auto;
+        right: 0
+    }
+}
+
+.ui-popover {
+    display: inline-block;
+    position: relative
+}
+
+.ui-popover .ui-popover-panel {
+    display: none;
+    position: absolute;
+    z-index: 1000;
+    right: 0
+}
+
+.ui-popover .ui-popover-panel.visible {
+    display: block
+}
+
+.ui-popover .ui-popover-panel .ui-popover-wrap {
+    position: relative;
+    margin-top: 15rem;
+    margin-right: -26rem;
+    padding: 25rem 30rem 31rem;
+    background: #fff;
+    border: 1rem solid #dee1e6;
+    box-sizing: border-box;
+    box-shadow: 0 10rem 30rem rgba(0,0,0,.15);
+    -webkit-box-shadow: 0 10rem 30rem rgba(0,0,0,.15);
+    -moz-box-shadow: 0 10rem 30rem rgba(0,0,0,.15);
+    border-radius: 10rem
+}
+
+.ui-popover .ui-popover-panel .ui-popover-wrap:before {
+    content: "";
+    position: absolute;
+    top: -10rem;
+    right: 26rem;
+    width: 18rem;
+    height: 18rem;
+    background: #fff;
+    border-color: #dee1e6;
+    border-style: solid;
+    border-width: 1rem 0 0 1rem;
+    transform: rotate(45deg)
+}
+
+.ui-popover .ui-popover-panel .ui-popover-wrap ul li {
+    text-align: left
+}
+
+.ui-popover .ui-popover-panel .ui-popover-wrap ul li+li {
+    padding-top: 15rem
+}
+
+.ui-popover .ui-popover-panel .ui-popover-wrap ul li.line {
+    padding-bottom: 14rem;
+    border-bottom: 1rem solid #dee1e6
+}
+
+.ui-popover .ui-popover-panel .ui-popover-wrap ul li a {
+    position: relative;
+    font-size: 14rem;
+    line-height: 22rem;
+    letter-spacing: -.03em
+}
