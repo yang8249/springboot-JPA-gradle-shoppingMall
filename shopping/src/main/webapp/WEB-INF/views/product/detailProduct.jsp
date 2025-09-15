@@ -6,7 +6,7 @@
 
 <style>
 	.container { position:relative; } 
-	.img_wrap { position: relative; width: 400px; height:400px; } 
+	.img_wrap { position: relative; width: 400px; } 
 	.img_wrap .img { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; } 
 	.zoom_lens { display: none; position:absolute; width:150px; height:150px; background: #000; border: 1px solid #fff; z-index: 2; opacity: 0.2; } 
 	.zoom_result { display: none; position: absolute; top: 0; left:520px; width:400px; height:400px; } 
@@ -56,6 +56,7 @@
         text-align: center;
     	padding-top: 15px;
     }
+    
     
 </style>
 <div id="container" data-ez="layout-06i7law-1">
@@ -109,7 +110,7 @@
 									
 						<div class="prdImg ">
 							<div class="img_wrap thumbnail" style="width: 500px;">
-								<img src="http://localhost:9000/upload/img/${product.fileInfo[0].uuid}"
+								<img id="originalImg" src="${pageContext.request.contextPath}/image?filename=${product.fileInfo[0].uuid}"
 									alt="살구색 후드티" class="img" loading="lazy" ez-prevent="img"
 										style="height: auto; width: 100%;">
 							</div>
@@ -120,9 +121,12 @@
 							class="xans-element- xans-product xans-product-addimage listImg">
 							<div class="inner">
 								<ul class="list">
-									<li class="xans-record-"><img
-										src="http://localhost:9000/upload/img/${product.fileInfo[0].uuid}"
-										class="ThumbImage" alt=""></li>
+									
+									<c:forEach var="file" items="${product.fileInfo}" varStatus="status">
+										<li class="xans-record-"><img
+											src="${pageContext.request.contextPath}/image?filename=${file.uuid}"
+											class="ThumbImage" alt=""></li>
+									</c:forEach>
 								</ul>
 							</div>
 						</div>

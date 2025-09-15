@@ -1,24 +1,34 @@
 $(document).ready(function(){
+	
+	const input = document.getElementById('inputBox');
+	const box = document.getElementById('dynamicBox');
+
+
+	
    var fileTarget = $('.filebox .upload-hidden');
 
-    fileTarget.on('change', function(){
-        if(window.FileReader){
-            // 파일명 추출
-            var filename = $(this)[0].files[0].name;
-        } 
+   fileTarget.on('change', function () {
+       const files = $(this)[0].files;
+       let filenames = [];
 
-        else {
-            // Old IE 파일명 추출
-            var filename = $(this).val().split('/').pop().split('\\').pop();
-        };
+       if (window.FileReader && files.length) {
+           filenames = [...files].map(file => file.name);
+       } else {
+           // Old IE fallback
+           const val = $(this).val();
+           filenames = [val.split('/').pop().split('\\').pop()];
+       }
 
-        $(this).siblings('.upload-name').val(filename);
-    });
+       $(this).siblings('.upload-name').val(filenames.join(', '));
+	   const length = filenames.join(', ').length;
+	   input.style.width = `${length + 5}ch`; // +1은 여유 공간
+	   box.style.width = `${length + 17}ch`; // +1은 여유 공간
+   });
 
     //preview image 
     var imgTarget = $('.preview-image .upload-hidden');
 
-    imgTarget.on('change', function(){
+    imgTarget.on('change',async function(){
         var parent = $(this).parent();
 		if($($(".upload-display").siblings()[0]).is("br")){
 			$($(".upload-display").siblings()[0]).remove();
@@ -26,15 +36,28 @@ $(document).ready(function(){
         parent.children('.upload-display').remove();
 
         if(window.FileReader){
-            //image 파일만
-            if (!$(this)[0].files[0].type.match(/image\//)) return;
-            
-            var reader = new FileReader();
-            reader.onload = function(e){
-                var src = e.target.result;
-                parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img src="'+src+'" class="upload-thumb"></div></div><br>');
-            }
-            reader.readAsDataURL($(this)[0].files[0]);
+			const files = $(this)[0].files;
+
+			for (const file of files) {
+			    if (!file.type.match(/image\//)) continue;
+			    const src = await readFileAsDataURL(file);
+			    parent.append(`
+			      <div class="upload-display">
+			        <div class="upload-thumb-wrap">
+			          <img src="${src}" class="upload-thumb">
+			        </div>
+			      </div>
+			    `);
+			  }
+			  async function readFileAsDataURL(file) {
+	  			  return new Promise((resolve, reject) => {
+	  			    const reader = new FileReader();
+	  			    reader.onload = e => resolve(e.target.result);
+	  			    reader.onerror = reject;
+	  			    reader.readAsDataURL(file);
+		  		});
+		  	}
+
         }
 
         else {

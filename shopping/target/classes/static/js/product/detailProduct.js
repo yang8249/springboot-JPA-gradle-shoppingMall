@@ -16,10 +16,14 @@ function getCookie(name) {
 
 $(function(){	
 	
-
-			
 	
-
+	//제품 상세정보에서 밑에있는 썸네일 이미지 클릭 시 사진변경
+	$(".xans-record-").click((e)=>{
+		console.log(e.target);
+		const imgLocation = e.target.src;
+		$("#originalImg").attr("src", imgLocation);
+		$(".zoom_result").css("background-image", "url('"+imgLocation+"')");
+	});
 
 	$("#btn-delete").on("click", ()=>{
 

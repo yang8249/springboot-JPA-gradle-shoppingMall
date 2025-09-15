@@ -12,6 +12,21 @@
 	.zoom_result { display: none; position: absolute; top: 0; left:520px; width:400px; height:400px; } 
 	.img_wrap:hover ~ .zoom_result,
 	.img_wrap:hover .zoom_lens { display: block; } 
+	
+      #dynamicBox {
+    border: 1px solid #333;
+    padding: 10px;
+    width: 300px;
+    min-height: 40px;
+    overflow: hidden;
+    resize: none;
+    transition: height 0.2s ease;
+  }
+
+  #inputBox {
+    width: 200px;
+    margin-top: 10px;
+  }
 </style>
 
 <div class="container">
@@ -56,11 +71,11 @@
 		  <textarea data-info="제품상세" class="form-control summernote" rows="5" id="content"></textarea>
 	  </div>
 	<!-- 파일업로드 폼 -->
-	<div class="filebox bs3-primary preview-image">
-       <input class="upload-name" value="파일선택" disabled="disabled" style="width: 200px;">
+	<div class="filebox bs3-primary preview-image" id="dynamicBox">
+       <input type="file" id="input_file" multiple class="upload-hidden"> 
+       <input class="upload-name" id="inputBox"value="파일선택" disabled="disabled" >
 
        <label for="input_file">업로드</label> 
-       <input type="file" id="input_file" multiple class="upload-hidden"> 
      </div>
 	</form>
 	

@@ -91,8 +91,8 @@
 							<div class="prdList__item">
 								<div class="thumbnail">
 									<a href="/product/detailProduct?id=${newProduct[0].productSeq}&userId=${principal.user.id}"><img
-										src="http://localhost:9000/upload/img/${newProduct[1].uuid}"
-										src="http://localhost:9000${newProduct[1].filePath}"
+										src="/image?filename=${newProduct[1].uuid}"
+										src="/image?filename=${newProduct[1].filePath}"
 										id="eListPrdImage11_3" alt="그물 가방" loading="lazy"></a>
 										
 									<div class="likeButton displaynone">
@@ -382,7 +382,7 @@
 								<div class="prdList__item">
 									<div class="thumbnail">
 										<a href="/product/detailProduct?id=${product.productSeq}&userId=${principal.user.id}"><img
-											src="http://localhost:9000/upload/img/${product.fileInfo[0].uuid}"
+											src="${pageContext.request.contextPath}/image?filename=${product.fileInfo[0].uuid}"
 											id="eListPrdImage14_1" alt="살구색 후드티" loading="lazy"></a>
 										<div class="likeButton displaynone">
 											<button type="button">

@@ -64,7 +64,7 @@ public class ProductService {
 	private EntityManager entityManager;
 
     // 파일 저장 경로 (예시로 "uploads" 폴더에 저장)
-    private static final String UPLOAD_DIR = "E:/upload/img/";
+    private static final String UPLOAD_DIR = "D:/upload/img/";
     //private static final String UPLOAD_DIR = "/upload/img/";
     
 	//제품 저장
@@ -100,7 +100,7 @@ public class ProductService {
 	    Query query = entityManager.createQuery("SELECT p, fi FROM Product p"
 	    		+ " LEFT JOIN FileInfo fi ON p.productSeq = fi.product.productSeq "
  				+"AND fi.fileSeq = "
- 				+ "(SELECT MAX(fi1.fileSeq) FROM FileInfo fi1 WHERE fi1.product.productSeq = p.productSeq) "
+ 				+ "(SELECT min(fi1.fileSeq) FROM FileInfo fi1 WHERE fi1.product.productSeq = p.productSeq) "
 	    		+ " ORDER BY p.createDate DESC");
 	    
 	    // 결과 개수 제한
