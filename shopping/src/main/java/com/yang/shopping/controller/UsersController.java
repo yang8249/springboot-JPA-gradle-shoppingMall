@@ -19,6 +19,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.reactive.function.client.WebClient;
 
@@ -28,7 +29,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yang.shopping.config.auth.PrincipalDetail;
 import com.yang.shopping.model.KakaoProfile;
 import com.yang.shopping.model.OAuthToken;
+import com.yang.shopping.model.Product;
 import com.yang.shopping.model.Users;
+import com.yang.shopping.service.MypageService;
+import com.yang.shopping.service.ProductService;
 import com.yang.shopping.service.UserService;
 
 import jakarta.servlet.http.Cookie;
@@ -227,12 +231,12 @@ public class UsersController {
 	}
 	
 	@GetMapping("/user/mypageForm")
-	public String mypageForm(String page, Model model) {
+	public String mypageForm(@RequestParam("userId") String userId, Model model) {
 		
-		System.out.println("page : "+page);
-		if(page != null || page != "") {
-			model.addAttribute("page", page);
-		}
+//		System.out.println("page : "+page);
+//		if(page != null || page != "") {
+//			model.addAttribute("page", page);
+//		}
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -244,6 +248,10 @@ public class UsersController {
 	    	System.out.println("사용자가 로그인했습니다."); 
 		  	model.addAttribute("principal", authentication.getPrincipal()); 
 	    }
+		
+
+		Product product = MypageService.recentlyBuyItem(userId);
+		model.addAttribute("product", product);
 		
 		return "user/mypageForm";
 	}

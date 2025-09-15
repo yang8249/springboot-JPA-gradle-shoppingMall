@@ -59,7 +59,7 @@
 							<li class="displaynone">
 								<div class="ec-shop-shipping_additional_fee_show displaynone">
 									<span class="txtEm">배송비 : <span
-										id="f_addr_total_ship_fee_id"></span>원
+										id="f_addr_total_ship_fee_id" class="myTotalPay"></span>원
 									</span> = 해외배송비 <span id="f_addr_delv_price_id"></span>원 + 보험료 <span
 										id="f_addr_insurance_price_id"></span>원 <span
 										class="ec-shop-shipping_additional_fee_name_show">+ <span
@@ -1119,8 +1119,8 @@
 										type="checkbox" disabled="">
 								</div>
 								<div class="thumbnail">
-									<a href="/product/detail.html?product_no=14&amp;cate_no=1"><img
-										src="//ecudemo276583.cafe24.com/web/product/tiny/202304/ea56f77d90d40b6ecdbff3f46aa99a76.png"
+									<img
+										src="${pageContext.request.contextPath}/image?filename=${product.fileInfo[0].uuid}"
 										alt="" width="90" height="90"></a>
 								</div>
 								<div class="description">
@@ -1150,9 +1150,8 @@
 										<li class="displaynone">상품중량 : 1.00kg * 1개 = 1.00kg</li>
 									</ul>
 									<div class="proPrice">
-										<span class="displaynone">80,000원</span> <span
-											class="displaynone"></span> <span class="display"> <span
-											id="">80,000원 </span> <span class="displaynone">()</span>
+										<span class="displaynone"></span> <span
+											class="displaynone"></span> <span class="display"> <span class="myTotalPay">원</span> <span class="displaynone">()</span>
 										</span>
 									</div>
 								</div>
@@ -1168,8 +1167,8 @@
 					<div class="totalPrice ">
 						<div class="title">
 							<h3>배송비</h3>
-							<span class="deliveryFee"><span id="domestic_ship_fee">0
-									(무료)</span>원</span>
+							<span class="deliveryFee"><span id="domestic_ship_fee" class="myTotalPay">0
+									(무료)</span>(무료)</span>
 						</div>
 					</div>
 	
@@ -1177,7 +1176,7 @@
 					<div class="totalPrice displaynone">
 						<div class="title">
 							<h3>배송비</h3>
-							<span class="deliveryFee"><span id=""></span>원</span>
+							<span class="deliveryFee"><span id="" class="myTotalPay"></span></span>
 						</div>
 					</div>
 	
@@ -1185,7 +1184,7 @@
 					<div class="totalPrice displaynone">
 						<div class="title">
 							<h3>배송비</h3>
-							<span class="deliveryFee"><span id=""></span>원</span>
+							<span class="deliveryFee"><span id="" class="myTotalPay"></span></span>
 						</div>
 					</div>
 				</div>
@@ -1196,7 +1195,7 @@
 						<div class="title">
 							<h3>배송비</h3>
 							<span class="deliveryFee"><span
-								id="f_list_total_delv_price_id"></span>원</span>
+								id="f_list_total_delv_price_id" class="myTotalPay"></span></span>
 						</div>
 					</div>
 				</div>
@@ -1471,7 +1470,7 @@
 								<tr>
 									<th scope="row">주문상품</th>
 									<td class="right"><span id="total_product_base_price_id"
-										class="price">80,000원</span></td>
+										class="price myTotalPay"></span></td>
 								</tr>
 								<tr class="displaynone">
 									<th scope="row">부가세</th>
@@ -1550,12 +1549,9 @@
 				</div>
 				<div class="totalPay paymentPrice">
 					<h3 class="heading">최종 결제 금액</h3>
-					<strong class="txtStrong"> <span
-						id="payment_total_order_sale_price_view">80,000</span>원 <span
-						class="refer displaynone">(<span
-							id="payment_total_order_sale_price_ref_view"><span
-								class="eRefPrice"></span></span>)
-					</span>
+					<strong class="txtStrong"> 
+						<span
+						id="payment_total_order_sale_price_view" class="myTotalPay"></span>
 					</strong> <span class="displaynone"><input id="total_price"
 						name="total_price" fw-filter="isFill" fw-label="결제금액" fw-msg=""
 						class="inputTypeText" placeholder=""
@@ -2725,7 +2721,7 @@
 		</div>
 		<div class="ec-base-button gFull" id="orderFixItem">
 			<button type="button" class="btnSubmit" id="btn_payment">
-				<span id="total_order_sale_price_view">80,000</span>원 <span class="">결제하기</span><span
+				<span id="total_order_sale_price_view" class="myTotalPay"></span> <span class="">결제하기</span><span
 					class="displaynone">정기배송 신청하기</span>
 			</button>
 		</div>
@@ -3052,7 +3048,7 @@
 													<li class="displaynone">상품중량 : 1.00kg * 1개 = 1.00kg</li>
 												</ul>
 												<div class="proPrice">
-													<span id="">80,000원 </span> <span class="displaynone">()</span>
+													<span id="">원 </span> <span class="displaynone">()</span>
 												</div>
 											</div>
 										</div>
@@ -3065,7 +3061,7 @@
 									<div class="title">
 										<h3>배송비</h3>
 										<span class="deliveryFee"><span
-											id="ec-shop-confirm_domestic_ship_fee">0 (무료)</span>원</span>
+											id="ec-shop-confirm_domestic_ship_fee">0 </span>(무료)</span>
 									</div>
 								</div>
 	
@@ -3073,7 +3069,7 @@
 								<div class="totalPrice displaynone">
 									<div class="title">
 										<h3>배송비</h3>
-										<span class="deliveryFee"><span id=""></span>원</span>
+										<span class="deliveryFee"><span id=""></span></span>
 									</div>
 								</div>
 	
@@ -3081,7 +3077,7 @@
 								<div class="totalPrice displaynone">
 									<div class="title">
 										<h3>배송비</h3>
-										<span class="deliveryFee"><span id=""></span>원</span>
+										<span class="deliveryFee"><span id=""></span></span>
 									</div>
 								</div>
 							</div>
@@ -3092,7 +3088,7 @@
 									<div class="title">
 										<h3>배송비</h3>
 										<span class="deliveryFee"><span
-											id="ec-shop-confirm_f_list_total_delv_price_id"></span>원</span>
+											id="ec-shop-confirm_f_list_total_delv_price_id"></span></span>
 									</div>
 								</div>
 							</div>
@@ -3200,7 +3196,7 @@
 											<tr>
 												<th scope="row">주문상품</th>
 												<td id="ec-shop-confirm_total_product_base_price_id"
-													class="right">80,000원</td>
+													class="right">원</td>
 											</tr>
 											<tr class="displaynone">
 												<th scope="row">부가세</th>
@@ -3420,7 +3416,7 @@
 								<div class="totalPay gBlank10">
 									<h3 class="heading">결제금액</h3>
 									<strong class="txtStrong"> <span
-										id="ec-shop-confirm_payment_total_order_sale_price_view">80,000</span>원
+										id="ec-shop-confirm_payment_total_order_sale_price_view"></span>원
 										<span class="refer displaynone">(<span
 											id="ec-shop-confirm_payment_total_order_sale_price_ref_view"></span>)
 									</span>
@@ -3512,7 +3508,7 @@
 				<div class="ec-base-button gFull">
 					<button type="button" class="btnSubmit"
 						id="ec-shop_btn_layer_payment">
-						<span id="ec-shop-confirm_total_order_price_view">80,000</span>원
+						<span id="ec-shop-confirm_total_order_price_view"></span>원
 						결제하기
 					</button>
 				</div>

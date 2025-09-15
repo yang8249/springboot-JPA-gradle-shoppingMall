@@ -13,12 +13,13 @@ function getCookie(name) {
     }
     return null; // 쿠키가 없을 경우
 }
-
+let totalPay = defaultPrice;
 $(function(){	
 	
 	
+	
 	//제품 상세정보에서 밑에있는 썸네일 이미지 클릭 시 사진변경
-	$(".xans-record-").click((e)=>{
+	$(".thumbImgClick").click((e)=>{
 		console.log(e.target);
 		const imgLocation = e.target.src;
 		$("#originalImg").attr("src", imgLocation);
@@ -66,6 +67,7 @@ $(function(){
 
 			//가격 증가		
 			price += defaultPrice;
+			totalPay = price;
 			stringPrice = price.toLocaleString('ko-KR') + "원";
 
 			$(".quantity_price").text(stringPrice);
@@ -77,6 +79,7 @@ $(function(){
 
 			//가격 인하	
 			price -= defaultPrice;
+			totalPay = price;
 			stringPrice = price.toLocaleString('ko-KR') + "원";
 			$(".quantity_price").text(stringPrice);
 		}
@@ -463,3 +466,12 @@ function viewPersonAgree() {
 	            return { x, y };
 	        }
 	    }
+		
+		
+
+		$(".paymentClick").click((e)=>{
+			console.log(totalPay);	
+			
+			$("span.myTotalPay").text(totalPay+"원");
+		});
+		

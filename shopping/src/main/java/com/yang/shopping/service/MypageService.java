@@ -8,11 +8,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.yang.shopping.model.Delivery;
+import com.yang.shopping.model.Product;
 import com.yang.shopping.model.RoleType;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.repository.MypageRepository;
+import com.yang.shopping.repository.ProductRepository;
 import com.yang.shopping.repository.UserRepository;
-
 
 
 /*
@@ -23,6 +24,8 @@ import com.yang.shopping.repository.UserRepository;
 @Service
 public class MypageService {
 
+    private final ProductRepository productRepository;
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -31,6 +34,10 @@ public class MypageService {
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
+
+    MypageService(ProductRepository productRepository) {
+        this.productRepository = productRepository;
+    }
 
 	@Transactional(readOnly = true)
 	public Users findUser(String username) {
@@ -56,6 +63,12 @@ public class MypageService {
 		return result;
 	}
 
-	
+
+	//수정할 제품 정보 불러오기
+	@Transactional(readOnly = true)
+	public Product recentlyBuyItem(String id) {
+		return productRepository.getProductWithFileInfo(id).orElse(null);
+		//return productRepository.findById(id).orElse(null);
+	}
 
 }

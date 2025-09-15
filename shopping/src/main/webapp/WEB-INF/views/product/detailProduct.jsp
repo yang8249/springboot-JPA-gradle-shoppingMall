@@ -37,7 +37,6 @@
     	width: 918px;
    	  	overflow-x: hidden; /* 가로 스크롤 제거 */
 	  	overflow-y: auto; /* 넘치는 부분 숨김 */
-    	
     }
     #payMenuDiv2{
     	display: block;
@@ -123,7 +122,7 @@
 								<ul class="list">
 									
 									<c:forEach var="file" items="${product.fileInfo}" varStatus="status">
-										<li class="xans-record-"><img
+										<li class="xans-record- thumbImgClick"><img
 											src="${pageContext.request.contextPath}/image?filename=${file.uuid}"
 											class="ThumbImage" alt=""></li>
 									</c:forEach>
@@ -136,7 +135,7 @@
 							<a href="#none" id="prdDetailImg"
 								data-param="?product_no=14&amp;cate_no=42&amp;display_group=1"
 								class="thumbnail"> <img
-								src="//ecudemo276583.cafe24.com/web/product/big/202304/e366d126ee2a0e92a6946993f101d633.png"
+								src="${pageContext.request.contextPath}/image?filename=${product.fileInfo[0].uuid}"
 								class="bigImage" alt="살구색 후드티" ez-prevent="img">
 								<span class="wish"><img
 									src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/btn_wish_before.png"
@@ -386,7 +385,7 @@
 							ec-data-custom="0원" ec-data-price="80000"></div>
 						<div class=" action_button ">
 							<span class="sub_sold displaynone">SOLD OUT</span> <a  id="actionBuy"
-								href="#none" class="btnSubmit sizeL hideATag" style="
+								href="#none" class="btnSubmit sizeL hideATag paymentClick" style="
 								    text-decoration-line: none;
 								    color: white;
 								"><span
