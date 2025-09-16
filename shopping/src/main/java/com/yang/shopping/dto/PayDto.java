@@ -20,5 +20,5 @@ public class PayDto{
 	private Users users;
 	private Delivery delivery;
 	private Cart cart;
-    private Product product;
+	private int productId;
 }

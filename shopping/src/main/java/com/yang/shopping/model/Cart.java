@@ -43,7 +43,7 @@ public class Cart{
 	private int productCount;
 
 	@Column(nullable = false, length = 30)
-	private int totalPrice;
+	private String totalPrice;
 
 	//장바구니담은 유저 정보
 	@ManyToOne //Many = Cart, One = product 테이블을 뜻한다. 1대다 관계임.

@@ -1,6 +1,4 @@
-const user = {
-	id : $("#userId").val()
-}
+
 let weekBuyList;
 let newBuyList;
 
@@ -25,7 +23,7 @@ async function getBuyList(){
 	});
 	
 	//최근 10개 구매내역
-	newBuyList = new Promise((resolve, reject) => {
+	await new Promise((resolve, reject) => {
 	  $.ajax({
 		url:"/api/mypage/newBuyData",
 		type:"POST",
@@ -34,6 +32,7 @@ async function getBuyList(){
 	    dataType: "json",
 	    success: function(response) {
 	      resolve(response);  // 성공적으로 데이터를 받으면 resolve 호출
+		  newBuyList = response.data;
 	    },
 	    error: function(xhr, status, error) {
 	      reject(error);  // 에러 발생 시 reject 호출
@@ -51,19 +50,100 @@ async function chartDataLoad(){
 	
 	console.log("weekBuyList : "+weekBuyList);
 	console.log("newBuyList : "+newBuyList);
+	/*let oCount = 0;
+	let tCount = 0;
+	let dCount = 0;
+	let bCount = 0;
+	let ACount = 0;
+	for(let i=0; i<weekBuyList.length; i++){
+		
+		switch (weekBuyList[i].product.category) {
+		    case "outerwear":
+		        // 실행 코드
+				console.log(1);
+				oCount++;
+		        break;
+		    case "tops":
+				console.log(2);    
+			// 실행 코드
+				tCount++;
+		        break;
+			case "dresses":
+			    // 실행 코드
+				oCount++;
+				donsole.log(3);
+			    break;
+			case "bottoms":
+			    // 실행 코드
+				console.log(4);
+				bCount++;
+			    break;
+			case "accessories":
+			    // 실행 코드
+				console.log(5);
+				aCount++;
+			    break;
+		    default:
+		        // 위 조건에 모두 해당하지 않을 때 실행
+				
+			
+		}
+	}*/
 	
-	new Chart(ctx, {
+	// 3 = 아우터, 	7 = 악세사리
+	// 3~7 번까지 카테고리로 사용함.
+ 	new Chart(ctx, {
 	  type: 'line',
 	  data: {
-	    labels: ['Sunday', 'Monday', 'Yellow', 'Green', 'Purple', 'Orange'],
+	    labels: ['월', '화', '수', '목', '금', '토', '일'],
 	    datasets: [{
 		      label: '아우터',
-		      data: [12, 19, 3, 5, 2, 3],
+		      data: [
+					weekBuyList[0][3], weekBuyList[1][3], 
+				  	weekBuyList[2][3], weekBuyList[3][3], 
+				  	weekBuyList[4][3], weekBuyList[5][3],
+					weekBuyList[6][3]
+		  		],
 		      borderWidth: 1
 		    }, 	  
 			{
-	  	      label: '바지',
-	  	      data: [10, 16, 1, 5, 2, 3],
+	  	      label: '상의',
+				data: [
+					weekBuyList[0][4], weekBuyList[1][4], 
+				  	weekBuyList[2][4], weekBuyList[3][4], 
+				  	weekBuyList[4][4], weekBuyList[5][4],
+					weekBuyList[6][4]
+					],
+	  	      borderWidth: 1
+	  	    }, 	  
+  			{
+  	  	      label: '드레스',
+  				data: [
+  					weekBuyList[0][5], weekBuyList[1][5], 
+  				  	weekBuyList[2][5], weekBuyList[3][5], 
+  				  	weekBuyList[4][5], weekBuyList[5][5],
+  					weekBuyList[6][5]
+  					],
+  	  	      borderWidth: 1
+  	  	    }, 	  
+			{
+	  	      label: '하의',
+				data: [
+					weekBuyList[0][6], weekBuyList[1][6], 
+				  	weekBuyList[2][6], weekBuyList[3][6], 
+				  	weekBuyList[4][6], weekBuyList[5][6],
+					weekBuyList[6][6]
+					],
+	  	      borderWidth: 1
+	  	    }, 	  
+			{
+	  	      label: '악세사리',
+				data: [
+					weekBuyList[0][7], weekBuyList[1][7], 
+				  	weekBuyList[2][7], weekBuyList[3][7], 
+				  	weekBuyList[4][7], weekBuyList[5][7],
+					weekBuyList[6][7]
+					],
 	  	      borderWidth: 1
 	  	    }
 		]

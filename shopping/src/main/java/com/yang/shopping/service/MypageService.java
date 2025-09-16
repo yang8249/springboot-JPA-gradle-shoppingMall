@@ -1,8 +1,13 @@
 package com.yang.shopping.service;
 
+import java.sql.Timestamp;
+import java.time.DayOfWeek;
+import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,6 +16,7 @@ import com.yang.shopping.model.Delivery;
 import com.yang.shopping.model.Product;
 import com.yang.shopping.model.RoleType;
 import com.yang.shopping.model.Users;
+import com.yang.shopping.repository.DeliveryRepository;
 import com.yang.shopping.repository.MypageRepository;
 import com.yang.shopping.repository.ProductRepository;
 import com.yang.shopping.repository.UserRepository;
@@ -24,6 +30,10 @@ import com.yang.shopping.repository.UserRepository;
 @Service
 public class MypageService {
 
+	@Autowired
+    private final DeliveryRepository deliveryRepository;
+
+	@Autowired
     private final ProductRepository productRepository;
 
 	@Autowired
@@ -35,8 +45,9 @@ public class MypageService {
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
-    MypageService(ProductRepository productRepository) {
+    MypageService(ProductRepository productRepository, DeliveryRepository deliveryRepository) {
         this.productRepository = productRepository;
+        this.deliveryRepository = deliveryRepository;
     }
 
 	@Transactional(readOnly = true)
@@ -66,9 +77,40 @@ public class MypageService {
 
 	//수정할 제품 정보 불러오기
 	@Transactional(readOnly = true)
-	public Product recentlyBuyItem(String id) {
-		return productRepository.getProductWithFileInfo(id).orElse(null);
+	public List<Delivery> recentlyBuyItem(String id) {
+		PageRequest pageRequest = PageRequest.of(0, 10); // 첫 페이지, 10개
+		List<Delivery> deliveries = deliveryRepository.recentlyBuyItem(id, pageRequest);
+
+		return deliveries;
 		//return productRepository.findById(id).orElse(null);
 	}
 
+	public LocalDate getStartOfWeek() {
+	    return LocalDate.now().with(DayOfWeek.MONDAY);
+	}
+
+	public LocalDate getEndOfWeek() {
+	    return LocalDate.now().with(DayOfWeek.SUNDAY);
+	}
+	
+	//수정할 제품 정보 불러오기
+	@Transactional(readOnly = true)
+	public List<Object> findWeeklyPurchases(int id) {
+		LocalDate start = LocalDate.now().with(DayOfWeek.MONDAY);
+		LocalDate end = LocalDate.now().with(DayOfWeek.SUNDAY);
+
+		Timestamp startTs = Timestamp.valueOf(start.atStartOfDay());
+		Timestamp endTs = Timestamp.valueOf(end.atTime(LocalTime.MAX)); // 23:59:59
+
+		List<Object> result = mypageRepository.findWeeklyPurchases(startTs, endTs, id);
+		return result;
+    }
+
+	//수정할 제품 정보 불러오기
+	@Transactional(readOnly = true)
+	public List<Object> orderList(int id) {
+		List<Object> result = mypageRepository.orderList(id);
+		return result;
+    }
+	
 }

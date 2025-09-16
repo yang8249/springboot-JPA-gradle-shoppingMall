@@ -34,11 +34,13 @@ public class PayService {
 
 	@Autowired
 	private PayRepository payRepository;
-	
+
+	@Autowired
+	private ProductRepository productRepository;
 
 
 	@Transactional
-	public void insertPay(Users user, Delivery delivery, Cart cart, Product product) {
+	public void insertPay(Users user, Delivery delivery, Cart cart, int productId) {
 		try {
 				delivery.setMainAddr(delivery.getMainAddr());
 				delivery.setDetailAddr(delivery.getDetailAddr());
@@ -48,7 +50,16 @@ public class PayService {
 				delivery.setPayCustomer(delivery.getPayCustomer());
 				delivery.setDetailInfo1(delivery.getDetailInfo1());
 				delivery.setDetailInfo2(delivery.getDetailInfo2());
+				delivery.setItemCount(delivery.getItemCount());
+				delivery.setTotalPrice(cart.getTotalPrice());
+				delivery.setOrderName(delivery.getOrderName());
+				Product product = productRepository.findById(productId)
+					    .orElseThrow(() -> new IllegalArgumentException("해당 productId가 존재하지 않습니다: " + productId));
+
+					delivery.setProduct(product);
+
 				delivery.setUser(user);
+				
 			 
 				payRepository.save(delivery);
 		

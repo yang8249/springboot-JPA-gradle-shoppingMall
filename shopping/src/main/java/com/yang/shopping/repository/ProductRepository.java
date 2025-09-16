@@ -22,8 +22,6 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.fileInfo WHERE p.productSeq = :productSeq")
     Optional<Product> getProductWithFileInfo(@Param("productSeq") int id);
 
-    @Query("SELECT p FROM Product p LEFT JOIN FETCH p.fileInfo WHERE p.user.userId = :userId ORDER BY p.purchaseDate DESCq")
-    Optional<Product> recentlyBuyItem(@Param("userId") int id);
 
 	/*d
 	 * @Query("SELECT p, fi FROM Product p " +

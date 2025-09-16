@@ -1,6 +1,8 @@
 package com.yang.shopping.controller;
 
 import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -27,6 +29,8 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yang.shopping.config.auth.PrincipalDetail;
+import com.yang.shopping.controller.api.BoardApiController;
+import com.yang.shopping.model.Delivery;
 import com.yang.shopping.model.KakaoProfile;
 import com.yang.shopping.model.OAuthToken;
 import com.yang.shopping.model.Product;
@@ -43,17 +47,27 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class UsersController {
 
+    private final BoardApiController boardApiController;
+
     @Value("${yang.key}")
     private String ykey;
 
 	@Autowired
 	private UserService userService;
 	
+
+	@Autowired
+	private MypageService mypageService;
+	
 	@Autowired
 	private AuthenticationManager authenticationManager;
 
 	@Autowired
 	private HttpSession session;
+
+    UsersController(BoardApiController boardApiController) {
+        this.boardApiController = boardApiController;
+    }
 	
 	@GetMapping("/auth/joinForm")
 	public String joinForm() {
@@ -231,12 +245,15 @@ public class UsersController {
 	}
 	
 	@GetMapping("/user/mypageForm")
-	public String mypageForm(@RequestParam("userId") String userId, Model model) {
+	public String mypageForm(@RequestParam("userId") String userId, String page, Model model) {
 		
-//		System.out.println("page : "+page);
-//		if(page != null || page != "") {
-//			model.addAttribute("page", page);
-//		}
+		System.out.println("userId.value : "+userId);
+		System.out.println("page : "+page);
+		
+		System.out.println("page : "+page);
+		if(page != null || page != "") {
+			model.addAttribute("page", page);
+		}
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
@@ -250,9 +267,10 @@ public class UsersController {
 	    }
 		
 
-		Product product = MypageService.recentlyBuyItem(userId);
-		model.addAttribute("product", product);
+		List<Delivery> delivery = mypageService.recentlyBuyItem(userId);
+		model.addAttribute("recentlyDelivery", delivery);
 		
+		System.out.println("del"+delivery);
 		return "user/mypageForm";
 	}
 }

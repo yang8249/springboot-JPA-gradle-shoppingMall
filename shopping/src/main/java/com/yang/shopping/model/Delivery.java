@@ -7,6 +7,9 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.DynamicInsert;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,9 +26,12 @@ import jakarta.persistence.OneToOne;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -56,11 +62,22 @@ public class Delivery{
 	@Column(length = 100)
 	private String bank;
 
+	//주문자 명
+	@Column(length = 100)
+	private String orderName;
+	
 	//입금자명
 	@Column(length = 100)
 	private String payCustomer;
 	
+	//구매수량
+	@Column(length = 100)
+	private int itemCount;
 
+	//최종금액
+	@Column(length = 100)
+	private String totalPrice;
+	
 	//요청사항
 	@Column(length = 200)
 	private String detailInfo1;
@@ -72,6 +89,10 @@ public class Delivery{
 	@JoinColumn(name = "userId") //userId라는 컬럼명으로 외래키를 만든다.
 	private Users user;
 
+	@ManyToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.
+	@JoinColumn(name = "productId") //userId라는 컬럼명으로 외래키를 만든다.
+	private Product product;
+	
 	@CreationTimestamp
 	private Timestamp createDate;
 	

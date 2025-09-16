@@ -49,9 +49,9 @@ public class PayApiController {
 		System.out.println("users : "+payDto.getUsers());
 		System.out.println("delivery : "+payDto.getDelivery());
 		System.out.println("cart : "+payDto.getCart());
-		System.out.println("product : "+payDto.getProduct());
+		System.out.println("productId : "+payDto.getProductId());
 		
-		payService.insertPay(payDto.getUsers(), payDto.getDelivery(), payDto.getCart(), payDto.getProduct());
+		payService.insertPay(payDto.getUsers(), payDto.getDelivery(), payDto.getCart(), payDto.getProductId());
 
 		
 		return new ResponseDto<PayDto>(HttpStatus.OK.value(), payDto);

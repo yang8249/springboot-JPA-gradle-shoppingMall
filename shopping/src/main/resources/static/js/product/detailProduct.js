@@ -359,11 +359,12 @@ $(function(){
 				detailInfo1 : arrList.omessage_select, 
 				detailInfo2 : arrList.omessage,
 				bank : arrList.bankaccount,
-				payCustomer : arrList.pname
+				payCustomer : arrList.pname,
+				itemCount : $("#quantity").val(),
+				orderName : arrList.rname
 			};
-			const product ={
-				productSeq: productSeq
-			}
+			const productId = productSeq;
+			
 			const cart = {
 				productCount : $("#quantity").val(),
 				productName : productName,
@@ -374,7 +375,7 @@ $(function(){
 			const data = {
 				users : users,
 				delivery : delivery,
-				product : product,
+				productId : productId,
 				cart : cart
 			}
 			
@@ -393,7 +394,7 @@ $(function(){
 			}).done((result)=>{
 				alert("결제되었습니다!");
 				console.log("result : "+result);
-				location.href = "/user/mypageForm?page=orderList";
+				location.href = "/user/mypageForm?userId="+userId.value+"&page=orderList";
 			}).fail((error)=>{
 				alert(JSON.stringify(error));
 			});

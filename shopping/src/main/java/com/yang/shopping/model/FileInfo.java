@@ -6,6 +6,8 @@ import java.util.List;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -19,9 +21,14 @@ import jakarta.persistence.OneToMany;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
-@Data
+@Getter
+@Setter
+@ToString(exclude = "product")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -46,6 +53,7 @@ public class FileInfo{
 
     @ManyToOne
     @JoinColumn(name = "productSeq", nullable = false)  // 외래 키 설정
+    @JsonBackReference
 	private Product product;
 	
 	@CreationTimestamp

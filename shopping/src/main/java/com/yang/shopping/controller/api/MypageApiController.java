@@ -33,15 +33,15 @@ public class MypageApiController {
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
-	//구매현황 (최근7일) 정보 가져오기
-	@PostMapping("/api/mypage/weekBuyData")
-	public ResponseDto<List<Delivery>> getWeekBuyList(@RequestBody Users user) {
-		
-		//사용자 id값으로 정보 가져오기
-		List<Delivery> result = mypageService.getWeekBuyList(user);
-		
-		return new ResponseDto<List<Delivery>>(HttpStatus.OK.value(), result);
-	}
+//	//구매현황 (최근7일) 정보 가져오기
+//	@PostMapping("/api/mypage/weekBuyData")
+//	public ResponseDto<List<Delivery>> getWeekBuyList(@RequestBody Users user) {
+//		
+//		//사용자 id값으로 정보 가져오기
+//		List<Delivery> result = mypageService.getWeekBuyList(user);
+//		
+//		return new ResponseDto<List<Delivery>>(HttpStatus.OK.value(), result);
+//	}
 
 	//여기다 최근구매목록 10개 데이터 가져오기
 	@PostMapping("/api/mypage/newBuyData")
@@ -50,7 +50,24 @@ public class MypageApiController {
 		return null;
 	}
 	
-	
+
+	//구매현황 (최근7일) 정보 가져오기
+	@PostMapping("/api/mypage/weekBuyData")
+	public ResponseDto<List<Object>> findWeeklyPurchases(@RequestBody Users user) {
+		
+		//사용자 id값으로 정보 가져오기
+		List<Object> result = mypageService.findWeeklyPurchases(user.getId());
+		return new ResponseDto<List<Object>>(HttpStatus.OK.value(), result);
+	}
+
+	//구매현황 (최근7일) 정보 가져오기
+	@PostMapping("/api/mypage/orderList")
+	public ResponseDto<List<Object>> orderList(@RequestBody Users user) {
+		
+		//사용자 id값으로 정보 가져오기
+		List<Object> result = mypageService.orderList(user.getId());
+		return new ResponseDto<List<Object>>(HttpStatus.OK.value(), result);
+	}
 
 	//사용자 정보 가져오기
 //	@PostMapping("/mypage/selectAccountInfo{id}")

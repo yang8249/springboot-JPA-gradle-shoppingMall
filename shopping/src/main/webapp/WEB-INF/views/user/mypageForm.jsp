@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!doctype html>
 <html lang="en" data-bs-theme="auto">
   <head><script src="/js/color-modes.js"></script>
@@ -18,7 +18,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
-<link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iyVHgWdgbOYA1Qxlw7jRhcp52l0uPEs4zrd0MRrcr1fDCFRPyz0k1VrxB1urC55B" crossorigin="anonymous">
 
 <!-- 그리드 라이브러리 -->	
 <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
@@ -129,7 +129,9 @@
   <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
   </head>
-  
+<script>
+	const user = {id : `${principal.user.id}`};
+</script>
   
   <body>
     <svg xmlns="http://www.w3.org/2000/svg" class="d-none">
@@ -148,7 +150,6 @@
       </symbol>
     </svg>
 
-	  <input type="hidden" id="userId" value="${principal.user.id}">
 	  
     <div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
       <button class="btn btn-bd-primary py-2 dropdown-toggle d-flex align-items-center"
@@ -318,7 +319,6 @@
         </div>
       </div>
     </div>
-
 	<!-- include -->
 	<main id="ableContent" class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
 		<div class="dashBoard">
@@ -346,7 +346,7 @@
 	const page = `${page}`;
 </script>
 
-<script src="/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="/js/bootstrap.bundle.min.js" integrity="sha384-HZYy7/e2t5ulY6HtYcKY7AWRuIBuyk3YMY+jfKGECq5pbYjpOnD+SSNz14RIH6F7" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script><script src="/js/dashboard.js"></script></body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/js/mypage/main.js"></script>
