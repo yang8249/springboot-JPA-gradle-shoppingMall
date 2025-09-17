@@ -30,6 +30,7 @@ import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yang.shopping.config.auth.PrincipalDetail;
 import com.yang.shopping.dto.CartDto;
+import com.yang.shopping.dto.DeliveryDto;
 import com.yang.shopping.dto.ProductDto;
 import com.yang.shopping.dto.ResponseDto;
 import com.yang.shopping.dto.WishDto;
@@ -37,6 +38,7 @@ import com.yang.shopping.model.Board;
 import com.yang.shopping.model.Cart;
 import com.yang.shopping.model.Product;
 import com.yang.shopping.model.Users;
+import com.yang.shopping.service.DeliveryService;
 import com.yang.shopping.service.ProductService;
 
 import jakarta.servlet.http.Cookie;
@@ -48,12 +50,14 @@ public class ProductApiController {
 	@Autowired
 	private ProductService productService;
 
+	@Autowired
+	private DeliveryService deliveryService;
 	
 	//제품 등록
 	@PostMapping("/api/Product/addProduct")
 	public ResponseDto<ProductDto> addProduct(
 		    @RequestParam("product") String productJson, 
-						@RequestParam("file") List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
+						@RequestParam List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
 
 	    // JSON 문자열을 Product 객체로 변환
 	    ObjectMapper objectMapper = new ObjectMapper();
@@ -85,11 +89,29 @@ public class ProductApiController {
 		return new ResponseDto<CartDto>(HttpStatus.OK.value(), cartDto);
 	}
 
+	//장바구니 삭제
+	@DeleteMapping("/api/Product/removeCart")
+	public ResponseDto<CartDto> removeCart(@RequestBody CartDto cartDto) {
+		
+		productService.deleteAddCart(cartDto.getCart(), cartDto.getProduct(), cartDto.getUser());
+		
+		return new ResponseDto<CartDto>(HttpStatus.OK.value(), cartDto);
+	}
+	
 	//찜 등록
 	@PostMapping("/api/Product/addWish")
 	public ResponseDto<WishDto> addWish(@RequestBody WishDto wishDto) {
 		
 		productService.insertAddWish(wishDto.getWish(), wishDto.getProduct(), wishDto.getUser());
+		
+		return new ResponseDto<WishDto>(HttpStatus.OK.value(), wishDto);
+	}
+
+	//찜 삭제
+	@DeleteMapping("/api/Product/removeWish")
+	public ResponseDto<WishDto> removeWish(@RequestBody WishDto wishDto) {
+		
+		productService.deleteAddWish(wishDto.getWish(), wishDto.getProduct(), wishDto.getUser());
 		
 		return new ResponseDto<WishDto>(HttpStatus.OK.value(), wishDto);
 	}
@@ -102,14 +124,15 @@ public class ProductApiController {
 		
 		return new ResponseDto<ProductDto>(HttpStatus.OK.value(), productDto);
 	}
-	
-	//찜 삭제
-	@DeleteMapping("/api/Product/removeWish")
-	public ResponseDto<WishDto> removeWish(@RequestBody WishDto wishDto) {
+
+	//반품 요청 (딜리버리 삭제는 나중에)
+	//반품 테이블먼저 insert 칠거임 ㅋ
+	@DeleteMapping("/api/Product/removeDelivery")
+	public ResponseDto<DeliveryDto> removeDelivery(@RequestBody DeliveryDto deliveryDto) {
 		
-		productService.deleteAddWish(wishDto.getWish(), wishDto.getProduct(), wishDto.getUser());
+		deliveryService.removeDelivery(deliveryDto);
 		
-		return new ResponseDto<WishDto>(HttpStatus.OK.value(), wishDto);
+		return new ResponseDto<DeliveryDto>(HttpStatus.OK.value(), deliveryDto);
 	}
 	
 	/*

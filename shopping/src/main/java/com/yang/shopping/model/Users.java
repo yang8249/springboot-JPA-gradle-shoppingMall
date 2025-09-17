@@ -45,6 +45,10 @@ public class Users{
 	@Column(nullable = false, length = 50)
 	private String email;
 
+	//이름
+	@Column(length = 50)
+	private String name;
+	
 	//주소
 	@Column(length = 200)
 	private String mainAddr;
@@ -54,7 +58,7 @@ public class Users{
 	//우편번호
 	@Column(nullable = false)
 	@ColumnDefault("0")
-	private int zoneCode;
+	private String zoneCode;
 
 	//연락처
 	@Column(length = 200)

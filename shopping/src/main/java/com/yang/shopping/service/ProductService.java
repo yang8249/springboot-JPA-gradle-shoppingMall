@@ -26,6 +26,7 @@ import com.yang.shopping.model.Product;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.model.Wish;
 import com.yang.shopping.repository.CartRepository;
+import com.yang.shopping.repository.DeliveryRepository;
 import com.yang.shopping.repository.FileRepository;
 import com.yang.shopping.repository.ProductRepository;
 import com.yang.shopping.repository.UserRepository;
@@ -63,6 +64,10 @@ public class ProductService {
 	@Autowired
 	private EntityManager entityManager;
 
+	@Autowired
+	private DeliveryRepository deliveryRepository;
+	
+
     // 파일 저장 경로 (예시로 "uploads" 폴더에 저장)
     private static final String UPLOAD_DIR = "D:/upload/img/";
     //private static final String UPLOAD_DIR = "/upload/img/";
@@ -91,6 +96,7 @@ public class ProductService {
 	//제품 목록 불러오기
 	@Transactional(readOnly = true)
 	public Page<Product> selectProduct(String category, Pageable pageable) {
+		
         return productRepository.findByCategory(category, pageable);
 	}
 
@@ -116,6 +122,7 @@ public class ProductService {
 		//return productRepository.findById(id).orElse(null);
 	}
 
+	//장바구니 추가
 	@Transactional
 	public void insertAddCart(Cart cart, Product product, Users user) {
 		try {
@@ -131,11 +138,30 @@ public class ProductService {
 		}
 	}
 
+	//장바구니 삭제
+	@Transactional
+	public void deleteAddCart(Cart cart, Product product, Users user) {
+		try {
+			//하ㅣ 진짜 존나하기싫다 어쩌지
+			
+			Optional<Cart> entity = cartRepository.customFindByCart(product.getProductSeq(), user.getId());
+			if (entity.isPresent()) {
+				// 엔티티가 존재함
+				cartRepository.deleteById(entity.get().getId());
+			} else {
+				// 엔티티가 존재하지 않음
+				System.out.println("장바구니 등록되지 않은제품입니다!!!");
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("productService 장바구니 삭제() : "+e.getMessage());
+		}
+	}
 	@Transactional
 	public void insertAddWish(Wish wish, Product product, Users user) {
 		try {
 			Optional<Wish> entity = wishRepository.customFindByWish(product.getProductSeq(), user.getId());
-			if (!entity.isPresent()) {
+			if (entity.isEmpty()) {
 				// 엔티티가 존재하지 않음
 				Product selectProduct = productRepository.findById(product.getProductSeq()).orElseThrow();
 				Users selectUser = userRepository.findById(user.getId()).orElseThrow();
@@ -159,6 +185,8 @@ public class ProductService {
 	@Transactional
 	public void deleteProduct(Product product) {
 		try {
+
+			deliveryRepository.deleteByProductSeq(product.getProductSeq());
 			productRepository.deleteById(product.getProductSeq());
 		} catch (Exception e) {
 			e.printStackTrace();

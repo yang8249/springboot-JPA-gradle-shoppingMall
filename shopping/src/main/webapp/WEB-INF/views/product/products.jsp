@@ -108,13 +108,12 @@
 											src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/btn_wish_before.png"
 											class="icon_img ec-product-listwishicon" alt="관심상품 등록 전"
 											productno="11" categoryno="42" icon_status="off"
-											login_status="F" individual-set="F">WISH</span> <span
-											class="cart"><img
-											src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/btn_list_cart.gif"
-											
-											alt="장바구니 담기" class="ec-admin-icon cart">ADD</span> <span
-											class="option" style="display: none;">OPTION</span>
-									</div>
+											login_status="F" individual-set="F">WISH</span> <span class="cart">
+											<!-- <img
+												src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/btn_list_cart.gif"
+												alt="장바구니 담기" class="ec-admin-icon cart">ADD</span> <span
+												class="option" style="display: none;">OPTION</span> -->
+										</div>
 								</div>
 								<div class="description" ec-data-custom="" ec-data-price="39000">
 									<div class="name">
@@ -400,14 +399,14 @@
 												productno="14" categoryno="42" icon_status="off"
 												login_status="F" individual-set="F">WISH</span> 
 												
-												<span class="cart" data-productSeq="${product.productSeq}"
+												<%-- <span class="cart" data-productSeq="${product.productSeq}"
 												data-productName="${product.productName}"
 												data-productPrice="${product.price}">
 												<img data-productSeq="${product.productSeq}"
 												src="//img.echosting.cafe24.com/design/skin/admin/ko_KR/btn_list_cart.gif"
 												
 												alt="장바구니 담기" class="ec-admin-icon">ADD</span> <span
-												class="option" style="display: none;">OPTION</span>
+												class="option" style="display: none;">OPTION</span> --%>
 										</div>
 									</div>
 									<div class="description" ec-data-custom=""

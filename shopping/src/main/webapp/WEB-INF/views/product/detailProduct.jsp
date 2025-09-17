@@ -670,6 +670,16 @@
 	const productSeq = `${productSeq}`;
 	const productName = `${product.productName}`;
 	const isWish = `${wish.id}`;
+	const isCart = `${cart.id}`;
+	
+	
+
+	const name = `${principal.user.name}`;
+	const mainAddr = `${principal.user.mainAddr}`;
+	const detailAddr = `${principal.user.detailAddr}`;
+	const zoneCode = `${principal.user.zoneCode}`;
+	const phone = `${principal.user.phone}`;
+	const email = `${principal.user.email}`;
 </script>
 <script type="text/javascript" src="/js/product/detailProduct.js"></script>
 <%@ include file="../layout/footer.jsp" %>

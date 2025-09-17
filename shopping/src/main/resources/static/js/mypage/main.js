@@ -163,12 +163,58 @@ async function chartDataLoad(){
 	new Chart(ctx2, {
 	  type: 'line',
 	  data: {
-	    labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
+	    labels: ['월', '화', '수', '목', '금', '토', '일'],
 	    datasets: [{
-	      label: '# of Votes',
-	      data: [12, 19, 3, 5, 2, 3],
-	      borderWidth: 1
-	    }]
+		      label: '아우터',
+		      data: [
+					weekBuyList[0][3], weekBuyList[1][3], 
+				  	weekBuyList[2][3], weekBuyList[3][3], 
+				  	weekBuyList[4][3], weekBuyList[5][3],
+					weekBuyList[6][3]
+		  		],
+		      borderWidth: 1
+		    }, 	  
+			{
+	  	      label: '상의',
+				data: [
+					weekBuyList[0][4], weekBuyList[1][4], 
+				  	weekBuyList[2][4], weekBuyList[3][4], 
+				  	weekBuyList[4][4], weekBuyList[5][4],
+					weekBuyList[6][4]
+					],
+	  	      borderWidth: 1
+	  	    }, 	  
+			{
+	  	      label: '드레스',
+				data: [
+					weekBuyList[0][5], weekBuyList[1][5], 
+				  	weekBuyList[2][5], weekBuyList[3][5], 
+				  	weekBuyList[4][5], weekBuyList[5][5],
+					weekBuyList[6][5]
+					],
+	  	      borderWidth: 1
+	  	    }, 	  
+			{
+	  	      label: '하의',
+				data: [
+					weekBuyList[0][6], weekBuyList[1][6], 
+				  	weekBuyList[2][6], weekBuyList[3][6], 
+				  	weekBuyList[4][6], weekBuyList[5][6],
+					weekBuyList[6][6]
+					],
+	  	      borderWidth: 1
+	  	    }, 	  
+			{
+	  	      label: '악세사리',
+				data: [
+					weekBuyList[0][7], weekBuyList[1][7], 
+				  	weekBuyList[2][7], weekBuyList[3][7], 
+				  	weekBuyList[4][7], weekBuyList[5][7],
+					weekBuyList[6][7]
+					],
+	  	      borderWidth: 1
+	  	    }
+		]
 	  },
 	  options: {
 	    scales: {
@@ -178,6 +224,7 @@ async function chartDataLoad(){
 	    }
 	  }
 	});
+
 }
 
 
@@ -224,6 +271,16 @@ window.onload = function() {
 		
 		const ableContent = $("#ableContent").children(":not(.mypage-disabled)")[0].className;
 		
+		//이전에 선택되있던 태그에 클래스 빼기
+		$(".mypage-nav-button.nav.flex-column")
+		  .children("li")
+		  .children("a")
+		  .filter(".active").removeClass("active");
+		  
+		//현재 선택한 태그에 클래스 부여하기
+		$(e.target).addClass("active");
+		  
+		  
 		
 		if(selectMenu != ableContent){
 			$("#ableContent").children("."+ableContent).addClass("mypage-disabled");
@@ -269,4 +326,8 @@ window.onload = function() {
 	}).fail((error)=>{
 		alert(JSON.stringify(error));
 	});*/
+	$(document).on("click", ".grid-button", function(event) {
+	  event.stopPropagation(); // 부모로 이벤트 전달 막기
+	  console.log("버튼만 클릭됨");
+	});
 };

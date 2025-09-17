@@ -220,7 +220,7 @@
 										<tr class="ec-shippingInfo-newAddress-name">
 											<th scope="row">받는사람 <span class="icoRequired">필수</span>
 											</th>
-											<td><input id="rname" data-info="받는사람" name="rname" fw-filter="isFill"
+											<td><input id="rname"  data-info="받는사람" name="rname" fw-filter="isFill"
 												fw-label="수취자 성명" fw-msg="" class="inputTypeText"
 												placeholder="" size="15" value="" type="text"></td>
 										</tr>
@@ -512,7 +512,9 @@
 														class="inputTypeText" type="text" maxlength="14"
 														readonly="" fw-label="우편번호" style="">
 														<button id="btn_search_rzipcode" class="btnBasic"
-															type="button" style="cursor: pointer;">주소검색</button> <span
+															type="button" style="cursor: pointer;">주소검색</button>	
+															<button id="btn_myData" class="btnBasic"
+															type="button" style="cursor: pointer;">내 정보 넣기</button>	 <span
 														class="ec-base-label"> <input id="no_rzipcode0"
 															name="no_rzipcode0" class="displaynone" type="checkbox"
 															disabled="" fw-filter=""
@@ -1622,54 +1624,19 @@
 									<td><select id="bankaccount" data-info="입금은행" name="bankaccount"
 										fw-filter="" fw-label="무통장 입금은행" fw-msg="">
 											<option value="">::: 선택해 주세요. :::</option>
-											<option value='SC제일은행'>SC제일은행</option>       
-											<option value='경남은행'>경남은행</option>       
-											<option value='광주은행'>광주은행</option>       
+											<option value='하나은행'>하나은행</option>       
+											<option value='우리은행'>우리은행</option>       
 											<option value='국민은행'>국민은행</option>       
-											<option value='굿모닝신한증권'>굿모닝신한증권</option>       
-											<option value='기업은행'>기업은행</option>       
-											<option value='농협중앙회'>농협중앙회</option>       
-											<option value='농협회원조합'>농협회원조합</option>       
-											<option value='대구은행'>대구은행</option>       
-											<option value='대신증권'>대신증권</option>       
-											<option value='대우증권'>대우증권</option>       
-											<option value='동부증권'>동부증권</option>       
-											<option value='동양종합금융증권'>동양종합금융증권</option>       
-											<option value='메리츠증권'>메리츠증권</option>       
-											<option value='미래에셋증권'>미래에셋증권</option>       
-											<option value='뱅크오브아메리카(BOA)'>뱅크오브아메리카(BOA)</option>       
-											<option value='부국증권'>부국증권</option>       
+											<option value='기업은행'>기업은행</option>     
+											<option value='신한은행'>신한은행</option>       
+											<option value='농협은행'>농협은행</option>       
+											<option value='SC제일은행'>SC제일은행</option>       
 											<option value='부산은행'>부산은행</option>       
 											<option value='산림조합중앙회'>산림조합중앙회</option>       
 											<option value='산업은행'>산업은행</option>       
-											<option value='삼성증권'>삼성증권</option>       
-											<option value='상호신용금고'>상호신용금고</option>       
-											<option value='새마을금고'>새마을금고</option>       
-											<option value='수출입은행'>수출입은행</option>       
-											<option value='수협중앙회'>수협중앙회</option>       
-											<option value='신영증권'>신영증권</option>       
-											<option value='신한은행'>신한은행</option>       
-											<option value='신협중앙회'>신협중앙회</option>       
-											<option value='에스케이증권'>에스케이증권</option>       
-											<option value='에이치엠씨투자증권'>에이치엠씨투자증권</option>       
-											<option value='엔에이치투자증권'>엔에이치투자증권</option>       
-											<option value='엘아이지투자증권'>엘아이지투자증권</option>       
-											<option value='외환은행'>외환은행</option>       
-											<option value='우리은행'>우리은행</option>       
-											<option value='우리투자증권'>우리투자증권</option>       
-											<option value='우체국'>우체국</option>       
-											<option value='유진투자증권'>유진투자증권</option>       
+											<option value='수협은행'>수협은행</option>     
 											<option value='전북은행'>전북은행</option>       
-											<option value='제주은행'>제주은행</option>       
-											<option value='키움증권'>키움증권</option>       
-											<option value='하나대투증권'>하나대투증권</option>       
-											<option value='하나은행'>하나은행</option>       
-											<option value='하이투자증권'>하이투자증권</option>       
-											<option value='한국씨티은행'>한국씨티은행</option>       
-											<option value='한국투자증권'>한국투자증권</option>       
-											<option value='한화증권'>한화증권</option>       
-											<option value='현대증권'>현대증권</option>       
-											<option value='홍콩상하이은행'>홍콩상하이은행</option>
+											<option value='제주은행'>제주은행</option> 
 									</select></td>
 								</tr>
 								<tr>

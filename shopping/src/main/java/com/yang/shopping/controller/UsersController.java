@@ -245,7 +245,7 @@ public class UsersController {
 	}
 	
 	@GetMapping("/user/mypageForm")
-	public String mypageForm(@RequestParam("userId") String userId, String page, Model model) {
+	public String mypageForm(@RequestParam String userId, String page, Model model) {
 		
 		System.out.println("userId.value : "+userId);
 		System.out.println("page : "+page);

@@ -21,34 +21,32 @@ public interface MypageRepository extends JpaRepository<Delivery, Integer>{
 	
 
 	//@Query("SELECT d FROM Delivery d LEFT JOIN FETCH d.product WHERE d.createDate BETWEEN :start AND :end AND d.user.id = :userId ORDER BY d.createDate DESC")
-    @Query(value = ""
-			+ "WITH RECURSIVE week_days AS (\r\n"
-			+ "    SELECT DATE('2025-09-15') AS day\r\n"
-			+ "    UNION ALL\r\n"
-			+ "    SELECT DATE_ADD(day, INTERVAL 1 DAY)\r\n"
-			+ "    FROM week_days\r\n"
-			+ "    WHERE day < DATE('2025-09-21')\r\n"
-			+ ")\r\n"
-			+ "SELECT \r\n"
-			+ "    wd.day,\r\n"
-			+ "    COUNT(d.id) AS purchase_count,\r\n"
-			+ "    GROUP_CONCAT(d.id) AS product_ids,\r\n"
-			+ "    COUNT(p1.productSeq) as outerwear,\r\n"
-			+ "    COUNT(p2.productSeq) as tops,\r\n"
-			+ "    COUNT(p3.productSeq) as dresses,\r\n"
-			+ "    COUNT(p4.productSeq) as bottoms,\r\n"
-			+ "    COUNT(p5.productSeq) as accessories\r\n"
-			+ "FROM week_days wd\r\n"
-			+ "LEFT JOIN delivery d ON DATE(d.createDate) = wd.day and d.userId = :userId \r\n"
-			+ "left join product p1 on p1.productSeq = d.productId and p1.category = 'outerwear'\r\n"
-			+ "left join product p2 on p2.productSeq = d.productId and p2.category = 'tops'\r\n"
-			+ "left join product p3 on p3.productSeq = d.productId and p3.category = 'dresses'\r\n"
-			+ "left join product p4 on p4.productSeq = d.productId and p4.category = 'bottoms'\r\n"
-			+ "left join product p5 on p5.productSeq = d.productId and p5.category = 'accessories'\r\n"
-			+ "GROUP BY wd.day\r\n"
-			+ "ORDER BY wd.day"
-			+ ""
-			+ "", nativeQuery = true)
+    @Query(value = """
+            WITH RECURSIVE week_days AS (
+                SELECT DATE('2025-09-15') AS day
+                UNION ALL
+                SELECT DATE_ADD(day, INTERVAL 1 DAY)
+                FROM week_days
+                WHERE day < DATE('2025-09-21')
+            )
+            SELECT 
+                wd.day,
+                COUNT(d.id) AS purchase_count,
+                GROUP_CONCAT(d.id) AS product_ids,
+                COUNT(p1.productSeq) as outerwear,
+                COUNT(p2.productSeq) as tops,
+                COUNT(p3.productSeq) as dresses,
+                COUNT(p4.productSeq) as bottoms,
+                COUNT(p5.productSeq) as accessories
+            FROM week_days wd
+            LEFT JOIN delivery d ON DATE(d.createDate) = wd.day and d.userId = :userId 
+            left join product p1 on p1.productSeq = d.productId and p1.category = 'outerwear'
+            left join product p2 on p2.productSeq = d.productId and p2.category = 'tops'
+            left join product p3 on p3.productSeq = d.productId and p3.category = 'dresses'
+            left join product p4 on p4.productSeq = d.productId and p4.category = 'bottoms'
+            left join product p5 on p5.productSeq = d.productId and p5.category = 'accessories'
+            GROUP BY wd.day
+            ORDER BY wd.day""", nativeQuery = true)
     List<Object> findWeeklyPurchases(
     		@Param("start") Timestamp start,
     		@Param("end") Timestamp end,
@@ -61,7 +59,19 @@ public interface MypageRepository extends JpaRepository<Delivery, Integer>{
     List<Object> orderList(
     		@Param("userId") int id
 		);
-	
+
+    // 주문목록 뽑는놈2
+    @Query("SELECT d FROM Cart d WHERE d.user.id = :userId ORDER BY d.createDate DESC")
+    List<Object> cartList(
+    		@Param("userId") int id
+		);
+    
+
+    // 주문목록 뽑는놈3
+    @Query("SELECT d FROM Wish d WHERE d.user.id = :userId ORDER BY d.createDate DESC")
+    List<Object> wishList(
+    		@Param("userId") int id
+		);
 	
 	
 	

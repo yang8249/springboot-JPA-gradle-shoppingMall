@@ -1,6 +1,10 @@
 if(!!isWish){
 	$("#actionWish").addClass("btn-primary");
 }
+if(!!isCart){
+	$("#actionCart").addClass("btn-primary");
+}
+
 
 //쿠키가져오기
 function getCookie(name) {
@@ -26,6 +30,7 @@ $(function(){
 		$(".zoom_result").css("background-image", "url('"+imgLocation+"')");
 	});
 
+	//제품 삭제
 	$("#btn-delete").on("click", ()=>{
 
 		const product = {
@@ -46,7 +51,8 @@ $(function(){
 			data:JSON.stringify(data),
 			dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
 		}).done((result)=>{
-			console.log("삭제가 완료되었습니다. : "+result);
+			alert("삭제가 완료되었습니다.");
+			console.log("삭제가 완료되었습니다.");
 			location.href = "/";
 		}).fail((error)=>{
 			alert(JSON.stringify(error));
@@ -91,55 +97,101 @@ $(function(){
 	
 	//장바구니 담기
 	$("#actionCart").on("click", ()=>{
-		addCart();
+		if(!$("#actionCart").hasClass("btn-primary")){
+			addCart();				
+		}else{
+			removeCart();
+		}
 	});	
 	function addCart(){
-			if($("#userId").val() == null || $("#userId").val() == ""){
-				return alert("로그인을 해주세요.");
-			}
-			
-			// cart, Product와 Users 객체
-			const cart = {
-				productCount : $("#quantity").val(),
-				productName : productName,
-				totalPrice : price
-			};
-			const product = {
-			    productSeq: productSeq,
-				productCount : $("#quantity").val(),
-				productName : productName,
-				totalPrice : price
-			};
-			const user = {
-			   	id : $("#userId").val()
-			};
-			
-			// 두 객체를 하나의 JSON 객체로 묶기
-			let data = {
-				cart : cart,
-				product: product,
-				user: user
-			};
-			
-			$.ajax({
-				headers: {
-			        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
-			    },
-				type:"POST",
-				url:"/api/Product/addCart",
-				data:JSON.stringify(data),
-				contentType:"application/json; charset=utf-8",
-				dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
-			}).done((result)=>{
-				alert("장바구니 담기 완료 : "+result);
-				console.log("result : "+result);
-				location.href = "/";
-			}).fail((error)=>{
-				alert(JSON.stringify(error));
-			});
+		if($("#userId").val() == null || $("#userId").val() == ""){
+			return alert("로그인을 해주세요.");
 		}
+		
+		// cart, Product와 Users 객체
+		const cart = {
+			productCount : $("#quantity").val(),
+			productName : productName,
+			totalPrice : price
+		};
+		const product = {
+		    productSeq: productSeq,
+			productCount : $("#quantity").val(),
+			productName : productName,
+			totalPrice : price
+		};
+		const user = {
+		   	id : $("#userId").val()
+		};
+		
+		// 두 객체를 하나의 JSON 객체로 묶기
+		let data = {
+			cart : cart,
+			product: product,
+			user: user
+		};
+		
+		$.ajax({
+			headers: {
+		        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
+		    },
+			type:"POST",
+			url:"/api/Product/addCart",
+			data:JSON.stringify(data),
+			contentType:"application/json; charset=utf-8",
+			dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
+		}).done((result)=>{
+			alert("장바구니 담기 완료 ");
+			$("#actionCart").addClass("btn-primary");
+			console.log("result : "+result);
+		}).fail((error)=>{
+			alert(JSON.stringify(error));
+		});
+	}
+	function removeCart(){
+		
+		// cart, Product와 Users 객체
+		const cart = {
+			productCount : $("#quantity").val(),
+			productName : productName,
+			totalPrice : price
+		};
+		const product = {
+		    productSeq: productSeq,
+			productCount : $("#quantity").val(),
+			productName : productName,
+			totalPrice : price
+		};
+		const user = {
+		   	id : $("#userId").val()
+		};
+		
+		// 두 객체를 하나의 JSON 객체로 묶기
+		let data = {
+			cart : cart,
+			product: product,
+			user: user
+		};
+		
+		$.ajax({
+			headers: {
+		        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
+		    },
+			type:"DELETE",
+			url:"/api/Product/removeCart",
+			data:JSON.stringify(data),
+			contentType:"application/json; charset=utf-8",
+			dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
+		}).done((result)=>{
+			$("#actionCart").removeClass("btn-primary");
+			alert("장바구니를 취소하였습니다. ");
+		}).fail((error)=>{
+			alert(JSON.stringify(error));
+		});
+	}
+		
 
-		//찜하기
+		//찜하기 클릭 버튼
 		$("#actionWish").on("click", ()=>{
 			if(!$("#actionWish").hasClass("btn-primary")){
 				addWish();				
@@ -181,7 +233,7 @@ $(function(){
 				dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
 			}).done((result)=>{
 				$("#actionWish").addClass("btn-primary");
-				alert("찜하기 완료 : "+result);
+				alert("찜하기 완료");
 			}).fail((error)=>{
 				alert(JSON.stringify(error));
 			});
@@ -217,7 +269,7 @@ $(function(){
 				dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
 			}).done((result)=>{
 				$("#actionWish").removeClass("btn-primary")
-				alert("찜하기를 취소하였습니다. : "+result);
+				alert("찜하기를 취소하였습니다.");
 			}).fail((error)=>{
 				alert(JSON.stringify(error));
 			});
@@ -403,6 +455,29 @@ $(function(){
 		$("#btn_payment").click((e)=>{
 			//alert("기능 개발 예정입니다!");
 		});
+		
+		
+
+		$("#btn_myData").click((e)=>{
+
+			const [phoneNum1, phoneNum2, phoneNum3] = phone.split("-");
+			const [emailId, domain] = email.split("@");
+
+			$("#rname").val(name);
+			$("#rzipcode1").val(zoneCode);
+			$("#raddr1").val(mainAddr);
+			$("#raddr2").val(detailAddr);
+			$("#oemail1").val(emailId);
+			$("#oemail3").val("etc").prop("selected", true);
+			$("#oemail2").css("display", "block");
+			$("#oemail2").val(domain);
+			$("#rphone2_1").val(phoneNum1);
+			$("#rphone2_2").val(phoneNum2);
+			$("#rphone2_3").val(phoneNum3);
+			
+		});
+		
+		
 
 });
 

@@ -13,20 +13,11 @@ import org.springframework.data.repository.query.Param;
 
 import com.yang.shopping.model.Delivery;
 import com.yang.shopping.model.Product;
+import com.yang.shopping.model.ReturnDelivery;
 
 
 //DAO를 여기서 처리한다.
 //자동으로 Bean등록이 된다. (@Repository 어노테이션을 생략가능함)
-public interface DeliveryRepository extends JpaRepository<Delivery, Integer>{
+public interface ReturnRepository extends JpaRepository<ReturnDelivery, Integer>{
 	
-    @Query("SELECT p FROM Delivery p LEFT JOIN FETCH p.product WHERE p.user.id = :userId ORDER BY p.createDate DESC")
-    List<Delivery> recentlyBuyItem(@Param("userId") String id, Pageable pageable);
-    
-    @Modifying
-    @Query("DELETE FROM Delivery p WHERE p.product.productSeq = :productSeq")
-    void deleteByProductSeq(@Param("productSeq") int productSeq);
-
-    @Modifying
-    @Query("DELETE FROM Delivery p WHERE p.product.productSeq = :productSeq")
-    void returnItem(@Param("productSeq") int productSeq);
 }

@@ -2,7 +2,6 @@ package com.yang.shopping.controller.api;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.security.Principal;
 import java.text.NumberFormat;
 import java.util.List;
@@ -63,7 +62,7 @@ public class ImageApiController {
 	*/
 	@GetMapping("/{filename}")
 	public ResponseEntity<UrlResource> getImage(@PathVariable String filename) throws IOException {
-	    Path path = Paths.get(IMAGE_DIR + filename);
+	    Path path = Path.of(IMAGE_DIR + filename);
 	    UrlResource resource = new UrlResource(path.toUri());
 
 	    if (!resource.exists() || !resource.isReadable()) {

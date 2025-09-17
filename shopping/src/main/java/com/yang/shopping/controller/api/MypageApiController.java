@@ -60,7 +60,7 @@ public class MypageApiController {
 		return new ResponseDto<List<Object>>(HttpStatus.OK.value(), result);
 	}
 
-	//구매현황 (최근7일) 정보 가져오기
+	//주문내역 가져오기
 	@PostMapping("/api/mypage/orderList")
 	public ResponseDto<List<Object>> orderList(@RequestBody Users user) {
 		
@@ -68,6 +68,27 @@ public class MypageApiController {
 		List<Object> result = mypageService.orderList(user.getId());
 		return new ResponseDto<List<Object>>(HttpStatus.OK.value(), result);
 	}
+
+	//장바구니 가져오기
+	@PostMapping("/api/mypage/cartList")
+	public ResponseDto<List<Object>> cartList(@RequestBody Users user) {
+		
+		//사용자 id값으로 정보 가져오기
+		List<Object> result = mypageService.cartList(user.getId());
+		return new ResponseDto<List<Object>>(HttpStatus.OK.value(), result);
+	}
+
+	//찜목록 가져오기
+	@PostMapping("/api/mypage/wishList")
+	public ResponseDto<List<Object>> wishList(@RequestBody Users user) {
+		
+		//사용자 id값으로 정보 가져오기
+		List<Object> result = mypageService.wishList(user.getId());
+		return new ResponseDto<List<Object>>(HttpStatus.OK.value(), result);
+	}
+	
+	
+	
 
 	//사용자 정보 가져오기
 //	@PostMapping("/mypage/selectAccountInfo{id}")

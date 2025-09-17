@@ -23,12 +23,15 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.google.gson.Gson;
 import com.yang.shopping.config.auth.PrincipalDetail;
 import com.yang.shopping.dto.ResponseDto;
 import com.yang.shopping.model.Board;
+import com.yang.shopping.model.Cart;
 import com.yang.shopping.model.Product;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.model.Wish;
+import com.yang.shopping.service.CartService;
 import com.yang.shopping.service.ProductService;
 import com.yang.shopping.service.WishService;
 
@@ -43,6 +46,9 @@ public class ProductController {
 
 	@Autowired
 	private WishService wishService;
+	
+	@Autowired
+	private CartService cartService;
 
 	// 제품 목록
 	@GetMapping("/products")
@@ -76,7 +82,7 @@ public class ProductController {
 	
 	// 제품 상세 정보
 	@GetMapping("/product/detailProduct")
-	public String detailProduct(@RequestParam("id") int id, @RequestParam("userId") String userId, Model model) {
+	public String detailProduct(@RequestParam int id, @RequestParam String userId, Model model) {
 		// 스프링 시큐리티에서 작성한 로그인처리 로직이 끝난다음에 principal 객체에 정보가 담겨진다.
 		// System.out.println("로그인 사용자 : "+principal.getUsername());
 
@@ -92,6 +98,8 @@ public class ProductController {
 		if(!userId.isEmpty()) {
 			Wish wish = wishService.wishInfo(id, Integer.parseInt(userId));
 			model.addAttribute("wish", wish);
+			Cart cart = cartService.cartInfo(id, Integer.parseInt(userId));
+			model.addAttribute("cart", cart);
 		}
 
 		model.addAttribute("product", product);
@@ -104,7 +112,9 @@ public class ProductController {
 
 		model.addAttribute("productPrice",formattedAmount);
 		
-
+		//Json으로 유저정보 보내볼려다가 걍 안함
+//		String json = new Gson().toJson(principal);
+//		request.setAttribute("user", json);
 		
 		return "product/detailProduct";
 	}
@@ -118,7 +128,7 @@ public class ProductController {
 
 	// 제품 수정
 	@GetMapping("/product/modifyProduct")
-	public String modifyProduct(@RequestParam("id") int id, Model model) {
+	public String modifyProduct(@RequestParam int id, Model model) {
 		
 		Product product = productService.productInfo(id);
 

@@ -8,11 +8,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
-
+import com.google.gson.Gson;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.repository.UserRepository;
 
 import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 @Service
@@ -24,6 +25,8 @@ public class PrincipalDetailService implements UserDetailsService{
 	@Autowired
 	private HttpServletResponse response;
 	
+	@Autowired
+	private HttpServletRequest request;
 	/*
 	 * 스프링이 로그인 요청을 가로챌때, username과 password 변수 2개를 가로채는데
 	 * password는 시큐리티가 알아서하게된다.
@@ -48,7 +51,13 @@ public class PrincipalDetailService implements UserDetailsService{
 	        userCookie.setPath("/"); // 모든 경로에서 쿠키 사용 가능
 	        userCookie.setHttpOnly(false); // JavaScript에서 접근 불가능 (보안 강화)
 	        response.addCookie(userCookie); // 응답에 쿠키 추가
+
 	        
+	        // Json으로 유저정보 보내볼까하다가 안함 ㅋ
+//			String json = new Gson().toJson(principal);
+//			request.setAttribute("user", json);
+			
+			
 		return new PrincipalDetail(principal);
 	}
 

@@ -59,7 +59,12 @@ public class UserService {
 				return new IllegalArgumentException("회원 수정 실패 : 유저 정보가 없습니다.");
 			});
 		Persistence.setPassword(encoder.encode(user.getPassword()));
+		Persistence.setName(user.getName());
+		Persistence.setPhone(user.getPhone());
 		Persistence.setEmail(user.getEmail());
+		Persistence.setMainAddr(user.getMainAddr());
+		Persistence.setDetailAddr(user.getDetailAddr());
+		Persistence.setZoneCode(user.getZoneCode());
 	}
 
 	
