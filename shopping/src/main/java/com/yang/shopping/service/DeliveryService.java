@@ -66,6 +66,21 @@ public class DeliveryService {
 		}
 	}
 
+
+
+	//선택한 주문정보 디테일 가져오기
+	@Transactional
+	public Optional<Delivery> deliveryInfo(int deliId) {
+		try {
+			
+			return deliveryRepository.findById(deliId);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("DeliveryService : 제품삭제() : "+e.getMessage());
+		}
+		return null;
+	}
+	
 	
 	
 }

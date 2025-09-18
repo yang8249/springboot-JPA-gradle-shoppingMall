@@ -9,7 +9,9 @@ import org.hibernate.annotations.DynamicInsert;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -23,6 +25,7 @@ import jakarta.persistence.Lob;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.OrderBy;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -66,6 +69,11 @@ public class ReturnDelivery{
 	@ManyToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.
 	@JoinColumn(name = "productId") //userId라는 컬럼명으로 외래키를 만든다.
 	private Product product;
+	
+	@OneToMany(mappedBy = "returnDelivery", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+	@OrderBy("fileSeq ASC")
+	@JsonManagedReference
+	private List<FileInfo> fileInfo;
 	
 	@ManyToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.
 	@JoinColumn(name = "userId") //userId라는 컬럼명으로 외래키를 만든다.

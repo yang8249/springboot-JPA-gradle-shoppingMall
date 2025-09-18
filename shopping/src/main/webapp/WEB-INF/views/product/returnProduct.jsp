@@ -30,27 +30,56 @@
 </style>
 
 <div class="container">
-      <h1>제품 등록</h1>
+
+      <h1>반품 요청</h1>
       <br>
   	<form action="/auth/loginProc" method="post" class="was-validated" enctype="multipart/form-data">
+  	<div class="form-inline">
 	  <div class="form-group">
-	    <label for="title">제품명</label>
-	    <input type="text" data-info="제품명" class="form-control" id="productName" placeholder="Enter title" name="title" required>
+	    <label for="title">주문자 명</label>
+	    <input type="text" data-info="제품명" class="form-control" id="productName" readonly name="title" required>
 	  </div>
-	  
+		  <div class="form-group">
+		    <label for="title">은행명</label>
+		    <input type="text" data-info="제품명" class="form-control" id="productName" readonly name="title" required>
+		  </div>
+		  <div class="form-group">
+		    <label for="title">입금자 명</label>
+		    <input type="text" data-info="제품명" class="form-control" id="productName" readonly name="title" required>
+		  </div>	
+    </div>
   	<div class="form-inline">
 		  <div class="form-group">
-		    <label>가격</label>
-		    <input type="number" class="form-control" data-info="가격" id="price" value="${product.price}">
-		  </div>
-	   <!-- (옵션 동적 세팅 기능 추가 필요) -->
+		    <label for="title">제품 명</label>
+		    <input type="text" data-info="제품명" class="form-control" id="productName" readonly name="title" required>
+		  </div>	
 		  <div class="form-group">
-		    <label for="pwd">색상</label>
-		    <input type="text" class="form-control" data-info="색상" id="color" value="${product.color}">
+		    <label>가격</label>
+		    <input type="number" class="form-control" data-info="가격" id="price" readonly value="${product.price}">
 		  </div>
-		  <br>
-		  <div class="sort">
-			<select id="category" data-info="카테고리" name="selArray"
+		  <div class="form-group">
+		    <label>연락처</label>
+		    <input id="rphone2_1" data-info="휴대전화" name="rphone2_[]" maxlength="3"
+				fw-filter="isNumber&amp;isFill" fw-label="수취자 핸드폰번호"
+				fw-alone="N" fw-msg="" placeholder="" size="4" value=""
+				type="text">
+			-
+			<input id="rphone2_2" data-info="휴대전화"
+			name="rphone2_[]" maxlength="4"
+			fw-filter="isNumber&amp;isFill" fw-label="수취자 핸드폰번호"
+			fw-alone="N" fw-msg="" placeholder="" size="4" value=""
+			type="text">
+			
+			-
+			<input id="rphone2_3" data-info="휴대전화" name="rphone2_[]" maxlength="4"
+				fw-filter="isNumber&amp;isFill" fw-label="수취자 핸드폰번호"
+				fw-alone="N" fw-msg="" placeholder="" size="4" value=""
+				type="text">
+		  </div>
+		</div>
+  	<div class="form-inline">
+		  <div class="form-group">
+			<select id="category" disabled data-info="카테고리" name="selArray"
 				class="xans-element- xans-product xans-product-orderby"><option
 					value="">- 카테고리 -</option>
 				<option value="outerwear"
@@ -65,11 +94,18 @@
 					class="xans-record-">Accessories</option>
 			</select>
 		</div>
-  	</div>
-	
 		
+		  <div class="form-group">
+		  <!-- 여따가는 이미지 넣을 예정 제품썸넬 -->
+		</div>
+     </div>
+		<br>
+		<div class="form-group">
+	    <label for="title">제목</label>
+	    <input type="text" data-info="제품명" class="form-control" id="productName" placeholder="Enter title" name="title" required>
+	  </div>
 	  <div class="form-group">
-		  <label for="content">제품상세정보:</label>
+		  <label for="content">반품사유</label>
 		  <textarea data-info="제품상세" class="form-control summernote" rows="5" id="content"></textarea>
 	  </div>
 	<!-- 파일업로드 폼 -->
@@ -85,7 +121,7 @@
 </div>
 <script>
   $('.summernote').summernote({
-    placeholder: 'Hello Bootstrap 4',
+    placeholder: '상세히 적어주세요.',
     tabsize: 2,
     height: 300
   });

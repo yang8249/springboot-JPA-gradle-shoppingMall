@@ -20,6 +20,10 @@
 </style>
 
 <div class="container">
+
+      <h1>제품 수정</h1>
+      <br>
+      
   	<form action="/auth/loginProc" method="post" class="was-validated">
 		  <div class="form-group">
 		    <label for="title">제품명</label>

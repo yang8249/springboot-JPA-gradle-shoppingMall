@@ -52,10 +52,15 @@ public class FileInfo{
     private String fileType; // MIME 타입 (예: image/jpeg, application/pdf 등)
 
     @ManyToOne
-    @JoinColumn(name = "productSeq", nullable = false)  // 외래 키 설정
+    @JoinColumn(name = "productSeq", nullable = true)  // 외래 키 설정
     @JsonBackReference
 	private Product product;
 	
+    @ManyToOne
+    @JoinColumn(name = "id", nullable = true)  // 외래 키 설정
+    @JsonBackReference
+	private ReturnDelivery returnDelivery;
+    
 	@CreationTimestamp
 	private Timestamp createDate;
 }

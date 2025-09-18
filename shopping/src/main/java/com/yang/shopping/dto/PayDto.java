@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class PayDto{
+	
 	private Users users;
 	private Delivery delivery;
 	private Cart cart;

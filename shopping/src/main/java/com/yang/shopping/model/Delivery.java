@@ -71,7 +71,8 @@ public class Delivery{
 	private String payCustomer;
 	
 	//구매수량
-	@Column(length = 100)
+	@Column(nullable = false)
+	@ColumnDefault("0")
 	private int itemCount;
 
 	//최종금액

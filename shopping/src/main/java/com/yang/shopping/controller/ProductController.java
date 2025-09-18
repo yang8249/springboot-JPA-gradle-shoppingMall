@@ -4,6 +4,7 @@ import java.security.Principal;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -25,13 +26,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.google.gson.Gson;
 import com.yang.shopping.config.auth.PrincipalDetail;
+import com.yang.shopping.controller.api.ProductApiController;
 import com.yang.shopping.dto.ResponseDto;
 import com.yang.shopping.model.Board;
 import com.yang.shopping.model.Cart;
+import com.yang.shopping.model.Delivery;
 import com.yang.shopping.model.Product;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.model.Wish;
 import com.yang.shopping.service.CartService;
+import com.yang.shopping.service.DeliveryService;
 import com.yang.shopping.service.ProductService;
 import com.yang.shopping.service.WishService;
 
@@ -41,6 +45,8 @@ import jakarta.servlet.http.HttpSession;
 @Controller
 public class ProductController {
 
+    private final ProductApiController productApiController;
+
 	@Autowired
 	private ProductService productService;
 
@@ -49,6 +55,13 @@ public class ProductController {
 	
 	@Autowired
 	private CartService cartService;
+
+	@Autowired
+	private DeliveryService deliveryService;
+	
+    ProductController(ProductApiController productApiController) {
+        this.productApiController = productApiController;
+    }
 
 	// 제품 목록
 	@GetMapping("/products")
@@ -124,6 +137,20 @@ public class ProductController {
 	public String addProduct() {
 		
 		return "product/addProduct";
+	}
+	
+
+	// 반품 페이지
+	@GetMapping("/product/writeReturnItem")
+	public String addProduct(@RequestParam int id, @RequestParam int userId, Model model) {
+		
+		System.out.println("배송 id : "+id);
+		System.out.println("유저 id : "+userId);
+		Optional<Delivery> delivery = deliveryService.deliveryInfo(id);
+
+		model.addAttribute("delivery", delivery);
+		
+		return "product/returnProduct";
 	}
 
 	// 제품 수정
