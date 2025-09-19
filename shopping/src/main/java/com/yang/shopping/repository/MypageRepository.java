@@ -60,6 +60,12 @@ public interface MypageRepository extends JpaRepository<Delivery, Integer>{
     		@Param("userId") int id
 		);
 
+    // 주문목록 뽑는놈
+    @Query("SELECT d FROM ReturnDelivery d WHERE d.user.id = :userId ORDER BY d.createDate DESC")
+    List<Object> returnList(
+    		@Param("userId") int id
+		);
+    
     // 주문목록 뽑는놈2
     @Query("SELECT d FROM Cart d WHERE d.user.id = :userId ORDER BY d.createDate DESC")
     List<Object> cartList(

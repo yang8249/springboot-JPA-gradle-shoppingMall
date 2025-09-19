@@ -116,7 +116,7 @@
 							<div class="zoom_result" style="z-index: 100;"></div>
 						</div>
 						<hr>
-						<div style="margin-top: 300px;"
+						<div style="margin-top: 484px;"
 							class="xans-element- xans-product xans-product-addimage listImg">
 							<div class="inner">
 								<ul class="list">

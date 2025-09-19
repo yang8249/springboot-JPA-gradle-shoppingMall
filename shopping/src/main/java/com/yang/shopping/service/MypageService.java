@@ -113,6 +113,13 @@ public class MypageService {
 		return result;
     }
 
+	//주문목록 불러오기
+	@Transactional(readOnly = true)
+	public List<Object> returnList(int id) {
+		List<Object> result = mypageRepository.returnList(id);
+		return result;
+    }
+	
 	//장바구니 불러오기
 	@Transactional(readOnly = true)
 	public List<Object> cartList(int id) {

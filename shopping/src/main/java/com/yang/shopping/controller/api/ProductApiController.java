@@ -33,10 +33,12 @@ import com.yang.shopping.dto.CartDto;
 import com.yang.shopping.dto.DeliveryDto;
 import com.yang.shopping.dto.ProductDto;
 import com.yang.shopping.dto.ResponseDto;
+import com.yang.shopping.dto.ReturnDto;
 import com.yang.shopping.dto.WishDto;
 import com.yang.shopping.model.Board;
 import com.yang.shopping.model.Cart;
 import com.yang.shopping.model.Product;
+import com.yang.shopping.model.ReturnDelivery;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.service.DeliveryService;
 import com.yang.shopping.service.ProductService;
@@ -133,6 +135,27 @@ public class ProductApiController {
 		deliveryService.removeDelivery(deliveryDto);
 		
 		return new ResponseDto<DeliveryDto>(HttpStatus.OK.value(), deliveryDto);
+	}
+	
+
+	//반품 등록
+	@PostMapping("/api/Product/insertReturn")
+	public ResponseDto<ReturnDto> insertReturn(
+			@RequestParam("returnDelivery") String returnDeliveryJson,
+			@RequestParam List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
+
+	    // JSON 문자열을 Product 객체로 변환
+		ObjectMapper objectMapper = new ObjectMapper();
+		ReturnDto returnDto = objectMapper.readValue(returnDeliveryJson, ReturnDto.class);
+
+	    returnDto.setFile(file);
+	    
+		System.out.println("return : "+returnDto.getReturnDelivery());
+		System.out.println("fileInfo : "+returnDto.getFile());
+		
+		productService.insertReturn(returnDto);
+		
+		return new ResponseDto<ReturnDto>(HttpStatus.OK.value(), null);
 	}
 	
 	/*

@@ -47,13 +47,17 @@ public class ReturnDelivery{
 	private int id;
 	
 	//처리상태
-	@Column(length = 200)
-	private String status;
+	@Enumerated(EnumType.STRING)
+	private StatusType status;
 
 	//환불금액
 	@Column(length = 200)
 	private String refund;
 
+	
+	//반품제목
+	@Column(length = 200)
+	private String returnTitle;
 	//반품사유
 	@Lob
 	private String reason;
@@ -65,14 +69,9 @@ public class ReturnDelivery{
 	@ManyToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.
 	@JoinColumn(name = "deliId") //userId라는 컬럼명으로 외래키를 만든다.
 	private Delivery delivery;
-
-	@ManyToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.
-	@JoinColumn(name = "productId") //userId라는 컬럼명으로 외래키를 만든다.
-	private Product product;
 	
 	@OneToMany(mappedBy = "returnDelivery", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
 	@OrderBy("fileSeq ASC")
-	@JsonManagedReference
 	private List<FileInfo> fileInfo;
 	
 	@ManyToOne //Many = board, One = users 테이블을 뜻한다. 1대다 관계임.

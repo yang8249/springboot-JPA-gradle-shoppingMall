@@ -1642,7 +1642,7 @@
 								<tr>
 									<th scope="row">입금자명 <span class="icoRequired">필수</span>
 									</th>
-									<td><input id="pname" name="pname" fw-filter=""
+									<td><input id="pname"  name="pname" fw-filter=""
 										fw-label="무통장 입금자명" data-info="입금자명" fw-msg="" class="inputTypeText"
 										placeholder="" size="15" maxlength="20" value="" type="text"></td>
 								</tr>

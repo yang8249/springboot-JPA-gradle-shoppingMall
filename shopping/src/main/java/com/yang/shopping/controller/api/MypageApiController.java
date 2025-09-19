@@ -69,6 +69,15 @@ public class MypageApiController {
 		return new ResponseDto<List<Object>>(HttpStatus.OK.value(), result);
 	}
 
+	//주문내역 가져오기
+	@PostMapping("/api/mypage/returnList")
+	public ResponseDto<List<Object>> returnList(@RequestBody Users user) {
+		
+		//사용자 id값으로 정보 가져오기
+		List<Object> result = mypageService.returnList(user.getId());
+		return new ResponseDto<List<Object>>(HttpStatus.OK.value(), result);
+	}
+	
 	//장바구니 가져오기
 	@PostMapping("/api/mypage/cartList")
 	public ResponseDto<List<Object>> cartList(@RequestBody Users user) {

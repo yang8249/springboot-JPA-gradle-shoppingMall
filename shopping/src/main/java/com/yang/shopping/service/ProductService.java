@@ -1,5 +1,7 @@
 package com.yang.shopping.service;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
@@ -9,6 +11,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.imageio.ImageIO;
 
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,15 +23,20 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.yang.shopping.dto.ProductDto;
+import com.yang.shopping.dto.ReturnDto;
 import com.yang.shopping.model.Cart;
+import com.yang.shopping.model.Delivery;
 import com.yang.shopping.model.FileInfo;
 import com.yang.shopping.model.Product;
+import com.yang.shopping.model.ReturnDelivery;
+import com.yang.shopping.model.StatusType;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.model.Wish;
 import com.yang.shopping.repository.CartRepository;
 import com.yang.shopping.repository.DeliveryRepository;
 import com.yang.shopping.repository.FileRepository;
 import com.yang.shopping.repository.ProductRepository;
+import com.yang.shopping.repository.ReturnRepository;
 import com.yang.shopping.repository.UserRepository;
 import com.yang.shopping.repository.WishRepository;
 
@@ -66,7 +74,9 @@ public class ProductService {
 
 	@Autowired
 	private DeliveryRepository deliveryRepository;
-	
+
+	@Autowired
+	private ReturnRepository returnRepository;
 
     // 파일 저장 경로 (예시로 "uploads" 폴더에 저장)
     private static final String UPLOAD_DIR = "D:/upload/img/";
@@ -212,7 +222,47 @@ public class ProductService {
 	}
 	
 
+
 	public int uploadFile(List<MultipartFile> file, Product product) {
+	    try {
+	        int result = 0;
+	        for (int i = 0; i < file.size(); i++) {
+	            String originalFilename = file.get(i).getOriginalFilename();
+	            String uniqueFileName = UUID.randomUUID().toString() + "_" + originalFilename;
+	
+	            BufferedImage originalImage = ImageIO.read(file.get(i).getInputStream());
+	            int targetWidth = 600;
+	            int targetHeight = 600;
+	            BufferedImage resizedImage = new BufferedImage(targetWidth, targetHeight, originalImage.getType());
+	            Graphics2D g = resizedImage.createGraphics();
+	            g.drawImage(originalImage, 0, 0, targetWidth, targetHeight, null);
+	            g.dispose();
+	
+	            File destFile = new File(UPLOAD_DIR + uniqueFileName);
+	            ImageIO.write(resizedImage, "jpg", destFile);
+	
+	            System.out.println("파일명 : " + uniqueFileName);
+	            result++;
+	            FileInfo fileInfo = new FileInfo();
+	            fileInfo.setFileName(originalFilename);
+	            fileInfo.setFileSize(destFile.length()); // 리사이즈된 파일 크기
+	            fileInfo.setFileType(file.get(i).getContentType());
+	            fileInfo.setFilePath(UPLOAD_DIR + uniqueFileName);
+	            fileInfo.setUuid(uniqueFileName);
+	            fileInfo.setProduct(product);
+	
+	            fileRepository.save(fileInfo);
+	        }
+	        return result;
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	        System.out.println("fileUpload : 파일업로드() : " + e.getMessage());
+	    }
+	    return 0;
+	}
+
+
+	public int uploadFile_return(List<MultipartFile> file, ReturnDelivery product) {
 		try {
 			int result = 0;
 				for(int i=0; i<file.size(); i++) {
@@ -233,7 +283,7 @@ public class ProductService {
 					fileInfo.setFileType(file.get(i).getContentType());
 					fileInfo.setFilePath(UPLOAD_DIR+uniqueFileName);
 					fileInfo.setUuid(uniqueFileName);
-					fileInfo.setProduct(product);
+					fileInfo.setReturnDelivery(product);
 					
 					fileRepository.save(fileInfo);
 				}
@@ -246,4 +296,47 @@ public class ProductService {
 		}
 		return 0;
 	}
+	
+	//반품 저장
+
+	// src/main/java/com/yang/shopping/service/ProductService.java
+
+	@Transactional
+	public void insertReturn(ReturnDto returnDto) {
+	    try {
+	        ReturnDelivery returnDelivery = returnDto.getReturnDelivery();
+
+	        // 배송 PK 값이 있다고 가정 (예: returnDto.getDeliveryId())
+	        int deliveryId = returnDto.getDelivery().getId();
+	        Delivery delivery = deliveryRepository.findById(deliveryId)
+	            .orElseThrow(() -> new IllegalArgumentException("배송 정보 없음"));
+
+	        // 배송 PK 값이 있다고 가정 (예: returnDto.getDeliveryId())
+	        int userId = returnDto.getUsers().getId();
+	        Users user = userRepository.findById(userId)
+	            .orElseThrow(() -> new IllegalArgumentException("user 정보 없음"));
+	        
+	        
+	        // 배송 엔티티 할당
+	        returnDelivery.setDelivery(delivery);
+	        returnDelivery.setUser(user);
+	        returnDelivery.setStatus(StatusType.REQUESTED); // 반품 요청 상태로 설정);
+	        
+	        // 저장
+	        ReturnDelivery savedReturnDelivery = returnRepository.save(returnDelivery);
+
+	        int accessCount = 0;
+	        if (!returnDto.getFile().isEmpty()) {
+	            accessCount = uploadFile_return(returnDto.getFile(), savedReturnDelivery);
+	        }
+	        if (accessCount < 1) {
+	            System.out.println("저장된파일이 없음.");
+	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("BoardService : 글쓰기() : " + e.getMessage());
+	    }
+	}
+
 }

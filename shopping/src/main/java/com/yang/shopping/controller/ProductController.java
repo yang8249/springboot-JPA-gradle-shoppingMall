@@ -146,7 +146,7 @@ public class ProductController {
 		
 		System.out.println("배송 id : "+id);
 		System.out.println("유저 id : "+userId);
-		Optional<Delivery> delivery = deliveryService.deliveryInfo(id);
+		Delivery delivery = deliveryService.deliveryInfo(id);
 
 		model.addAttribute("delivery", delivery);
 		

@@ -57,7 +57,7 @@ async function initCartwishGrid(){
 	//데이터 긁어오기
 	for (let i = 0; i < cartList.length; i++) {
 	  const obj = {
-	    num: i,
+	    num: i+1,
 	    image: cartList[i].product.fileInfo[0].uuid,
 		productSeq: cartList[i].product.productSeq,
 		productName: cartList[i].product.productName,
@@ -79,20 +79,20 @@ async function initCartwishGrid(){
 	  	layout:"fitColumns", //fit columns to width of table (optional)
 		maxHeight: "600px", //늘어나다가 최대 600px 까지 늘어나도록 제한검
 	  	columns:[ //Define Table Columns
-			{title:"순번", field:"num", width:65, hozAlign:"center", vertAlign: "center"},
+			{title:"순번", field:"num", width:65, hozAlign:"center", vertAlign: "middle"},
 			{
 			  title:"image",
 			  field:"image",
 			  formatter: function(cell, formatterParams){
 			    var imgUrl = cell.getValue();
 			    return `<img src="/image?filename=${imgUrl}" style="height:100px;">`;
-			  },hozAlign:"center", vertAlign: "center"
+			  },hozAlign:"center", vertAlign: "middle"
 			},
-	 	 	{title:"제품 명", field:"productName", hozAlign:"center", vertAlign: "center"},
-			{title:"카테고리", field:"category", hozAlign:"center", vertAlign: "center", width: 125},
-			{title:"담은 갯수", field:"productCount", hozAlign:"center", vertAlign: "center", width: 100},
-			{title:"총 금액", field:"totalPrice", hozAlign:"center", vertAlign: "center"},
-	 	 	{title:"장바구니 등록 일", field:"createDate", hozAlign:"center", vertAlign: "center", width: 150},
+	 	 	{title:"제품 명", field:"productName", hozAlign:"center", vertAlign: "middle", formatter: "textarea"},
+			{title:"카테고리", field:"category", hozAlign:"center", vertAlign: "middle", width: 125},
+			{title:"담은 갯수", field:"productCount", hozAlign:"center", vertAlign: "middle", width: 100},
+			{title:"총 금액", field:"totalPrice", hozAlign:"center", vertAlign: "middle"},
+	 	 	{title:"장바구니 등록 일", field:"createDate", hozAlign:"center", vertAlign: "middle", width: 150},
 	  	]
 	 });
 
@@ -129,7 +129,7 @@ async function initCartwishGrid(){
 	 //데이터 긁어오기
 	 for (let i = 0; i < wishList.length; i++) {
 	   const obj = {
-	     num: i,
+	     num: i+1,
 	     image: wishList[i].product.fileInfo[0].uuid,
 	 	productSeq: wishList[i].product.productSeq,
 	 	productName: wishList[i].product.productName,
@@ -149,7 +149,7 @@ async function initCartwishGrid(){
 	   	layout:"fitColumns", //fit columns to width of table (optional)
 	 	maxHeight: "600px", //늘어나다가 최대 600px 까지 늘어나도록 제한검
 	   	columns:[ //Define Table Columns
-	 		{title:"순번", field:"num", width:65, hozAlign:"center", vertAlign: "center"},
+	 		{title:"순번", field:"num", width:65, hozAlign:"center", vertAlign: "middle"},
 	 		{
 	 		  title:"image",
 	 		  field:"image",
@@ -158,9 +158,9 @@ async function initCartwishGrid(){
 	 		    return `<img src="/image?filename=${imgUrl}" style="height:100px;">`;
 	 		  },hozAlign:"center", vertAlign: "center"
 	 		},
-	  	 	{title:"제품 명", field:"productName", hozAlign:"center", vertAlign: "center"},
-	 		{title:"카테고리", field:"category", hozAlign:"center", vertAlign: "center", width: 120},
-	  	 	{title:"찜 등록 일", field:"createDate", hozAlign:"center", vertAlign: "center", width: 150},
+	  	 	{title:"제품 명", field:"productName", hozAlign:"center", vertAlign: "middle", formatter: "textarea"},
+	 		{title:"카테고리", field:"category", hozAlign:"center", vertAlign: "middle", width: 120},
+	  	 	{title:"찜 등록 일", field:"createDate", hozAlign:"center", vertAlign: "middle", width: 150},
 	   	]
 	  });
 

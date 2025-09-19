@@ -18,7 +18,7 @@
 
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
-<link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<link href="/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iyVHgWdgbOYA1Qxlw7jRhcp52l0uPEs4zrd0MRrcr1fDCFRPyz0k1VrxB1urC55B" crossorigin="anonymous">
 
 <!-- 그리드 라이브러리 -->	
 <link href="https://unpkg.com/tabulator-tables/dist/css/tabulator.min.css" rel="stylesheet">
@@ -346,7 +346,7 @@
 	const page = `${page}`;
 </script>
 
-<script src="/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+<script src="/js/bootstrap.bundle.min.js" integrity="sha384-HZYy7/e2t5ulY6HtYcKY7AWRuIBuyk3YMY+jfKGECq5pbYjpOnD+SSNz14RIH6F7" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.3.2/dist/chart.umd.js" integrity="sha384-eI7PSr3L1XLISH8JdDII5YN/njoSsxfbrkCTnJrzXt+ENP5MOVBxD+l6sEG4zoLp" crossorigin="anonymous"></script><script src="/js/dashboard.js"></script></body>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="/js/mypage/main.js"></script>

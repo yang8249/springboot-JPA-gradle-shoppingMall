@@ -30,68 +30,81 @@
 </style>
 
 <div class="container">
-
+ <input type="hidden" value="${delivery.phone}" class="form-control" id="phone" name="phone"  >
+ <input type="hidden" value="${delivery.product.productSeq}" class="form-control" id="productSeq"name="productSeq"  >
+ <input type="hidden" value="${delivery.id}" class="form-control" id="deliId"name="deliId"  >
+		 
       <h1>반품 요청</h1>
       <br>
   	<form action="/auth/loginProc" method="post" class="was-validated" enctype="multipart/form-data">
   	<div class="form-inline">
 	  <div class="form-group">
-	    <label for="title">주문자 명</label>
-	    <input type="text" data-info="제품명" class="form-control" id="productName" readonly name="title" required>
+	    <label for="orderName">주문자 명</label>
+	    <input type="text" value="${delivery.orderName}" data-info="주문자 명" class="form-control" id="orderName" readonly name="orderName" required>
 	  </div>
 		  <div class="form-group">
-		    <label for="title">은행명</label>
-		    <input type="text" data-info="제품명" class="form-control" id="productName" readonly name="title" required>
+		    <label for="bank">은행명</label>
+		    <input type="text" value="${delivery.bank}" data-info="은행명" class="form-control" id="bank" readonly name="bank" required>
 		  </div>
 		  <div class="form-group">
-		    <label for="title">입금자 명</label>
-		    <input type="text" data-info="제품명" class="form-control" id="productName" readonly name="title" required>
+		    <label for="payCustomer">입금자 명</label>
+		    <input type="text" value="${delivery.payCustomer}" data-info="입금자 명" class="form-control" id="payCustomer" readonly name="payCustomer" required>
 		  </div>	
     </div>
   	<div class="form-inline">
 		  <div class="form-group">
-		    <label for="title">제품 명</label>
-		    <input type="text" data-info="제품명" class="form-control" id="productName" readonly name="title" required>
+		    <label for="productName">제품 명</label>
+		    <input type="text" value="${delivery.product.productName}" data-info="제품 명" class="form-control" id="productName" readonly name="productName" required>
 		  </div>	
 		  <div class="form-group">
-		    <label>가격</label>
-		    <input type="number" class="form-control" data-info="가격" id="price" readonly value="${product.price}">
+		    <label for="price">가격</label>
+		    <input type="text" value="${delivery.totalPrice}" class="form-control" data-info="가격" id="price" name="totalPrice" readonly>
 		  </div>
 		  <div class="form-group">
 		    <label>연락처</label>
-		    <input id="rphone2_1" data-info="휴대전화" name="rphone2_[]" maxlength="3"
+		    <input id="rphone2_1" readonly data-info="휴대전화" name="rphone2_[]" maxlength="3"
 				fw-filter="isNumber&amp;isFill" fw-label="수취자 핸드폰번호"
 				fw-alone="N" fw-msg="" placeholder="" size="4" value=""
 				type="text">
 			-
-			<input id="rphone2_2" data-info="휴대전화"
+			<input id="rphone2_2" readonly data-info="휴대전화"
 			name="rphone2_[]" maxlength="4"
 			fw-filter="isNumber&amp;isFill" fw-label="수취자 핸드폰번호"
 			fw-alone="N" fw-msg="" placeholder="" size="4" value=""
 			type="text">
 			
 			-
-			<input id="rphone2_3" data-info="휴대전화" name="rphone2_[]" maxlength="4"
+			<input id="rphone2_3" readonly data-info="휴대전화" name="rphone2_[]" maxlength="4"
 				fw-filter="isNumber&amp;isFill" fw-label="수취자 핸드폰번호"
 				fw-alone="N" fw-msg="" placeholder="" size="4" value=""
 				type="text">
 		  </div>
-		</div>
+	</div>
   	<div class="form-inline">
 		  <div class="form-group">
 			<select id="category" disabled data-info="카테고리" name="selArray"
 				class="xans-element- xans-product xans-product-orderby"><option
 					value="">- 카테고리 -</option>
 				<option value="outerwear"
-					class="xans-record-">Outerwear</option>
+					class="xans-record-" 
+					${delivery.product.category eq 'outerwear' ? 'selected' : ''}
+					>Outerwear</option>
 				<option value="tops"
-					class="xans-record-">Tops</option>
+					class="xans-record-" 
+					${delivery.product.category eq 'tops' ? 'selected' : ''}
+					>Tops</option>
 				<option value="dresses"
-					class="xans-record-">Dresses</option>
+					class="xans-record-" 
+					${delivery.product.category eq 'dresses' ? 'selected' : ''}
+					>Dresses</option>
 				<option value="bottoms"
-					class="xans-record-">Bottoms</option>
+					class="xans-record-"
+					${delivery.product.category eq 'bottoms' ? 'selected' : ''}
+					>Bottoms</option>
 				<option value="accessories"
-					class="xans-record-">Accessories</option>
+					class="xans-record-"
+					${delivery.product.category eq 'accessories' ? 'selected' : ''}
+					>Accessories</option>
 			</select>
 		</div>
 		
@@ -101,12 +114,12 @@
      </div>
 		<br>
 		<div class="form-group">
-	    <label for="title">제목</label>
-	    <input type="text" data-info="제품명" class="form-control" id="productName" placeholder="Enter title" name="title" required>
+	    <label for="returnTitle">제목</label>
+	    <input type="text" data-info="제목" class="form-control" id="returnTitle" placeholder="Enter title" name="returnTitle" required>
 	  </div>
 	  <div class="form-group">
-		  <label for="content">반품사유</label>
-		  <textarea data-info="제품상세" class="form-control summernote" rows="5" id="content"></textarea>
+		  <label for="reason">반품사유</label>
+		  <textarea data-info="반품사유" class="form-control summernote" rows="5" id="reason"></textarea>
 	  </div>
 	<!-- 파일업로드 폼 -->
 	<div class="filebox bs3-primary preview-image" id="dynamicBox">
@@ -121,7 +134,7 @@
 </div>
 <script>
   $('.summernote').summernote({
-    placeholder: '상세히 적어주세요.',
+    placeholder: '반품 사유를 상세히 적어주세요.',
     tabsize: 2,
     height: 300
   });
@@ -129,5 +142,5 @@
 <script type="text/javascript">
  let pageable = ${products.number};
 </script>
-<script type="text/javascript" src="/js/product/addProduct.js"></script>
+<script type="text/javascript" src="/js/product/returnDelivery.js"></script>
 <%@ include file="../layout/footer.jsp" %>

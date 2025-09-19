@@ -42,7 +42,8 @@ public class DeliveryService {
 	private ReturnRepository returnRepository;
 
 
-	//현재 로그인된 계정에 대한 장바구니목록 불러오기
+	//관리자가 반품오케이 하면
+	//구매완료 (delivery) 테이블에 저장된 건 삭제시켜주는 서비수
 	@Transactional
 	public void removeDelivery(DeliveryDto deliveryDto) {
 		try {
@@ -70,10 +71,10 @@ public class DeliveryService {
 
 	//선택한 주문정보 디테일 가져오기
 	@Transactional
-	public Optional<Delivery> deliveryInfo(int deliId) {
+	public Delivery deliveryInfo(int deliId) {
 		try {
 			
-			return deliveryRepository.findById(deliId);
+			return deliveryRepository.findById(deliId).orElse(null);
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("DeliveryService : 제품삭제() : "+e.getMessage());

@@ -7,6 +7,9 @@ import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -33,6 +36,7 @@ import lombok.ToString;
 @AllArgsConstructor
 @Builder
 @Entity //ORM -> Java Obejct -> 테이블로 매핑해주는 기술이다.
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "fileSeq")
 public class FileInfo{
 	
 	@Id
@@ -57,8 +61,8 @@ public class FileInfo{
 	private Product product;
 	
     @ManyToOne
-    @JoinColumn(name = "id", nullable = true)  // 외래 키 설정
-    @JsonBackReference
+    @JoinColumn(name = "returnDeliveryId", nullable = true)  // 외래 키 설정
+    @JsonIgnoreProperties("returnDelivery")
 	private ReturnDelivery returnDelivery;
     
 	@CreationTimestamp

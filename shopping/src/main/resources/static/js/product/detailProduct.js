@@ -474,6 +474,7 @@ $(function(){
 			$("#rphone2_1").val(phoneNum1);
 			$("#rphone2_2").val(phoneNum2);
 			$("#rphone2_3").val(phoneNum3);
+			$("#pname").val(name);
 			
 		});
 		

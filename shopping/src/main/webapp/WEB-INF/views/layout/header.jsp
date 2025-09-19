@@ -175,7 +175,7 @@
 			  </c:when>
 			  <c:otherwise>
 			        <li><a href="/user/mypageForm?userId=${principal.user.id}"><span class="glyphicon glyphicon-user"></span> 내 정보</a></li>
-			        <li><a href="/user/mypageForm?userId=${principal.user.id}"><span style="margin-right:5px" class="glyphicon glyphicon-shopping-cart"></span>장바구니</a></li>
+			        <li><a href="/user/mypageForm?userId=${principal.user.id}"><span style="margin-right:5px" class="glyphicon glyphicon-shopping-cart"></span>문의하기</a></li>
 			        <li>
 						<c:if test="${empty principal.user.oauth}">
 					       <a class="nav-link" href="/logout"><span class="glyphicon glyphicon-user"></span> 로그아웃</a>
