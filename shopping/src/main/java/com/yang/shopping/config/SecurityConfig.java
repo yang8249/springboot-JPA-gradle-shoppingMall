@@ -68,10 +68,16 @@ public class SecurityConfig {
 		 	// 기본적으로 REQUEST 방식에 대한 필터라서 이렇게 dispatcher 설정을 해줘야한다.
 		 	// 이거 안하면 무한 리다이렉트 걸림 ㅠ
             request.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
+            .requestMatchers("/user/**", "/mypage/**", "/mypageForm", "/user/mypageForm").authenticated()
 		     //.requestMatchers().authenticated()
 		     .anyRequest().permitAll() //permitAll은 권한없어도 OK해주는 옵션
 		     
 		 )
+        .exceptionHandling(e ->
+	        e.authenticationEntryPoint(
+	                new org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint("/")
+	        )
+		)
 	     .formLogin(login -> login
 	    		 //초기 로그인 페이지를 커스텀해서 내 JSP로 넘기는 필터임.
 	 		     .loginPage("/auth/loginForm")
