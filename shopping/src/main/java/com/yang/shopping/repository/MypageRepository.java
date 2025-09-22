@@ -23,11 +23,11 @@ public interface MypageRepository extends JpaRepository<Delivery, Integer>{
 	//@Query("SELECT d FROM Delivery d LEFT JOIN FETCH d.product WHERE d.createDate BETWEEN :start AND :end AND d.user.id = :userId ORDER BY d.createDate DESC")
     @Query(value = """
             WITH RECURSIVE week_days AS (
-                SELECT DATE('2025-09-15') AS day
+                SELECT DATE(:start) AS day
                 UNION ALL
                 SELECT DATE_ADD(day, INTERVAL 1 DAY)
                 FROM week_days
-                WHERE day < DATE('2025-09-21')
+                WHERE day < DATE(:end)
             )
             SELECT 
                 wd.day,

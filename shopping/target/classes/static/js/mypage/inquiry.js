@@ -10,7 +10,7 @@
 	   ];
 	   
 	   //create Tabulator on DOM element with id "example-table"
-	   var table = new Tabulator("#example-table5", {
+	   var table5 = new Tabulator("#example-table5", {
 	    	height:205, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
 	    	data:tabledata, //assign data to table
 	    	layout:"fitColumns", //fit columns to width of table (optional)
@@ -23,6 +23,6 @@
 	   });
 
 	   //trigger an alert message when the row is clicked
-	   table.on("rowClick", function(e, row){ 
+	   table5.on("rowClick", function(e, row){ 
 	   	alert("Row " + row.getData().id + " Clicked!!!!");
 	   });

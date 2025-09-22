@@ -178,7 +178,7 @@ $(document).ready(function(){
 			    success: function(response) {
 					alert("반품 요청이 완료되었습니다.");
 			        console.log("Upload Success: ", response);
-					location.href = "/";
+					location.href = "/user/mypageForm?page=orderList";
 			    },
 			    error: function(xhr, status, error) {
 			        console.log("Upload Failed: ", error);

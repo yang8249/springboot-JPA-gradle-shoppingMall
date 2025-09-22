@@ -1,6 +1,8 @@
 
 let orderList;
 let returnList;
+var table = null;
+var table2 = null;
 
 async function getOrderList(){
 	//주문목록이용
@@ -84,7 +86,7 @@ async function initGrid(){
 	 ];*/
 	 
 	 //create Tabulator on DOM element with id "example-table"
-	 var table = new Tabulator("#example-table1", {
+	  table = new Tabulator("#example-table1", {
 		resizableRows: true,
 	  	height:705, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
 	  	data:test, //assign data to table
@@ -117,7 +119,7 @@ async function initGrid(){
 			{title:"주문 갯수", field:"itemCount", hozAlign:"center", vertAlign: "middle", width: 100},
 			{title:"결제 금액", field:"totalPrice", hozAlign:"center", vertAlign: "middle", width: 120},
 	 	 	{title:"결제일", field:"createDate", hozAlign:"center", vertAlign: "middle" },
-	  	]
+	  	],
 	 });
 
 	 //요기는 위에서 만든 그리드 버튼이벤트 넣는곳
@@ -158,6 +160,20 @@ async function initGrid(){
  	const returnListArr = [];
 
  	for (let i = 0; i < returnList.length; i++) {
+		
+		let status = returnList[i].status;
+		switch(status) {
+			case "REQUESTED":
+				status = "반품 요청됨";
+				break;
+			case "APPROVED":
+				status = "처리 승인됨";
+				break;
+			case "REFUNDED":
+				status = "반품 완료";
+				break;
+			default:
+		}
  	  const obj = {
  	    num: i+1,
  		returnId: returnList[i].id,
@@ -173,7 +189,7 @@ async function initGrid(){
 		reason: returnList[i].reason,
 		returnTitle: returnList[i].returnTitle,
 		adminNote: returnList[i].adminNote,
-		status: returnList[i].status
+		status: status
  	  };
 
  	  returnListArr.push(obj);
@@ -183,10 +199,10 @@ async function initGrid(){
 	
 	 
 	  
-	var table2 = new Tabulator("#example-table2", {
+	table2 = new Tabulator("#example-table2", {
 	  	height:705, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
 	  	data:returnListArr, //assign data to table
-	  	layout:"fitDataFill", //fit columns to width of table (optional)
+	  	layout:"fitColumns", //fit columns to width of table (optional)
 		maxHeight: "600px", //늘어나다가 최대 600px 까지 늘어나도록 제한검
 	  	columns:[ //Define Table Columns
 			{title:"순번", field:"num", width:65, hozAlign:"center", vertAlign: "middle"},
@@ -205,7 +221,7 @@ async function initGrid(){
 			    align: "center",
 			    formatter: function(cellvalue, options, rowObject) {
 					console.log("editRow :"+rowObject.id);
-			      return `<button onclick="editRow('${rowObject.id}')">반품하기</button>`;
+			      return `<button onclick="editRow('${rowObject.id}')">반품취소</button>`;
 			    },hozAlign:"center", vertAlign: "middle"
 			  },
 	 	 	{title:"주문자", field:"name", width:150, hozAlign:"center", vertAlign: "middle"},
@@ -227,8 +243,31 @@ async function initGrid(){
 	 console.log(row);
 
 	 if (e.target.tagName === "BUTTON") {
-	   console.log("버튼 태그 클릭됨!");
-	   window.location = "/product/writeReturnItem?id="+ row._row.data.deliId +"&userId="+ user.id;
+		 const result = confirm("반품을 취소하시겠습니까?");
+		 if (result) {
+	   		console.log("예");		
+			$.ajax({
+				url:"/api/mypage/cancelReturnItem?id="+ row._row.data.returnId,
+				type:"DELETE",
+				data:JSON.stringify(user),
+				contentType:"application/json; charset=utf-8",
+			    dataType: "json",
+			    success: async function(response) {
+					if (response.data > 0) {
+						alert("반품이 취소되었습니다.");
+						table2.getRows()[row.getPosition()-1].delete()
+						return;
+					}
+				  alert("반품 취소에 실패했습니다.");
+			    },
+			    error: function(xhr, status, error) {
+				  alert("반품 취소에 실패했습니다." + error);
+			    }
+			  });
+		} else {
+		   // 사용자가 "아니오"를 눌렀을 때
+		   console.log("아니요");
+		 }
 
 	   return; 
 	 }

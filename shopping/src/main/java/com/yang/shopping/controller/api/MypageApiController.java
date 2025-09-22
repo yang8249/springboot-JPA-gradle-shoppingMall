@@ -10,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
@@ -96,7 +97,16 @@ public class MypageApiController {
 		return new ResponseDto<List<Object>>(HttpStatus.OK.value(), result);
 	}
 	
-	
+
+	//반품 취소하기
+	@DeleteMapping("/api/mypage/cancelReturnItem")
+	public ResponseDto<Integer> cancelReturnItem(int id) {
+		
+		//반품테이블 id로 반품 취소 서비스 시작하기
+		boolean bool = mypageService.cancelReturnItem(id);
+		int result = bool ? 1 : 0;
+		return new ResponseDto<Integer>(HttpStatus.OK.value(), result);
+	}
 	
 
 	//사용자 정보 가져오기

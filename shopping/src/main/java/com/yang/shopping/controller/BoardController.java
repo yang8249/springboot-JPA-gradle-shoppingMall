@@ -23,6 +23,8 @@ public class BoardController {
 	
 	@Autowired
 	private BoardService boardService;
+
+	
 	
 	@GetMapping({"", "/"})
 	public String index(Model model, 
@@ -36,6 +38,18 @@ public class BoardController {
 		return "main";
 	}
 
+	@GetMapping("/admin")
+	public String locationIndex(Model model, 
+			@PageableDefault(size = 3, sort = "id", direction = Direction.DESC) Pageable pageable) {
+		/* @AuthenticationPrincipal PrincipalDetail principal */
+		//스프링 시큐리티에서 작성한 로그인처리 로직이 끝난다음에 principal 객체에 정보가 담겨진다.
+		Page<Board> boards = boardService.selectAllBoard(pageable);
+		
+		model.addAttribute("boards", boards);
+		
+		return "admin/index";
+	}
+	
 	@GetMapping("/board/{id}")
 	public String findById(@PathVariable int id, Model model) {
 		//스프링 시큐리티에서 작성한 로그인처리 로직이 끝난다음에 principal 객체에 정보가 담겨진다.

@@ -14,11 +14,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.yang.shopping.model.Delivery;
 import com.yang.shopping.model.Product;
+import com.yang.shopping.model.ReturnDelivery;
 import com.yang.shopping.model.RoleType;
 import com.yang.shopping.model.Users;
 import com.yang.shopping.repository.DeliveryRepository;
 import com.yang.shopping.repository.MypageRepository;
 import com.yang.shopping.repository.ProductRepository;
+import com.yang.shopping.repository.ReturnRepository;
 import com.yang.shopping.repository.UserRepository;
 
 
@@ -41,6 +43,9 @@ public class MypageService {
 
 	@Autowired
 	private MypageRepository mypageRepository;
+	
+	@Autowired
+	private ReturnRepository returnRepository;
 	
 	@Autowired
 	private BCryptPasswordEncoder encoder;
@@ -134,4 +139,19 @@ public class MypageService {
 		List<Object> result = mypageRepository.wishList(id);
 		return result;
     }
+	
+	//반품 삭제요
+	@Transactional
+	public boolean cancelReturnItem(int id) {
+		ReturnDelivery findReturn = returnRepository.findById(id)
+			.orElseThrow(()->{
+				return new IllegalArgumentException("회원 수정 실패 : 유저 정보가 없습니다.");
+			});
+
+		returnRepository.delete(findReturn);
+		
+		return !returnRepository.existsById(id);
+	}
+
+	
 }

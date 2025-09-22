@@ -1,5 +1,7 @@
 
 let cartList, wishList;
+var table4, table3 = null;
+ 
 
 async function getCartList(){
 	//주문목록이용
@@ -73,7 +75,7 @@ async function initCartwishGrid(){
 	console.log(tabledata);
 	 
 	//긁어온 데이터로 테이블 생성
-	var table = new Tabulator("#example-table3", {
+	var table3 = new Tabulator("#example-table3", {
 	  	height:705, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
 	  	data:tabledata, //assign data to table
 	  	layout:"fitColumns", //fit columns to width of table (optional)
@@ -99,7 +101,7 @@ async function initCartwishGrid(){
 	 
 	 //요기는 위에서 만든 그리드 버튼이벤트 넣는곳
 	 //trigger an alert message when the row is clicked
-	 table.on("rowClick", function(e, row){ 
+	 table3.on("rowClick", function(e, row){ 
 		
 		console.log(e);
 		console.log(row);
@@ -143,7 +145,7 @@ async function initCartwishGrid(){
 	 console.log(tabledata2);
 	  
 	 //긁어온 데이터로 테이블 생성
-	 var table = new Tabulator("#example-table4", {
+	  table4 = new Tabulator("#example-table4", {
 	   	height:705, // set height of table (in CSS or here), this enables the Virtual DOM and improves render speed dramatically (can be any valid css height value)
 	   	data:tabledata2, //assign data to table
 	   	layout:"fitColumns", //fit columns to width of table (optional)
@@ -167,7 +169,7 @@ async function initCartwishGrid(){
 	  
 	  //요기는 위에서 만든 그리드 버튼이벤트 넣는곳
 	  //trigger an alert message when the row is clicked
-	  table.on("rowClick", function(e, row){ 
+	  table4.on("rowClick", function(e, row){ 
 	 	
 	 	console.log(e);
 	 	console.log(row);

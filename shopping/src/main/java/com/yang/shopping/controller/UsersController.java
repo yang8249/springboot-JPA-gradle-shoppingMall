@@ -245,9 +245,8 @@ public class UsersController {
 	}
 	
 	@GetMapping("/user/mypageForm")
-	public String mypageForm(@RequestParam String userId, String page, Model model) {
+	public String mypageForm(String page, Model model) {
 		
-		System.out.println("userId.value : "+userId);
 		System.out.println("page : "+page);
 		
 		System.out.println("page : "+page);
@@ -256,10 +255,12 @@ public class UsersController {
 		}
 		
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-
+		PrincipalDetail principal  = (PrincipalDetail) authentication.getPrincipal();// 또는 UserDetails에서 userId 추출
+		String userId = String.valueOf(principal.getId());
+		System.out.println("userId.value : "+userId);
 		
 		if (authentication.getPrincipal() instanceof String && authentication.getPrincipal().equals("anonymousUser")) {
-			System.out.println("사용자가 로그인하지 않았습니다."); 
+//			System.out.println("사용자가 로그인하지 않았습니다."); 
 			return "main";
 	    } else {
 	    	System.out.println("사용자가 로그인했습니다."); 

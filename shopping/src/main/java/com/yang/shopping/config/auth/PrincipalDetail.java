@@ -33,6 +33,10 @@ public class PrincipalDetail implements UserDetails{
 		// TODO Auto-generated method stub
 		return user.getUsername();
 	}
+	
+	public int getId() {
+        return user.getId();
+    }
 
 	//계정이 만료되지 않았는지 리턴한다.
 	@Override
