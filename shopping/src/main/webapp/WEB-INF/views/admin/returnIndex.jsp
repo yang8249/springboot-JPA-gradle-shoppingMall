@@ -43,12 +43,12 @@
 		    </tr>
 		  </thead>
 		    <tbody>
-		    <c:forEach var="board" items="${boards.content}">
+		    <c:forEach var="board" items="${delivery.content}">
 		      <tr>
-		        <td>${board.title}</td>
-		        <td>${board.user.username}</td>
-		        <td>${board.user.name}</td>
-		        <td>${board.content}</td>
+		        <td>${board.delivery.orderName}</td>
+		        <td>${board.delivery.product.productName}</td>
+		        <td>${board.returnTitle}</td>
+		        <td>${board.reason}</td>
 		        <c:choose>
 				  <c:when test="${not empty board.answer}">
 				    <td style="color : blue">답변완료</td>
@@ -58,7 +58,7 @@
 				  </c:otherwise>
 				</c:choose>
 		        <td>
-		          <a href="/board/${board.id}" class="btn btn-primary btn-sm">상세보기</a>
+		          <a href="/admin/returnDetailProduct/${board.id}" class="btn btn-primary btn-sm">상세보기</a>
 		        </td>
 		      </tr>
 		    </c:forEach>
@@ -68,20 +68,20 @@
 	</div>
   <ul class="pagination justify-content-center">
   	<c:choose>
-  		<c:when test="${boards.first}">
-	  		<li class="disabled"><a onclick="return false;" href="?page=${boards.number-1}">Previous</a></li>
+  		<c:when test="${delivery.first}">
+	  		<li class="disabled"><a onclick="return false;" href="?page=${delivery.number-1}">Previous</a></li>
   		</c:when>
   		<c:otherwise>
-	  		<li class=""><a href="?page=${boards.number-1}">Previous</a></li>
+	  		<li class=""><a href="?page=${delivery.number-1}">Previous</a></li>
   		</c:otherwise>
   	</c:choose>
   	
   	<c:choose>
-  		<c:when test="${boards.last}">
-	  		<li class="disabled"><a onclick="return false;" href="?page=${boards.number+1}">Next</a></li>
+  		<c:when test="${delivery.last}">
+	  		<li class="disabled"><a onclick="return false;" href="?page=${delivery.number+1}">Next</a></li>
   		</c:when>
   		<c:otherwise>
-	 		<li class=""><a href="?page=${boards.number+1}">Next</a></li>
+	 		<li class=""><a href="?page=${delivery.number+1}">Next</a></li>
   		</c:otherwise>
   	</c:choose>
   </ul>

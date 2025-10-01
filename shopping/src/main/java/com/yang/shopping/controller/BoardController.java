@@ -1,6 +1,7 @@
 package com.yang.shopping.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -15,7 +16,10 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yang.shopping.model.Board;
+import com.yang.shopping.model.Delivery;
+import com.yang.shopping.model.ReturnDelivery;
 import com.yang.shopping.service.BoardService;
+import com.yang.shopping.service.DeliveryService;
 
 import jakarta.servlet.http.HttpSession;
 
@@ -25,7 +29,9 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 
-	
+	@Autowired
+	private DeliveryService deliveryService;
+
 	
 	@GetMapping({"", "/"})
 	public String index(Model model, 
@@ -50,6 +56,29 @@ public class BoardController {
 		model.addAttribute("boards", boards);
 		
 		return "user/index";
+	}
+
+	@GetMapping("/admin/returnProduct")
+	public String returnProduct(Model model, 
+			@PageableDefault(size = 5, sort = "id", direction = Direction.DESC) Pageable pageable) {
+		
+		Page<ReturnDelivery> delivery = deliveryService.deliveryAllInfo(pageable);
+		
+		model.addAttribute("delivery", delivery);
+		
+		return "admin/returnIndex";
+	}
+
+	@GetMapping("/admin/returnDetailProduct/{id}")
+	public String returnDetailProduct(@PathVariable int id, Model model) {
+		System.out.println("test : "+id);
+		ReturnDelivery returnDelivery = deliveryService.returnDetailInfo(id);
+		Delivery delivery = deliveryService.deliveryDetailInfo(returnDelivery.getDelivery().getId());
+
+		model.addAttribute("delivery", delivery);
+		model.addAttribute("returnDelivery", returnDelivery);
+		
+		return "admin/returnProduct";
 	}
 	
 	@GetMapping("/admin")

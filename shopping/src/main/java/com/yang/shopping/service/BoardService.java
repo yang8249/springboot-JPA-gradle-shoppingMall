@@ -80,6 +80,20 @@ public class BoardService {
 		//이때에 더티체킹(영속 컨테이너와 DB와 비교)하여 자동 업뎃이 된다. 
 	}
 
-	
+
+	//글 답변하기
+	@Transactional
+	public void boardAnswer(int id, Board board) {
+		System.out.println("BoardService : boardAnswer() : 진입 성공");
+		Board PersistenceBoard = boardRepository.findById(id).orElseThrow(()->{
+			return new IllegalArgumentException("글 수정 실패 : 아이디를 찾을 수 없음.");
+		}); //select하여 영속화 한다.
+		
+		PersistenceBoard.setAnswer(board.getAnswer());
+		System.out.println("마지막구간임");
+		//영속화 후 set해주면 함수(service)종료 시 트랜잭션이 종료된다.
+		//이때에 더티체킹(영속 컨테이너와 DB와 비교)하여 자동 업뎃이 된다. 
+	}
+
 	
 }

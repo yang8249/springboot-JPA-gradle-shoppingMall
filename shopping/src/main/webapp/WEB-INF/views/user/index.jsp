@@ -12,6 +12,18 @@
 	}
 
 
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  tr, td {
+    vertical-align: middle; /* 세로 가운데 정렬 */
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* 하단 줄 */
+  }
+
+
 </style>
 <div class="container">
 
@@ -24,6 +36,7 @@
 		    <tr>
 		      <th style="width: 20%; text-align: center;">제목</th>
 		      <th style="width: 35%; text-align: center;">내용</th>
+		      <th style="width: 35%; text-align: center;">답변 여부</th>
 		      <th style="width: 15%; text-align: center;">상세보기</th>
 		    </tr>
 		  </thead>
@@ -32,6 +45,14 @@
 		      <tr>
 		        <td>${board.title}</td>
 		        <td>${board.content}</td>
+		        <c:choose>
+				  <c:when test="${not empty board.answer}">
+				    <td style="color : blue">답변완료</td>
+				  </c:when>
+				  <c:otherwise>
+				    <td style="color : red">답변대기중</td>
+				  </c:otherwise>
+				</c:choose>
 		        <td>
 		          <a href="/board/${board.id}" class="btn btn-primary btn-sm">상세보기</a>
 		        </td>

@@ -37,6 +37,9 @@ public class Board{
 	
 	@Lob
 	private String content;
+
+	@Lob
+	private String answer;
 	
 	@ColumnDefault("0")
 	private int count;

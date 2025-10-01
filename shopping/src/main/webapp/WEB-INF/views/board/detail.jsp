@@ -34,7 +34,6 @@
 </style>
 <div class="container">
 
-  	<form action="/auth/loginProc" method="post" class="was-validated">
 	 
 		<div style="
 			    display: flex;
@@ -68,10 +67,33 @@
 
        <label for="input_file">업로드</label> 
      </div> -->
-	</form>
-	
 </div>
 
+	
+	<br>
+	<hr>
+	<br>
+	
+	<div class="container">
+	
+		 
+		  <div class="form-group">
+			  <label for="answer">답변</label>
+			  <textarea class="form-control summernote" rows="5" id="answer">${board.answer}</textarea>
+		  </div>
+		  
+<c:if test="${principal.user.role eq 'ADMIN'}">
+			<button class="btn btn-warning" id="btn-answer">답변하기</button>
+		
+</c:if>
+		<!-- 파일업로드 폼 -->
+		<!-- <div class="filebox bs3-primary preview-image" id="dynamicBox">
+	       <input type="file" id="input_file" multiple class="upload-hidden"> 
+	       <input class="upload-name" id="inputBox"value="파일선택" disabled="disabled" >
+	
+	       <label for="input_file">업로드</label> 
+	     </div> -->
+	</div> 
     <script>
       $('.summernote').summernote({
         placeholder: 'Hello Bootstrap 4',

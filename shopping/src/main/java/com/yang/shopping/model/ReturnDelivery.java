@@ -62,6 +62,10 @@ public class ReturnDelivery{
 	@Lob
 	private String reason;
 
+	//답변 여부
+	@Lob
+	private String answer;
+	
 	//관리자 처리사유
 	@Column(length = 200)
 	private String adminNote;

@@ -81,6 +81,9 @@ let index2 = {
 		$("#btn-update").on("click", ()=>{
 			this.update();
 		});
+		$("#btn-answer").on("click", ()=>{
+			this.answer();
+		});
 	},
 	
 	save:function(){
@@ -147,6 +150,31 @@ let index2 = {
 			alert("글이 수정되었습니다.");
 			console.log("글이 수정되었습니다. : "+result);
 			location.href = "/boardList?userId="+$("#userId").val();
+		}).fail((error)=>{
+			alert(JSON.stringify(error));
+		});
+			
+	},
+	answer:function(){
+		
+		let data = {
+			id : $("#boardId").val(),
+			answer : $("#answer").val()
+		};
+
+		$.ajax({
+			headers: {
+		        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
+		    },
+			type:"PUT",
+			url:"/api/boardAnswer/"+data.id,
+			data:JSON.stringify(data),
+			contentType:"application/json; charset=utf-8",
+			dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
+		}).done((result)=>{
+			alert("답변이 완료되었습니다.");
+			console.log("답변이 완료되었습니다. : "+result);
+			location.href = "/admin"
 		}).fail((error)=>{
 			alert(JSON.stringify(error));
 		});

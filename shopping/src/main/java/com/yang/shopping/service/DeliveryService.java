@@ -35,6 +35,7 @@ import com.yang.shopping.repository.WishRepository;
 @Service
 public class DeliveryService {
 
+
 	@Autowired
 	private DeliveryRepository deliveryRepository;
 
@@ -82,6 +83,44 @@ public class DeliveryService {
 		return null;
 	}
 	
+
+	//관리자용 모든반품 리스트 다 가져오기
+	@Transactional
+	public Page<ReturnDelivery> deliveryAllInfo(Pageable pageable) {
+		try {
+			
+			return returnRepository.findAll(pageable);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("DeliveryService : 제품삭제() : "+e.getMessage());
+		}
+		return null;
+	}
 	
+	//관리자용 특정 리스트 다 가져오기
+	@Transactional
+	public Delivery deliveryDetailInfo(int id) {
+		try {
+			
+			return deliveryRepository.findById(id).orElse(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("DeliveryService : 제품삭제() : "+e.getMessage());
+		}
+		return null;
+	}
+
+	//관리자용 특정 리스트 다 가져오기
+	@Transactional
+	public ReturnDelivery returnDetailInfo(int id) {
+		try {
+			
+			return returnRepository.findById(id).orElse(null);
+		} catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("DeliveryService : 제품삭제() : "+e.getMessage());
+		}
+		return null;
+	}
 	
 }
