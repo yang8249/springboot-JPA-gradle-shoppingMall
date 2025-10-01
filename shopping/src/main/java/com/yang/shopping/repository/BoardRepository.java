@@ -16,6 +16,6 @@ import com.yang.shopping.model.Product;
 //자동으로 Bean등록이 된다. (@Repository 어노테이션을 생략가능함)
 public interface BoardRepository extends JpaRepository<Board, Integer>{
 	
-
+	Page<Board> findByUserId(Integer userId, Pageable pageable);
 	
 }

@@ -2,18 +2,75 @@
  * 회원가입 js입니다.
  */
 // 쿠키에서 특정 이름의 값을 가져오는 함수
-function getCsrfToken() {
-    // 쿠키 문자열을 세미콜론(;) 기준으로 분리하여 배열로 저장
-    let cookies = document.cookie.split(';');
+const input = document.getElementById('inputBox');
+const box = document.getElementById('dynamicBox');
+var fileTarget = $('.filebox .upload-hidden');
 
-    // 배열에서 'XSRF-TOKEN='으로 시작하는 쿠키를 찾아 값을 반환
-    let csrfToken = cookies.find(cookie => cookie.trim().startsWith('XSRF-TOKEN='));
+   fileTarget.on('change', function () {
+       const files = $(this)[0].files;
+       let filenames = [];
 
-    // 'XSRF-TOKEN=' 이후의 값을 반환, 없으면 null 반환
-    return csrfToken ? csrfToken.split('=')[1] : null;
-}
+       if (window.FileReader && files.length) {
+           filenames = [...files].map(file => file.name);
+       } else {
+           // Old IE fallback
+           const val = $(this).val();
+           filenames = [val.split('/').pop().split('\\').pop()];
+       }
 
-let index = {
+       $(this).siblings('.upload-name').val(filenames.join(', '));
+	   const length = filenames.join(', ').length;
+	   input.style.width = `${length + 5}ch`; // +1은 여유 공간
+	   box.style.width = `${length + 17}ch`; // +1은 여유 공간
+   });
+
+    //preview image 
+    var imgTarget = $('.preview-image .upload-hidden');
+
+    imgTarget.on('change',async function(){
+        var parent = $(this).parent();
+		if($($(".upload-display").siblings()[0]).is("br")){
+			$($(".upload-display").siblings()[0]).remove();
+		}
+        parent.children('.upload-display').remove();
+
+        if(window.FileReader){
+			const files = $(this)[0].files;
+
+			for (const file of files) {
+			    if (!file.type.match(/image\//)) continue;
+			    const src = await readFileAsDataURL(file);
+			    parent.append(`
+			      <div class="upload-display">
+			        <div class="upload-thumb-wrap">
+			          <img src="${src}" class="upload-thumb">
+			        </div>
+			      </div>
+			    `);
+			  }
+			  async function readFileAsDataURL(file) {
+	  			  return new Promise((resolve, reject) => {
+	  			    const reader = new FileReader();
+	  			    reader.onload = e => resolve(e.target.result);
+	  			    reader.onerror = reject;
+	  			    reader.readAsDataURL(file);
+		  		});
+		  	}
+
+        }
+
+        else {
+            $(this)[0].select();
+            $(this)[0].blur();
+            var imgSrc = document.selection.createRange().text;
+            parent.prepend('<div class="upload-display"><div class="upload-thumb-wrap"><img class="upload-thumb"></div></div>');
+
+            var img = $(this).siblings('.upload-display').find('img');
+            img[0].style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(enable='true',sizingMethod='scale',src=\""+imgSrc+"\")";        
+        }
+    });
+	
+let index2 = {
 	init:function(){
 		$("#btn-save").on("click", ()=>{
 			this.save();
@@ -43,8 +100,9 @@ let index = {
 			contentType:"application/json; charset=utf-8",
 			dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
 		}).done((result)=>{
+			alert("글이 저장되었습니다.");
 			console.log("글이 저장되었습니다. : "+result);
-			location.href = "/";
+			location.href = "/boardList?userId="+$("#userId").val();
 		}).fail((error)=>{
 			alert(JSON.stringify(error));
 		});
@@ -56,12 +114,13 @@ let index = {
 			        'X-CSRF-Token': getCsrfToken()  // 쿠키에서 가져온 CSRF 토큰을 헤더에 추가
 			    },
 				type:"DELETE",
-				url:"/api/board/"+$("#boardId").text(),
+				url:"/api/board/"+$("#boardId").val(),
 				contentType:"application/json; charset=utf-8",
 				dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
 			}).done((result)=>{
+				alert("삭제가 완료되었습니다.");
 				console.log("삭제가 완료되었습니다. : "+result);
-				location.href = "/";
+				location.href = "/boardList?userId="+$("#userId").val();
 			}).fail((error)=>{
 				alert(JSON.stringify(error));
 			});
@@ -85,8 +144,9 @@ let index = {
 			contentType:"application/json; charset=utf-8",
 			dataType:"json" //서버에서 응답받을때에 데이터를 자바스크립트 객체로 받는다는뜻이다.
 		}).done((result)=>{
+			alert("글이 수정되었습니다.");
 			console.log("글이 수정되었습니다. : "+result);
-			location.href = "/";
+			location.href = "/boardList?userId="+$("#userId").val();
 		}).fail((error)=>{
 			alert(JSON.stringify(error));
 		});
@@ -94,4 +154,4 @@ let index = {
 	}
 }
 
-index.init();
+index2.init();

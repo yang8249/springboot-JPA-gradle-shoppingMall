@@ -54,6 +54,11 @@ public class BoardService {
 		boardRepository.deleteById(id);
 	}
 
+	@Transactional(readOnly = true)
+	public Page<Board> selectAllBoardByUser(Integer userId, Pageable pageable) {
+	    return boardRepository.findByUserId(userId, pageable);
+	}
+	
 	//전체 글 불러오기
 	@Transactional(readOnly = true)
 	public Page<Board> selectAllBoard(Pageable pageable) {	
@@ -63,12 +68,14 @@ public class BoardService {
 	//글 수정하기
 	@Transactional
 	public void updateBoard(int id, Board board) {
+		System.out.println("BoardService : updateBoard() : 진입 성공");
 		Board PersistenceBoard = boardRepository.findById(id).orElseThrow(()->{
 			return new IllegalArgumentException("글 수정 실패 : 아이디를 찾을 수 없음.");
 		}); //select하여 영속화 한다.
 		
 		PersistenceBoard.setTitle(board.getTitle());
 		PersistenceBoard.setContent(board.getContent());
+		System.out.println("마지막구간임");
 		//영속화 후 set해주면 함수(service)종료 시 트랜잭션이 종료된다.
 		//이때에 더티체킹(영속 컨테이너와 DB와 비교)하여 자동 업뎃이 된다. 
 	}

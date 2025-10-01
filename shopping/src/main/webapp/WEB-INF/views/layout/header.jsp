@@ -168,6 +168,16 @@
       	<c:if test="${principal.user.role eq 'ADMIN'}">
       		<li ><a href="/product/addProduct" style="margin-right:10px"><img class="searchIcon" style="margin-right:35px" alt="" src="/img/addProduct.png">제품 등록</a></li>
       	</c:if>
+      	<c:if test="${principal.user.role eq 'USER'}">
+			<li><a style="
+				    margin-right: 30px;
+				">어서오세요 ${principal.user.name}님</a></li>
+	  	</c:if>
+	  	<c:if test="${principal.user.role eq 'ADMIN'}"> 	
+			<li><a style="
+				    margin-right: 30px;
+				">어서오세요 관리자님</a></li>
+		</c:if>
         <li><a href="#" ><img class="searchIcon" alt="" src="/img/free-icon-magnifier-2866321.png">검색</a></li>
 		  <c:choose>
 			  <c:when test="${empty principal}">
@@ -175,7 +185,14 @@
 			  </c:when>
 			  <c:otherwise>
 			        <li><a href="/user/mypageForm?userId=${principal.user.id}"><span class="glyphicon glyphicon-user"></span> 내 정보</a></li>
-			        <li><a href="/user/mypageForm?userId=${principal.user.id}"><span style="margin-right:5px" class="glyphicon glyphicon-shopping-cart"></span>문의하기</a></li>
+			        
+			      	<c:if test="${principal.user.role eq 'USER'}">
+				        <li><a href="/boardList?userId=${principal.user.id}"><span style="margin-right:5px" class="glyphicon glyphicon-shopping-cart"></span>문의하기</a></li>
+			      	</c:if>
+			        
+			      	<c:if test="${principal.user.role eq 'ADMIN'}">
+			        	<li><a href="/admin"><span style="margin-right:5px" class="glyphicon glyphicon-shopping-cart"></span>문의하기</a></li>
+			      	</c:if>
 			        <li>
 						<c:if test="${empty principal.user.oauth}">
 					       <a class="nav-link" href="/logout"><span class="glyphicon glyphicon-user"></span> 로그아웃</a>

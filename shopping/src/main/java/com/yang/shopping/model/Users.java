@@ -59,7 +59,6 @@ public class Users{
 	@Column(length = 200)
 	private String detailAddr;
 	//우편번호
-	@Column(nullable = false)
 	@ColumnDefault("0")
 	private String zoneCode;
 

@@ -299,7 +299,7 @@
               </a>
             </li>
             <li class="nav-item">
-              <a value="inquiry" class="nav-link d-flex align-items-center gap-2" href="#">
+              <a value="" class="nav-link d-flex align-items-center gap-2" href="/admin">
                 <svg class="bi"><use xlink:href="#file-earmark-text"/></svg>
                 문의사항
               </a>
@@ -309,6 +309,9 @@
           <hr class="my-3">
 
           <ul class="nav flex-column mb-auto mypage-nav-button">
+          
+	      	<c:if test="${principal.user.role eq 'ADMIN'}">
+	      		
             <li class="nav-item">
               <a value="return" class="nav-link d-flex align-items-center gap-2" href="#">
                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-repeat" viewBox="0 0 16 16">
@@ -326,6 +329,7 @@
                 고객 문의 요청
               </a>
             </li>
+	      	</c:if>
             <li class="nav-item">
               <a class="nav-link d-flex align-items-center gap-2" href="/logout">
                 <svg class="bi"><use xlink:href="#door-closed"/></svg>
@@ -353,9 +357,9 @@
 		<div class="purchStat mypage-disabled">
 			<%@ include file="purchStat.jsp"%>
 		</div>
-		<div class="inquiry mypage-disabled">
+		<%-- <div class="inquiry mypage-disabled">
 			<%@ include file="inquiry.jsp"%>
-		</div>
+		</div> --%>
 		<div class="return mypage-disabled">
 			<%@ include file="return.jsp"%>
 		</div>

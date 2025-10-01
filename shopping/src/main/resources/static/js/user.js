@@ -25,6 +25,7 @@ window.onload = function() {
 	function save(){
 		let data = {
 			username : $("#username").val(),
+			name : $("#name").val(),
 			password : $("#password").val(),
 			email : $("#email").val()
 		};

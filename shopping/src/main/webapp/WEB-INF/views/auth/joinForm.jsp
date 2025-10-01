@@ -14,6 +14,10 @@
 	    <input type="text" class="form-control" id="username" placeholder="Enter username" name="username" required>
 	  </div>
 	  <div class="form-group">
+	    <label for="name">이름</label>
+	    <input type="text" class="form-control" id="name" placeholder="Enter name" name="name" required>
+	  </div>
+	  <div class="form-group">
 	    <label for="email">이메일</label>
 	    <input type="email" class="form-control" id="email" placeholder="Enter email" name="email" required>
 	  </div>

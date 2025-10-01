@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.yang.shopping.model.Board;
 import com.yang.shopping.service.BoardService;
@@ -38,9 +39,22 @@ public class BoardController {
 		return "main";
 	}
 
+	@GetMapping("/boardList")
+	public String boardList(@RequestParam String userId, Model model, 
+			@PageableDefault(size = 5, sort = "id", direction = Direction.DESC) Pageable pageable) {
+		/* @AuthenticationPrincipal PrincipalDetail principal */
+		//스프링 시큐리티에서 작성한 로그인처리 로직이 끝난다음에 principal 객체에 정보가 담겨진다.
+		System.out.println("userId : "+userId);
+		Page<Board> boards = boardService.selectAllBoardByUser(Integer.parseInt(userId), pageable);
+		
+		model.addAttribute("boards", boards);
+		
+		return "user/index";
+	}
+	
 	@GetMapping("/admin")
 	public String locationIndex(Model model, 
-			@PageableDefault(size = 3, sort = "id", direction = Direction.DESC) Pageable pageable) {
+			@PageableDefault(size = 10, sort = "id", direction = Direction.DESC) Pageable pageable) {
 		/* @AuthenticationPrincipal PrincipalDetail principal */
 		//스프링 시큐리티에서 작성한 로그인처리 로직이 끝난다음에 principal 객체에 정보가 담겨진다.
 		Page<Board> boards = boardService.selectAllBoard(pageable);
@@ -54,9 +68,11 @@ public class BoardController {
 	public String findById(@PathVariable int id, Model model) {
 		//스프링 시큐리티에서 작성한 로그인처리 로직이 끝난다음에 principal 객체에 정보가 담겨진다.
 		//System.out.println("로그인 사용자 : "+principal.getUsername());
+		System.out.println("test : "+id);
 		model.addAttribute("board", boardService.boardDetail(id));
 		return "board/detail";
 	}
+	
 
 	@GetMapping("/board/{id}/updateForm")
 	public String boardUpdate(@PathVariable int id, Model model) {
