@@ -16,7 +16,6 @@
       #dynamicBox {
     border: 1px solid #333;
     padding: 10px;
-    width: 300px;
     min-height: 40px;
     overflow: hidden;
     resize: none;
@@ -28,11 +27,29 @@
     margin-top: 10px;
   }
 </style>
-
+<style>
+.preview-image {
+  display: flex;
+  gap: 10px;
+  width: fit-content; /* 자식 크기만큼 자동 확장 */
+}
+.upload-thumb-wrap {
+  display: flex;
+  gap: 10px;
+  width: fit-content; /* 자식 크기만큼 자동 확장 */
+}
+.ThumbImage {
+  width: 120px; /* 원하는 크기로 조절 */
+  height: auto;
+  object-fit: cover;
+}
+</style>
 <div class="container">
  <input type="hidden" value="${delivery.phone}" class="form-control" id="phone" name="phone"  >
  <input type="hidden" value="${delivery.product.productSeq}" class="form-control" id="productSeq"name="productSeq"  >
  <input type="hidden" value="${delivery.id}" class="form-control" id="deliId"name="deliId"  >
+ <input type="hidden" value="${returnDelivery.id}" class="form-control" id="returnDeliveryId"name="returnDeliveryId"  >
+ 
 		 
       <h1>반품 요청</h1>
       <br>
@@ -122,25 +139,33 @@
 		  <textarea data-info="반품사유" class="form-control summernote" rows="5" id="reason">${returnDelivery.reason}</textarea>
 	  </div>
 	<!-- 파일업로드 폼 -->
-	<div class="filebox bs3-primary preview-image" id="dynamicBox">
+	<div class=" bs3-primary preview-image" id="dynamicBox">
        <input type="file" id="input_file" multiple class="upload-hidden"> 
        <div class="upload-display">
       </div>
-		<c:forEach var="file" items="${returnDelivery.fileInfo}" varStatus="status">
 		
 			        <div class="upload-thumb-wrap">
+		<c:forEach var="file" items="${returnDelivery.fileInfo}" varStatus="status">
 			          <img src="${pageContext.request.contextPath}/image?filename=${file.uuid}"
 						class="ThumbImage" alt="">
+		</c:forEach>
 			        </div>
 			        
 				
-		</c:forEach>
 		
 
      </div>
 	</form>
 	
-	<button id="btn-save" class="btn btn-primary">글쓰기</button>
+	<br>
+	<hr>
+	<br>
+	  <div class="form-group">
+		  <label for="adminNote">승인/거절 사유</label>
+		  <textarea data-info="관리자사유" class="form-control summernote" rows="5" id="adminNote">${returnDelivery.adminNote}</textarea>
+	  </div>
+	<button id="btn-approve" class="btn btn-primary">승인하기</button>
+	<button id="btn-reject" class="btn btn-danger">반려하기</button>
 </div>
 <script>
   $('.summernote').summernote({

@@ -50,7 +50,7 @@
 		        <td>${board.returnTitle}</td>
 		        <td>${board.reason}</td>
 		        <c:choose>
-				  <c:when test="${not empty board.answer}">
+				  <c:when test="${not empty board.adminNote}">
 				    <td style="color : blue">답변완료</td>
 				  </c:when>
 				  <c:otherwise>

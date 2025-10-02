@@ -158,6 +158,35 @@ public class ProductApiController {
 		return new ResponseDto<ReturnDto>(HttpStatus.OK.value(), null);
 	}
 	
+	//반품 승인
+	@PutMapping("/api/Product/updateReturn")
+	public ResponseDto<ReturnDelivery> updateReturn(
+			@RequestBody ReturnDelivery returnDelivery
+			) throws JsonMappingException, JsonProcessingException {
+
+	    
+		System.out.println("returnDelivery : "+returnDelivery);
+		
+		productService.updateReturn(returnDelivery);
+		
+		return new ResponseDto<ReturnDelivery>(HttpStatus.OK.value(), null);
+	}
+	
+
+	//반품 거절
+	@PutMapping("/api/Product/rejectReturn")
+	public ResponseDto<ReturnDelivery> rejectReturn(
+			@RequestBody ReturnDelivery returnDelivery
+			) throws JsonMappingException, JsonProcessingException {
+
+	    
+		System.out.println("returnDelivery : "+returnDelivery);
+		
+		productService.rejectReturn(returnDelivery);
+		
+		return new ResponseDto<ReturnDelivery>(HttpStatus.OK.value(), null);
+	}
+	
 	/*
 	 * @PutMapping("/api/board/{id}") public ResponseDto<Integer>
 	 * updateBoard(@PathVariable int id, @RequestBody Board board){

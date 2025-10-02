@@ -167,7 +167,10 @@ async function initGrid(){
 				status = "반품 요청됨";
 				break;
 			case "APPROVED":
-				status = "처리 승인됨";
+				status = "반품 승인됨";
+				break;
+			case "REJECTED":
+				status = "반품 거절됨";
 				break;
 			case "REFUNDED":
 				status = "반품 완료";
@@ -221,6 +224,11 @@ async function initGrid(){
 			    align: "center",
 			    formatter: function(cellvalue, options, rowObject) {
 					console.log("editRow :"+rowObject.id);
+					if(cellvalue._cell.row.data.status == "반품 승인됨"){
+						return; //버튼 안보이게
+					} else if(cellvalue._cell.row.data.status == "반품 거절됨"){
+						return; //버튼 안보이게
+					}	
 			      return `<button onclick="editRow('${rowObject.id}')">반품취소</button>`;
 			    },hozAlign:"center", vertAlign: "middle"
 			  },
@@ -231,7 +239,27 @@ async function initGrid(){
 			{title:"주문 갯수", field:"itemCount", hozAlign:"center", vertAlign: "middle"},
 			{title:"환불 예정 금액", field:"totalPrice", hozAlign:"center", vertAlign: "middle"},
 	 	 	{title:"환불 요청일", field:"createDate", hozAlign:"center", vertAlign: "middle"},
-			{title:"환불 진행 상태", field:"status", hozAlign:"center", vertAlign: "middle"},
+			{title:"환불 진행 상태", field:"status", hozAlign:"center", vertAlign: "middle",
+				formatter: function(cell) {
+				    const value = cell.getValue();
+				    const el = cell.getElement();
+					console.log("status value : "+value);
+					console.log("status el : "+el);
+				    // 조건에 따라 배경색 변경
+				    if (value === "반품 승인됨") {
+				      el.style.backgroundColor = "#cce5ff"; // 연두색
+				      el.style.color = "#155724"; // 글자색
+				    } else if (value === "반품 거절됨") {
+				      el.style.backgroundColor = "#f8d7da"; // 연노랑
+				      el.style.color = "#856404";
+    				} else if (value === "반품 완료") {
+				      el.style.backgroundColor = "#d4edda"; // 연노랑
+				      el.style.color = "#856404";
+				    }
+
+				    return value; // 셀에 표시할 텍스트
+				  }
+			},
 	  	]
 	 });
 

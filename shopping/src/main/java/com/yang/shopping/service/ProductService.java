@@ -298,9 +298,6 @@ public class ProductService {
 	}
 	
 	//반품 저장
-
-	// src/main/java/com/yang/shopping/service/ProductService.java
-
 	@Transactional
 	public void insertReturn(ReturnDto returnDto) {
 	    try {
@@ -332,6 +329,54 @@ public class ProductService {
 	        if (accessCount < 1) {
 	            System.out.println("저장된파일이 없음.");
 	        }
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("BoardService : 글쓰기() : " + e.getMessage());
+	    }
+	}
+	
+	// src/main/java/com/yang/shopping/service/ProductService.java
+	
+	
+	//반품 업데이트 (관리자 승인/반려 적용)
+	@Transactional
+	public void updateReturn(ReturnDelivery returnDelivery) {
+	    try {
+	        
+	    	ReturnDelivery existing = returnRepository.findById(returnDelivery.getId())
+	    		    .orElseThrow();
+
+
+	    		existing.setAdminNote(returnDelivery.getAdminNote()); // 변경할 필드만 설정
+	    		existing.setStatus(StatusType.APPROVED); // 반품 요청 상태로 설정);
+	        // 업뎃쳐주기
+			// JPA는 save로 insert, update 둘다 처리한다.
+			// 단, id값이 있으면 update, 없으면 insert
+	        returnRepository.save(existing);
+
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        System.out.println("BoardService : 글쓰기() : " + e.getMessage());
+	    }
+	}
+	
+
+	//반품 업데이트 (관리자 승인/반려 적용)
+	@Transactional
+	public void rejectReturn(ReturnDelivery returnDelivery) {
+	    try {
+	        
+	    	ReturnDelivery existing = returnRepository.findById(returnDelivery.getId())
+	    		    .orElseThrow();
+
+
+	    		existing.setAdminNote(returnDelivery.getAdminNote()); // 변경할 필드만 설정
+	    		existing.setStatus(StatusType.REJECTED); // 반품 요청 상태로 설정);
+	        // 업뎃쳐주기
+			// JPA는 save로 insert, update 둘다 처리한다.
+			// 단, id값이 있으면 update, 없으면 insert
+	        returnRepository.save(existing);
 
 	    } catch (Exception e) {
 	        e.printStackTrace();
