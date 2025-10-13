@@ -170,13 +170,27 @@
       	</c:if>
       	<c:if test="${principal.user.role eq 'USER'}">
 			<li><a style="
-				    margin-right: 30px;
+				  
 				">어서오세요 ${principal.user.name}님</a></li>
 	  	</c:if>
 	  	<c:if test="${principal.user.role eq 'ADMIN'}"> 	
 			<li><a style="
-				    margin-right: 30px;
+				    
 				">어서오세요 관리자님</a></li>
+		</c:if>
+	  	<c:if test="${principal.user.role eq 'ADMIN'}"> 	
+			<li><a href="#" 
+				   onclick="window.open('/admin/inquiries', 'inquiryWindow'); return false;" 
+				   style="margin-right: 30px;">
+				   문의방 목록
+				</a></li>
+		</c:if>
+      	<c:if test="${principal.user.role eq 'USER'}">
+			<li><a href="#" 
+				   onclick="window.open('/inquiry', 'inquiryWindow', 'width=520,height=720,scrollbars=yes,resizable=yes'); return false;" 
+				   style="margin-right: 30px;">
+				   1대1 문의하기
+				</a></li>
 		</c:if>
         <li><a href="#" ><img class="searchIcon" alt="" src="/img/free-icon-magnifier-2866321.png">검색</a></li>
 		  <c:choose>

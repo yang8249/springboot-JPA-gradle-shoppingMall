@@ -1,0 +1,84 @@
+<%@page import="com.fasterxml.jackson.annotation.JsonInclude.Include"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ include file="../layout/header.jsp" %>
+
+<style>
+
+	.card-body{
+	    border: 1px solid black;
+	    display: flex;
+	    flex-direction: row;
+	    justify-content: space-around;
+	}
+
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+  }
+
+  tr, td {
+    vertical-align: middle; /* 세로 가운데 정렬 */
+    padding: 10px;
+    border-bottom: 1px solid #ccc; /* 하단 줄 */
+  }
+
+
+</style><!-- templates/chat/chat.mustache -->
+
+<h1>실시간 채팅</h1>
+<div id="chat-box" style="border:1px solid #ddd;height:400px;overflow:auto;padding:8px;margin-bottom:10px;"></div>
+
+<div style="display:flex;gap:8px;">
+    <input id="chat-input" type="text" placeholder="메시지를 입력하세요" style="flex:1;padding:8px;">
+    <button id="send-btn" class="btn btn-primary">전송</button>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/sockjs-client@1/dist/sockjs.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/stompjs@2.3.3/lib/stomp.min.js"></script>
+<script>
+    let stompClient = null;
+    const roomId = 'global';
+
+    function appendMsg(msg) {
+      const box = document.getElementById('chat-box');
+      const line = document.createElement('div');
+      line.textContent = `[${msg.sentAt}] ${msg.senderNick}: ${msg.content}`;
+      box.appendChild(line);
+      box.scrollTop = box.scrollHeight;
+    }
+
+    function connect() {
+      const socket = new SockJS('/ws');
+      stompClient = Stomp.over(socket);
+      stompClient.connect({}, function () {
+        // 구독
+        stompClient.subscribe('/topic/chat.' + roomId, function (frame) {
+          const msg = JSON.parse(frame.body);
+          appendMsg(msg);
+        });
+
+        // 초기 히스토리 로딩
+        fetch('/api/chat/history?roomId=' + roomId)
+          .then(r => r.json())
+          .then(list => list.forEach(appendMsg));
+      });
+    }
+
+    function sendMessage() {
+      const input = document.getElementById('chat-input');
+      const content = input.value.trim();
+      if (!content) return;
+      stompClient.send('/app/chat.send', {}, JSON.stringify({ roomId, content }));
+      input.value = '';
+    }
+
+    document.getElementById('send-btn').addEventListener('click', sendMessage);
+    document.getElementById('chat-input').addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') sendMessage();
+    });
+
+    connect();
+</script>
+
+<%@ include file="../layout/footer.jsp" %>

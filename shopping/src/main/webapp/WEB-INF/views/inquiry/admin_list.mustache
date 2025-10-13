@@ -1,0 +1,42 @@
+{{>layouts/header}}
+<div class="container py-3">
+    <h4>문의 채팅방 목록</h4>
+    <table class="table table-hover align-middle">
+        <thead>
+        <tr>
+            <th>방ID</th>
+            <th>고객</th>
+            <th>최근 메시지</th>
+            <th>시간</th>
+            <th>상태</th>
+            <th>열기</th>
+        </tr>
+        </thead>
+        <tbody>
+        {{#rooms}}
+            <tr>
+                <td>{{id}}</td>
+                <td>{{user.nickname}} ({{user.loginId}})</td>
+                <td>{{lastMessagePreview}}</td>
+                <td>{{lastMessageAt}}</td>
+                <td>
+                    {{#hasUnansweredByAdmin}}<span class="badge bg-danger">미응답</span>{{/hasUnansweredByAdmin}}
+                    {{^hasUnansweredByAdmin}}<span class="badge bg-secondary">응답완료</span>{{/hasUnansweredByAdmin}}
+                </td>
+                <td>
+                    <button class="btn btn-outline-primary btn-sm"
+                            onclick="window.open('/inquiry/room?roomId={{id}}','inqwin_{{id}}','width=520,height=720');">
+                    새 창
+                    </button>
+                </td>
+            </tr>
+        {{/rooms}}
+        </tbody>
+    </table>
+</div>
+
+<script>
+    // 관리자가 특정 방을 새 창으로 열 때 사용하는 라우트 보조:
+    // 아래 추가 라우트를 만들어두면 좋습니다. (/inquiry/room?roomId=inq-123)
+</script>
+{{>layouts/footer}}

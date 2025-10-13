@@ -30,6 +30,10 @@ public class SecurityConfig {
 	
 	@Autowired
 	private PrincipalDetailService principalDetailService;
+	
+	@Autowired
+    private CustomLoginSuccessHandler customLoginSuccessHandler;
+
 
     @Bean
     BCryptPasswordEncoder encoder() {
@@ -83,7 +87,9 @@ public class SecurityConfig {
 	 		     .loginPage("/auth/loginForm")
 	 		     .loginProcessingUrl("/auth/loginProc")
 	             .defaultSuccessUrl("/", true)
+	             .successHandler(customLoginSuccessHandler) // 여기 연결!
 	             .permitAll() //permitAll은 권한없어도 OK해주는 옵션
+
 	     );
 		
 		return http.build();
