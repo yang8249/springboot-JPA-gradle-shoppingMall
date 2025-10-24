@@ -192,7 +192,7 @@
 				   1대1 문의하기
 				</a></li>
 		</c:if>
-        <li><a href="#" ><img class="searchIcon" alt="" src="/img/free-icon-magnifier-2866321.png">검색</a></li>
+        <li><a href="#" id="searchBtn" ><img class="searchIcon" alt="" src="/img/free-icon-magnifier-2866321.png">검색</a></li>
 		  <c:choose>
 			  <c:when test="${empty principal}">
 			        <li><a href="/auth/loginForm"><span class="glyphicon glyphicon-user"></span> 로그인/회원가입</a></li>

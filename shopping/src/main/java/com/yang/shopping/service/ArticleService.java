@@ -5,6 +5,7 @@ import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.aggregations.StringTermsBucket;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch.core.SearchRequest;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 
@@ -72,7 +73,75 @@ public class ArticleService {
     private final ArticleRepository repository;
     private final ElasticsearchOperations elasticOps;
     private final ArticleMapper mapper;
+    
+    public ArticleSearchPageResponse searchProducts(String keyword, int page, int size) {
 
+		System.out.println("엘라스틱 서비스 진입완료");
+		
+        Pageable pageable = PageRequest.of(page, size);
+        NativeQuery query = NativeQuery.builder()
+            .withQuery(q -> q.match(m -> m.field("title").query(keyword)))
+            .withPageable(pageable)
+            .build();
+
+        SearchHits<ArticleDocument> hits = elasticOps.search(query, ArticleDocument.class);
+        List<ArticleResponse> products = hits.getSearchHits().stream()
+            .map(hit -> mapper.toResponse(hit.getContent()))
+            .toList();
+
+        long total = hits.getTotalHits();
+        System.out.println("검색 완료: " + total + "개의 상품이 검색되었습니다.");
+        System.out.println("검색된 상품: " + products);
+        return new ArticleSearchPageResponse(products, total);
+    }
+    
+    public ArticleSearchPageResponse searchProductsSame(String keyword, int page, int size) {
+        Pageable pageable = PageRequest.of(page, size);
+
+        NativeQuery query = NativeQuery.builder()
+                .withQuery(q -> q
+                    .multiMatch(m -> m
+                        .fields("title", "content", "category")
+                        .query(keyword)
+                        .fuzziness("AUTO") // 오타 허용
+                    )
+                )
+                .withPageable(pageable)
+                .build();
+
+
+
+        SearchHits<ArticleDocument> hits = elasticOps.search(query, ArticleDocument.class);
+
+        List<ArticleResponse> products = hits.getSearchHits().stream()
+                .map(hit -> mapper.toResponse(hit.getContent()))
+                .toList();
+
+        long total = hits.getTotalHits();
+
+        System.out.println("검색 완료: " + total + "개의 상품이 검색되었습니다.");
+        System.out.println("검색된 상품: " + products);
+
+        return new ArticleSearchPageResponse(products, total);
+    }
+//    public List<ArticleDocument> autocompleteTitle(String keyword, String category) {
+//        NativeQuery query = NativeQuery.builder()
+//            .withQuery(q -> q.bool(b -> {
+//                b.must(m -> m.matchPhrasePrefix(mp -> mp.field("title").query(keyword).maxExpansions(10)));
+//                if (category != null && !category.isEmpty()) {
+//                    b.filter(f -> f.term(t -> t.field("category.keyword").value(category)));
+//                }
+//            }))
+//            .withPageable(PageRequest.of(0, 5))
+//            .build();
+//
+//        SearchHits<ArticleDocument> hits = elasticOps.search(query, ArticleDocument.class);
+//
+//        return hits.getSearchHits().stream()
+//                   .map(SearchHit::getContent)
+//                   .toList();
+//    }
+	 
     @PostConstruct
     void ensureIndex() {
         try {
@@ -201,6 +270,8 @@ public class ArticleService {
         ArticleDocument document = mapper.toDocument(saved);
         elasticOps.save(document);
         elasticOps.indexOps(ArticleDocument.class).refresh();
+        System.out.println("저장된 ArticleDocument: " + document);
+
         return mapper.toResponse(saved);
     }
 

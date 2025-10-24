@@ -1,8 +1,8 @@
+let articleData = 1; // 전역 선언
 $(document).ready(function(){
 	
 	const input = document.getElementById('inputBox');
 	const box = document.getElementById('dynamicBox');
-
 
 	
    var fileTarget = $('.filebox .upload-hidden');
@@ -137,6 +137,15 @@ $(document).ready(function(){
 				file : fileInfo
 			};
 			
+			let article= {
+				title: arrList.productName,
+				category: arrList.category,
+				content: arrList.content
+			}
+			
+			const articleData = {
+				article : article
+			};
 			const formData = new FormData();
 			formData.append("product", JSON.stringify(product));
 			const fileInfoList = $("#input_file")[0].files; // 파일 리스트를 가져옴
@@ -155,6 +164,26 @@ $(document).ready(function(){
 			    contentType: false, // content-type을 자동으로 설정하지 않음
 			    success: function(response) {
 			        console.log("Upload Success: ", response);
+					// 제품 저장 후, Article 저장 컨트롤러 호출
+					console.log("제품 저장 후, Article 저장 컨트롤러 호출 : ", articleData);
+					
+					       $.ajax({
+					           url: "/articles", // Article 저장 컨트롤러 URL
+					           type: "POST",
+					           contentType: "application/json",
+							   data: JSON.stringify({
+							       title: articleData.article.title,
+								category: articleData.article.category,
+								   content: articleData.article.content
+							     }),
+					           success: function(articleResponse) {
+					               console.log("Article Save Success: ", articleResponse);
+					               location.href = "/"; // 완료 후 메인 페이지 이동
+					           },
+					           error: function(xhr, status, error) {
+					               console.error("Article Save Failed: ", error);
+					           }
+					       });
 					location.href = "/";
 			    },
 			    error: function(xhr, status, error) {

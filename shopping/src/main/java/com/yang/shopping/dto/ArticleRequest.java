@@ -1,5 +1,6 @@
 package com.yang.shopping.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.yang.shopping.model.Article;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -9,14 +10,19 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 public class ArticleRequest {
-
+	
+    private Article article;
+    
+    public Article getArticle() { return article; }
+    
+    public void setArticle(Article article) { this.article = article; }
+    
     @NotBlank
     private String title;
 
     @NotBlank
     private String content;
 
-    @NotBlank
     private String author;
 
     private String category;
@@ -27,7 +33,6 @@ public class ArticleRequest {
     @JsonFormat(pattern = "yyyy-MM-dd'T'HH:mm:ss")
     private LocalDateTime publishedAt;
 
-    @NotNull
     private Set<String> tags;
 
     public ArticleRequest() {
@@ -99,4 +104,5 @@ public class ArticleRequest {
     public void setTags(Set<String> tags) {
         this.tags = tags;
     }
+
 }

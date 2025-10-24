@@ -3,8 +3,50 @@
 	pageEncoding="UTF-8"%>
 	
 <%@ include file="layout/header.jsp"%>
+<style>
+/* 버튼 */
 
-	
+  /* 검색창 DIV */
+  #searchBox {
+    width: 550px;
+    height: 200px;
+    position: absolute;
+    top: 4%;
+    left: 34%;
+    transform: translate(-50%, -50%) scale(0.95);
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.4s ease, transform 0.4s ease;
+    border: 1px solid;
+    z-index: 9999;
+  }
+
+  /* 활성화 시 */
+  #searchBox.show {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+  }
+
+  /* 입력창 스타일 */
+  #searchInput {
+    font-size: large;
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    outline: none;
+    height: 50px;
+  }
+  
+</style>
+  <div id="searchBox">
+    <input type="text" id="searchInput" placeholder="검색어를 입력하세요">
+  </div>
 <div id="container" data-ez="layout-06i7law-1">
 	<div id="contents" style="margin-top: 0px;">
 		<span class="xans-element- xans-layout xans-layout-mobileaction RTMB "><a

@@ -17,7 +17,11 @@ public class ArticleSearchPageResponse {
         this.insights = insights;
     }
 
-    public List<ArticleSearchHitResponse> getHits() {
+    public ArticleSearchPageResponse(List<ArticleResponse> products, long total) {
+		// TODO Auto-generated constructor stub
+	}
+
+	public List<ArticleSearchHitResponse> getHits() {
         return hits;
     }
 

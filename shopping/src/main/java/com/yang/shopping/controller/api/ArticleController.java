@@ -12,6 +12,8 @@ import com.yang.shopping.dto.ArticleSearchPageResponse;
 import com.yang.shopping.dto.BulkLoadResponse;
 import com.yang.shopping.dto.ReindexResponse;
 import com.yang.shopping.dto.SuggestionResponse;
+import com.yang.shopping.model.Article;
+import com.yang.shopping.model.search.ArticleDocument;
 import com.yang.shopping.service.ArticleService;
 
 import java.time.LocalDateTime;
@@ -27,9 +29,34 @@ public class ArticleController {
     private final ArticleService service;
 
     @PostMapping
-    public ArticleResponse create(@Valid @RequestBody ArticleRequest request) {
-        return service.save(request);
+    public ArticleResponse create( @RequestBody ArticleRequest request) {
+    	
+		System.out.println("엘라스틱서치 데이터 생성 진입");
+		System.out.println("getTitle : "+ request.getTitle());
+		System.out.println("getContent : "+ request.getContent());
+		System.out.println("getTitle : "+ request.getCategory());
+		
+	    
+	    return service.save(request);
     }
+    
+//    // 키워드 기반 자동완성/추천
+//    @GetMapping("/search/autocomplete")
+//    public List<ArticleDocument> autocomplete(
+//            @RequestParam String keyword,
+//            @RequestParam(required = false) String category) {
+//        return service.autocompleteTitle(keyword, category);
+//    }
+
+	@GetMapping("/search/products")
+	public ArticleSearchPageResponse searchProducts(@RequestParam String keyword,
+	        @RequestParam(defaultValue = "0") int page,
+	        @RequestParam(defaultValue = "10") int size) {
+		System.out.println("엘라스틱 진입완료");
+		System.out.println("keyword: " + keyword + ", page: " + page + ", size: " + size);
+	    return service.searchProductsSame(keyword, page, size);
+	}
+
 
     @PostMapping("/bulk/sample")
     public BulkLoadResponse bulkSample(@RequestParam(defaultValue = "25") int count) {
