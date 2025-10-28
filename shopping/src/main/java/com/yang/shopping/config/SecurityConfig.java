@@ -87,7 +87,8 @@ public class SecurityConfig {
 	 		     .loginPage("/auth/loginForm")
 	 		     .loginProcessingUrl("/auth/loginProc")
 	             .defaultSuccessUrl("/", true)
-	             .successHandler(customLoginSuccessHandler) // 여기 연결!
+	             .successHandler(customLoginSuccessHandler) // 이거 써줘야 로그인성공 시 세션에 userId 담아줌
+	             //원래 시큐리티세션만 쓸려했는데 배용께서 그냥 세션 환경에 맞춰 개발한거 줌 ㅡㅡ
 	             .permitAll() //permitAll은 권한없어도 OK해주는 옵션
 
 	     );

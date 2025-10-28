@@ -10,6 +10,8 @@ import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
 import org.springframework.data.elasticsearch.annotations.FieldType;
 
+import jakarta.persistence.Column;
+
 import java.time.Instant;
 import java.util.Set;
 
@@ -23,10 +25,13 @@ public class ArticleDocument {
     @Id
     private String id;
 
-    @Field(type = FieldType.Text, analyzer = "standard")
+    private String productId;
+
+
+    @Field(type = FieldType.Text, analyzer = "korean_synonym_analyzer")
     private String title;
 
-    @Field(type = FieldType.Text, analyzer = "standard")
+    @Field(type = FieldType.Text, analyzer = "korean_synonym_analyzer")
     private String content;
 
     @Field(type = FieldType.Keyword)

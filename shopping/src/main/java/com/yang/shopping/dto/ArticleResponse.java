@@ -5,6 +5,7 @@ import java.util.Set;
 
 public class ArticleResponse {
     private String id;
+    private String productId;
     private String title;
     private String content;
     private String author;
@@ -16,9 +17,10 @@ public class ArticleResponse {
     public ArticleResponse() {
     }
 
-    public ArticleResponse(String id, String title, String content, String author, String category,
+    public ArticleResponse(String id, String productId, String title, String content, String author, String category,
                            Double rating, LocalDateTime publishedAt, Set<String> tags) {
         this.id = id;
+        this.productId = productId;
         this.title = title;
         this.content = content;
         this.author = author;
@@ -91,4 +93,12 @@ public class ArticleResponse {
     public void setTags(Set<String> tags) {
         this.tags = tags;
     }
+
+	public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
 }

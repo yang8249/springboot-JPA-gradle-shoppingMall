@@ -84,7 +84,7 @@ public class ProductService {
     
 	//제품 저장
 	@Transactional
-	public void insertAddProduct(ProductDto productDto) {
+	public Product insertAddProduct(ProductDto productDto) {
 		try {
 		
 			productDto.getProduct().setDelYn("N");
@@ -96,11 +96,13 @@ public class ProductService {
 	        }
 			if(accessCount < 1) {System.out.println("저장된파일이 없음.");}
 			
+			return savedProduct;
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 			System.out.println("BoardService : 글쓰기() : "+e.getMessage());
 		}
+		return null;
 	}
 	
 	//제품 목록 불러오기
@@ -109,6 +111,14 @@ public class ProductService {
 		
         return productRepository.findByCategory(category, pageable);
 	}
+
+	//조회한 제품 목록 불러오기
+	@Transactional(readOnly = true)
+	public Page<Product> searchProduct(List<String> ids, Pageable pageable) {
+		
+        return productRepository.findByProductSeqIn(ids, pageable);
+	}
+	
 
 	//최근에 등록한 제품 4개 불러오기
 	@Transactional(readOnly = true)

@@ -19,8 +19,18 @@ public class ArticleRequest {
     
     @NotBlank
     private String title;
-
     @NotBlank
+    private String productId;
+
+    public String getProductId() {
+		return productId;
+	}
+
+	public void setProductId(String productId) {
+		this.productId = productId;
+	}
+
+	@NotBlank
     private String content;
 
     private String author;
@@ -38,9 +48,10 @@ public class ArticleRequest {
     public ArticleRequest() {
     }
 
-    public ArticleRequest(String title, String content, String author, String category,
+    public ArticleRequest(String title, String productId, String content, String author, String category,
                           Double rating, LocalDateTime publishedAt, Set<String> tags) {
         this.title = title;
+        this.productId = productId;
         this.content = content;
         this.author = author;
         this.category = category;

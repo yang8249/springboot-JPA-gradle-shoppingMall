@@ -25,6 +25,7 @@ public class ArticleMapper {
         LocalDateTime publishedAt = request.getPublishedAt() != null ? request.getPublishedAt() : LocalDateTime.now();
     return Article.builder()
                 .title(request.getTitle())
+                .productId(request.getProductId())
                 .content(request.getContent())
                 .author(request.getAuthor())
                 .category(request.getCategory())
@@ -40,6 +41,7 @@ public class ArticleMapper {
         }
         return new ArticleResponse(
                 entity.getId() != null ? String.valueOf(entity.getId()) : null,
+                entity.getProductId(),
                 entity.getTitle(),
                 entity.getContent(),
                 entity.getAuthor(),
@@ -59,6 +61,7 @@ public class ArticleMapper {
                 : null;
         return new ArticleResponse(
                 document.getId(),
+                document.getProductId(),
                 document.getTitle(),
                 document.getContent(),
                 document.getAuthor(),
@@ -79,6 +82,7 @@ public class ArticleMapper {
         return ArticleDocument.builder()
                 .id(entity.getId() != null ? String.valueOf(entity.getId()) : null)
                 .title(entity.getTitle())
+                .productId(entity.getProductId())
                 .content(entity.getContent())
                 .author(entity.getAuthor())
                 .category(entity.getCategory())

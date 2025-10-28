@@ -5,10 +5,19 @@ import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.aggregations.StringTermsBucket;
 import co.elastic.clients.elasticsearch._types.query_dsl.BoolQuery;
+import co.elastic.clients.elasticsearch._types.query_dsl.Query;
 import co.elastic.clients.elasticsearch.core.SearchRequest;
+import co.elastic.clients.elasticsearch.core.SearchResponse;
+import co.elastic.clients.elasticsearch.transform.Settings;
+import co.elastic.clients.json.JsonpMapper;
+import co.elastic.clients.json.JsonpUtils;
+import co.elastic.clients.json.jackson.JacksonJsonpMapper;
 import jakarta.annotation.PostConstruct;
+import jakarta.json.spi.JsonProvider;
+import jakarta.json.stream.JsonGenerator;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -40,9 +49,12 @@ import com.yang.shopping.dto.ReindexResponse;
 import com.yang.shopping.dto.SuggestionResponse;
 import com.yang.shopping.mapper.ArticleMapper;
 import com.yang.shopping.model.Article;
+import com.yang.shopping.model.Product;
 import com.yang.shopping.model.search.ArticleDocument;
 import com.yang.shopping.repository.ArticleRepository;
+import com.yang.shopping.repository.ProductRepository;
 
+import java.io.StringWriter;
 import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -73,7 +85,11 @@ public class ArticleService {
     private final ArticleRepository repository;
     private final ElasticsearchOperations elasticOps;
     private final ArticleMapper mapper;
-    
+
+	@Autowired
+	private ProductRepository productRepository;
+	private ArticleRepository articleRepository;
+	
     public ArticleSearchPageResponse searchProducts(String keyword, int page, int size) {
 
 		System.out.println("엘라스틱 서비스 진입완료");
@@ -151,11 +167,72 @@ public class ArticleService {
                 indexOps.create();
                 indexOps.putMapping();
                 System.out.println("Elasticsearch 서버이미 있음: " + indexOps);
+                ensureIndexAndIndexData();
             }
         } catch (Exception e) {
             System.out.println("Elasticsearch 서버 없음: " + e.getMessage());
         }
     }
+    @PostConstruct
+    void ensureIndexAndIndexData() {
+        try {
+            IndexOperations indexOps = elasticOps.indexOps(ArticleDocument.class);
+
+            // 1️⃣ 기존 인덱스 삭제
+            if (indexOps.exists()) {
+                indexOps.delete();
+                System.out.println("기존 인덱스 삭제 완료");
+            }
+
+            // 설정 Map으로 analyzer 지정
+            Map<String, Object> settings = Map.of(
+                "analysis", Map.of(
+                    "analyzer", Map.of(
+                        "korean_synonym_analyzer", Map.of(
+                            "type", "custom",
+                            "tokenizer", "nori_tokenizer",
+                            "filter", List.of("lowercase", "synonym_filter")
+                        )
+                    ),
+                    "filter", Map.of(
+                        "synonym_filter", Map.of(
+                            "type", "synonym",
+                            "synonyms_path", "analysis/synonyms.txt"
+                        )
+                    )
+                )
+            );
+
+            // 인덱스 생성 + 매핑 적용
+            indexOps.create(settings);
+            indexOps.putMapping(indexOps.createMapping());
+            System.out.println("새 인덱스 및 매핑 생성 완료");
+
+            // 3️⃣ DB 전체 조회 후 색인
+            List<Product> products = productRepository.findAll();
+            for (Product p : products) {
+                ArticleDocument doc = mapToDocument(p);
+                elasticOps.save(doc);
+            }
+
+            System.out.println("DB 데이터를 Elasticsearch에 새로 색인 완료 (총 " + products.size() + "건)");
+
+        } catch (Exception e) {
+            System.out.println("Elasticsearch 오류: " + e.getMessage());
+        }
+    }
+
+    private ArticleDocument mapToDocument(Product p) {
+        ArticleDocument doc = new ArticleDocument();
+        doc.setProductId(String.valueOf(p.getProductSeq()));
+        doc.setTitle(p.getProductName());
+        doc.setContent(p.getContent());
+        doc.setCategory(p.getCategory());
+        return doc;
+    }
+
+
+
 
 
     @Transactional
@@ -188,20 +265,77 @@ public class ArticleService {
         return execute(query);
     }
 
-    public ArticleSearchPageResponse advancedSearch(String text,
+    @Autowired
+    private ElasticsearchOperations elasticsearchOperations;
+
+    public List<ArticleDocument> advancedSearch(
+            String text,
             String category,
             Set<String> tags,
             LocalDateTime publishedFrom,
             LocalDateTime publishedTo,
             Double minRating,
             int page,
-            int size) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(Sort.Order.desc("publishedAt")));
-        NativeQuery query = baseQuery(pageable)
-                .withQuery(q -> q.bool(
-                        builder -> applyFilters(builder, text, category, tags, publishedFrom, publishedTo, minRating)))
+            int size
+    ) {
+
+        BoolQuery.Builder boolBuilder = new BoolQuery.Builder();
+
+        // ✅ 유사검색 (동의어 + fuzziness)
+        if (StringUtils.hasText(text)) {
+            boolBuilder.should(s -> s.multiMatch(mm -> mm
+            	    .query(text)
+            	    .fields("title^3", "content^2")
+            	    .analyzer("korean_synonym_analyzer")
+            	    .fuzziness("AUTO")
+            	));
+            
+            boolBuilder.minimumShouldMatch("1");
+        }
+
+        if (StringUtils.hasText(category)) {
+            boolBuilder.filter(f -> f.term(t -> t.field("category").value(category)));
+        }
+
+        if (tags != null && !tags.isEmpty()) {
+            List<FieldValue> values = tags.stream().map(FieldValue::of).toList();
+            boolBuilder.filter(f -> f.terms(t -> t.field("tags").terms(tv -> tv.value(values))));
+        }
+
+        if (publishedFrom != null || publishedTo != null) {
+            boolBuilder.filter(f -> f.range(r -> r.date(d -> {
+                d.field("publishedAt");
+                if (publishedFrom != null)
+                    d.gte(publishedFrom.atOffset(ZoneOffset.UTC).toInstant().toString());
+                if (publishedTo != null)
+                    d.lte(publishedTo.atOffset(ZoneOffset.UTC).toInstant().toString());
+                return d;
+            })));
+        }
+
+        if (minRating != null) {
+            boolBuilder.filter(f -> f.range(r -> r.number(n -> n.field("rating").gte(minRating))));
+        }
+
+        // ✅ 조건이 없으면 match_all
+        if (!StringUtils.hasText(text) &&
+            !StringUtils.hasText(category) &&
+            (tags == null || tags.isEmpty()) &&
+            publishedFrom == null && publishedTo == null && minRating == null) {
+            boolBuilder.must(m -> m.matchAll(ma -> ma));
+        }
+
+        // ✅ Spring Data용 NativeQuery 생성
+        NativeQuery query = NativeQuery.builder()
+                .withQuery(q -> q.bool(boolBuilder.build()))
+                .withMaxResults(size)
                 .build();
-        return execute(query);
+
+        // ✅ 실행
+        return elasticsearchOperations.search(query, ArticleDocument.class)
+                .stream()
+                .map(SearchHit::getContent)
+                .toList();
     }
 
     public SuggestionResponse suggestTitles(String prefix, int size) {
@@ -362,50 +496,76 @@ public class ArticleService {
             LocalDateTime publishedFrom,
             LocalDateTime publishedTo,
             Double minRating) {
-        boolean[] hasMust = {false};
-        boolean[] hasFilter = {false};
 
-        if (StringUtils.hasText(text)) {
-            builder.must(m -> m.multiMatch(mm -> mm
-                    .query(text)
-                    .fields("title^2", "content", "tags")));
-            hasMust[0] = true;
-        }
-        if (StringUtils.hasText(category)) {
-            builder.filter(f -> f.term(t -> t.field(CATEGORY_KEYWORD_FIELD).value(category)));
-            hasFilter[0] = true;
-        }
-        if (!CollectionUtils.isEmpty(tags)) {
-            List<FieldValue> values = tags.stream().map(FieldValue::of).toList();
-            builder.filter(f -> f.terms(t -> t.field(TAGS_KEYWORD_FIELD).terms(tv -> tv.value(values))));
-            hasFilter[0] = true;
-        }
-        if (publishedFrom != null || publishedTo != null) {
-            builder.filter(f -> f.range(r -> {
-                return r.date(d -> {
-                    d.field(PUBLISHED_AT_FIELD);
-                    if (publishedFrom != null) {
-                        Instant fromInstant = publishedFrom.atOffset(ZoneOffset.UTC).toInstant();
-                        d.gte(fromInstant.toString());
-                    }
-                    if (publishedTo != null) {
-                        Instant toInstant = publishedTo.atOffset(ZoneOffset.UTC).toInstant();
-                        d.lte(toInstant.toString());
-                    }
-                    return d;
-                });
-            }));
-            hasFilter[0] = true;
-        }
-        if (minRating != null) {
-            builder.filter(f -> f.range(r -> r.number(n -> n.field(RATING_FIELD).gte(minRating))));
-            hasFilter[0] = true;
-        }
-        if (!hasMust[0] && !hasFilter[0]) {
-            builder.must(m -> m.matchAll(ma -> ma));
-        }
-        return builder;
-    }
+			boolean[] hasMust = {false};
+			boolean[] hasFilter = {false};
+			
+			if (StringUtils.hasText(text)) {
+			// 🔹 multi_match + fuzziness
+			builder.should(m -> m.multiMatch(mm -> mm
+			.query(text)
+			.fields("title^3", "content^2", "tags") // 가중치 지정
+			.fuzziness("AUTO") // 오타 허용
+			.prefixLength(1)   // fuzzy 적용 최소 글자 길이
+			));
+			
+			// 🔹 wildcard 보조 (부분 일치)
+			builder.should(m -> m.wildcard(w -> w
+			.field("title")
+			.value("*" + text + "*")
+			.boost(2.0f)
+			));
+			builder.should(m -> m.wildcard(w -> w
+			.field("content")
+			.value("*" + text + "*")
+			.boost(1.5f)
+			));
+			
+			builder.minimumShouldMatch("1"); // should 중 하나만 맞아도 검색
+			hasMust[0] = true;
+			}
+			
+			// 카테고리 필터
+			if (StringUtils.hasText(category)) {
+			builder.filter(f -> f.term(t -> t.field("category").value(category)));
+			hasFilter[0] = true;
+			}
+			
+			// 태그 필터
+			if (!CollectionUtils.isEmpty(tags)) {
+			List<FieldValue> values = tags.stream().map(FieldValue::of).toList();
+			builder.filter(f -> f.terms(t -> t.field("tags").terms(tv -> tv.value(values))));
+			hasFilter[0] = true;
+			}
+			
+			// 날짜 필터
+			if (publishedFrom != null || publishedTo != null) {
+			builder.filter(f -> f.range(r -> r.date(d -> {
+			d.field("publishedAt");
+			if (publishedFrom != null)
+			d.gte(publishedFrom.atOffset(ZoneOffset.UTC).toInstant().toString());
+			if (publishedTo != null)
+			d.lte(publishedTo.atOffset(ZoneOffset.UTC).toInstant().toString());
+			return d;
+			})));
+			hasFilter[0] = true;
+			}
+			
+			// 최소 평점 필터
+			if (minRating != null) {
+			builder.filter(f -> f.range(r -> r.number(n -> n.field("rating").gte(minRating))));
+			hasFilter[0] = true;
+			}
+			
+			// 아무 조건 없으면 match_all
+			if (!hasMust[0] && !hasFilter[0]) {
+			builder.must(m -> m.matchAll(ma -> ma));
+			}
+			
+			return builder;
+			}
+
+
 
     private Article generateSampleArticle(int seed) {
         String[] categories = { "Tech", "Business", "Culture", "Sports", "Science" };

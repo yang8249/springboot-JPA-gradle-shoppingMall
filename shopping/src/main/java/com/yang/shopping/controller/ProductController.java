@@ -1,51 +1,46 @@
 package com.yang.shopping.controller;
 
-import java.security.Principal;
 import java.text.NumberFormat;
 import java.util.List;
 import java.util.Locale;
-import java.util.Optional;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.google.gson.Gson;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yang.shopping.config.auth.PrincipalDetail;
 import com.yang.shopping.controller.api.ProductApiController;
-import com.yang.shopping.dto.ResponseDto;
-import com.yang.shopping.model.Board;
 import com.yang.shopping.model.Cart;
 import com.yang.shopping.model.Delivery;
 import com.yang.shopping.model.Product;
-import com.yang.shopping.model.Users;
 import com.yang.shopping.model.Wish;
 import com.yang.shopping.service.CartService;
 import com.yang.shopping.service.DeliveryService;
 import com.yang.shopping.service.ProductService;
 import com.yang.shopping.service.WishService;
 
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpSession;
 
 @Controller
 public class ProductController {
 
-    private final ProductApiController productApiController;
 
 	@Autowired
 	private ProductService productService;
@@ -59,9 +54,6 @@ public class ProductController {
 	@Autowired
 	private DeliveryService deliveryService;
 	
-    ProductController(ProductApiController productApiController) {
-        this.productApiController = productApiController;
-    }
 
 	// 제품 목록
 	@GetMapping("/products")
@@ -93,6 +85,65 @@ public class ProductController {
 		return "product/products";
 	}
 	
+	// 제품 목록
+		@PostMapping("/searchProductList")
+		@ResponseBody
+		public Page<Product> searchProductList(
+				@RequestBody List<Map<String, Object>> articles,
+		        //@RequestParam("jsonData") String jsonData,
+		        Model model, HttpSession session,
+				@PageableDefault(size = 10, sort = "productSeq", direction = Direction.DESC) Pageable pageable) throws JsonMappingException, JsonProcessingException {
+			
+
+//		    ObjectMapper mapper = new ObjectMapper();
+//		    List<Map<String, Object>> articles = mapper.readValue(
+//		        jsonData, new TypeReference<List<Map<String, Object>>>() {});
+		    
+		    // JSON에서 productId만 추출
+		    List<String> ids = articles.stream()
+		                               .map(a -> (String) a.get("productId"))
+		                               .collect(Collectors.toList());
+
+			
+			Page<Product> products = productService.searchProduct(ids, pageable);
+
+		    // 세션에 저장
+		    session.setAttribute("searchedProducts", products);
+		    model.addAttribute("products", products);
+		    
+		    
+			
+			Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+			
+			if (authentication.getPrincipal() instanceof String && authentication.getPrincipal().equals("anonymousUser")) {
+				System.out.println("사용자가 로그인하지 않았습니다."); 
+		    } else {
+		    	PrincipalDetail principal = (PrincipalDetail) authentication.getPrincipal();
+		    	System.out.println("사용자가 로그인했습니다."); 
+		    	int userId = principal.getUser().getId();
+			  	System.out.println(principal.getUser().getId());
+			  	model.addAttribute("wishs", wishService.userWishList(userId)); 
+		    }
+			 
+			
+			return products;
+		}
+
+		// 조회 후 페이지 이동
+		@SuppressWarnings("unchecked")
+		@GetMapping("/productListPage")
+	public String productListPage(HttpSession session, Model model) {
+	    Page<Product> products = (Page<Product>) session.getAttribute("searchedProducts");
+	    
+	    model.addAttribute("products", products);
+		model.addAttribute("newProducts", productService.selectNewProduct());
+		model.addAttribute("files", productService.selectNewProduct());
+		//여기다 최대 4개만 뽑는 최신등록 제품 가져오기
+	    
+		return "product/products";
+	}
+		
 	// 제품 상세 정보
 	@GetMapping("/product/detailProduct")
 	public String detailProduct(@RequestParam int id, @RequestParam String userId, Model model) {

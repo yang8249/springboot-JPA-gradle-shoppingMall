@@ -30,7 +30,9 @@ public class Article {
   private Long id;
 
   private String title;
-  
+
+	@Column(length = 100)
+  private String productId;
 
 	@Column(length = 100)
 	private String color;

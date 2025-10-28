@@ -6,6 +6,11 @@
 <%
     java.text.DecimalFormat df = new java.text.DecimalFormat("#,###");
 %>
+<style>
+  #searchBox {
+      top: 14% !important;
+  }
+</style>
 
 <%@ include file="../layout/header.jsp" %>
 <div id="container" data-ez="layout-06i7law-1">

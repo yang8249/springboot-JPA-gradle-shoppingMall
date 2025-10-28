@@ -2,12 +2,27 @@ package com.yang.shopping.dto;
 
 import java.util.List;
 
+import com.yang.shopping.model.search.ArticleDocument;
+
 public class ArticleSearchPageResponse {
 
     private List<ArticleSearchHitResponse> hits;
     private long totalHits;
     private ArticleInsightsResponse insights;
-
+    
+    private List<ArticleDocument> articles;
+    private int page;
+    private int size;
+    private long total;
+    
+    // ✅ 생성자 추가
+    public ArticleSearchPageResponse(List<ArticleDocument> articles, int page, int size, long total) {
+        this.articles = articles;
+        this.page = page;
+        this.size = size;
+        this.total = total;
+    }
+    
     public ArticleSearchPageResponse() {
     }
 

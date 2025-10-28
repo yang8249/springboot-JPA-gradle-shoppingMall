@@ -21,7 +21,9 @@ public interface ProductRepository extends JpaRepository<Product, Integer>{
 
     @Query("SELECT p FROM Product p LEFT JOIN FETCH p.fileInfo WHERE p.productSeq = :productSeq")
     Optional<Product> getProductWithFileInfo(@Param("productSeq") int id);
-
+    
+    // productId 기준으로 여러 개 조회
+    Page<Product> findByProductSeqIn(List<String> ids, Pageable pageable); // ✅ Pageable 추가
 
 	/*d
 	 * @Query("SELECT p, fi FROM Product p " +

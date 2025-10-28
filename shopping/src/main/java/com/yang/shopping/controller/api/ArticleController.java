@@ -32,6 +32,7 @@ public class ArticleController {
     public ArticleResponse create( @RequestBody ArticleRequest request) {
     	
 		System.out.println("엘라스틱서치 데이터 생성 진입");
+		System.out.println("getProductId : "+ request.getProductId());
 		System.out.println("getTitle : "+ request.getTitle());
 		System.out.println("getContent : "+ request.getContent());
 		System.out.println("getTitle : "+ request.getCategory());
@@ -88,7 +89,8 @@ public class ArticleController {
     }
 
     @GetMapping("/search/advanced")
-    public ArticleSearchPageResponse advanced(@RequestParam(required = false) String query,
+    public List<ArticleDocument> advanced(
+            @RequestParam(required = false) String query,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) List<String> tags,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime publishedFrom,
@@ -96,9 +98,11 @@ public class ArticleController {
             @RequestParam(required = false) Double minRating,
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "10") int size) {
+
         Set<String> tagSet = tags != null ? new HashSet<>(tags) : null;
         return service.advancedSearch(query, category, tagSet, publishedFrom, publishedTo, minRating, page, size);
     }
+
 
     @GetMapping("/search/suggest")
     public SuggestionResponse suggest(@RequestParam String prefix,

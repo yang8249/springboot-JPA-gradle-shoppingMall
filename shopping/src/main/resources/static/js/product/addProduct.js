@@ -172,8 +172,9 @@ $(document).ready(function(){
 					           type: "POST",
 					           contentType: "application/json",
 							   data: JSON.stringify({
+							   		productId: response.data.productSeq,
 							       title: articleData.article.title,
-								category: articleData.article.category,
+									category: articleData.article.category,
 								   content: articleData.article.content
 							     }),
 					           success: function(articleResponse) {

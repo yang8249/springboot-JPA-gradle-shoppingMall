@@ -57,7 +57,7 @@ public class ProductApiController {
 	
 	//제품 등록
 	@PostMapping("/api/Product/addProduct")
-	public ResponseDto<ProductDto> addProduct(
+	public ResponseDto<Product> addProduct(
 		    @RequestParam("product") String productJson, 
 						@RequestParam List<MultipartFile> file) throws JsonMappingException, JsonProcessingException {
 
@@ -73,9 +73,9 @@ public class ProductApiController {
 		System.out.println("product : "+productDto.getProduct());
 		System.out.println("fileInfo : "+productDto.getFile());
 		
-		productService.insertAddProduct(productDto);
+		Product result = productService.insertAddProduct(productDto);
 		
-		return new ResponseDto<ProductDto>(HttpStatus.OK.value(), null);
+		return new ResponseDto<Product>(HttpStatus.OK.value(), result);
 	}
 	
 	//장바구니 등록
