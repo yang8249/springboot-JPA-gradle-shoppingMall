@@ -1,6 +1,7 @@
 package com.yang.shopping.service;
 
 import co.elastic.clients.elasticsearch._types.FieldValue;
+import co.elastic.clients.elasticsearch._types.SortOrder;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregate;
 import co.elastic.clients.elasticsearch._types.aggregations.Aggregation;
 import co.elastic.clients.elasticsearch._types.aggregations.StringTermsBucket;
@@ -59,6 +60,7 @@ import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -67,6 +69,7 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.atomic.AtomicReference;
 import java.util.stream.Collectors;
 
 @Service
@@ -227,6 +230,11 @@ public class ArticleService {
         doc.setProductId(String.valueOf(p.getProductSeq()));
         doc.setTitle(p.getProductName());
         doc.setContent(p.getContent());
+        
+        List<String> colorList = Arrays.stream(p.getColor().split(","))
+                .map(String::trim)
+                .collect(Collectors.toList());
+        doc.setColor(colorList);
         doc.setCategory(p.getCategory());
         return doc;
     }
@@ -265,12 +273,13 @@ public class ArticleService {
         return execute(query);
     }
 
+
+    
     @Autowired
     private ElasticsearchOperations elasticsearchOperations;
-
     public List<ArticleDocument> advancedSearch(
             String text,
-            String category,
+            String category, // 추가
             Set<String> tags,
             LocalDateTime publishedFrom,
             LocalDateTime publishedTo,
@@ -281,57 +290,143 @@ public class ArticleService {
 
         BoolQuery.Builder boolBuilder = new BoolQuery.Builder();
 
-        // ✅ 유사검색 (동의어 + fuzziness)
+        // 🔹 1️⃣ 핵심 카테고리 키워드 매핑
+        Map<String, String> keywordToCategory = Map.ofEntries(
+            Map.entry("아우터", "outer"),
+            Map.entry("코트", "outer"),
+            Map.entry("재킷", "outer"),
+            Map.entry("블레이저", "outer"),
+            Map.entry("패딩", "outer"),
+            Map.entry("점퍼", "outer"),
+            Map.entry("트렌치코트", "outer"),
+
+            Map.entry("상의", "tops"),
+            Map.entry("티셔츠", "tops"),
+            Map.entry("셔츠", "tops"),
+            Map.entry("블라우스", "tops"),
+            Map.entry("니트", "tops"),
+            Map.entry("가디건", "tops"),
+            Map.entry("후드", "tops"),
+            Map.entry("맨투맨", "tops"),
+
+            Map.entry("바지", "bottoms"),
+            Map.entry("슬랙스", "bottoms"),
+            Map.entry("청바지", "bottoms"),
+            Map.entry("조거팬츠", "bottoms"),
+            Map.entry("레깅스", "bottoms"),
+            Map.entry("치마", "bottoms"),
+
+            Map.entry("원피스", "dresses"),
+            Map.entry("드레스", "dresses"),
+            Map.entry("투피스", "dresses"),
+            Map.entry("롱원피스", "dresses"),
+            Map.entry("미니원피스", "dresses"),
+            Map.entry("랩원피스", "dresses"),
+
+            Map.entry("가방", "accessories"),
+            Map.entry("모자", "accessories"),
+            Map.entry("벨트", "accessories")
+        );
+
+        // 🔹 2️⃣ 색상 리스트
+        List<String> knownColors = List.of(
+        	    "검정", "검정색", "블랙",
+        	    "화이트", "흰색", "아이보리", "화이트색", "흰색색", "아이보리색",
+        	    "베이지", "베이지색", "카키", "카키색", "브라운", "브라운색",
+        	    "레드", "레드색", "빨강", "빨강색", "핑크", "핑크색",
+        	    "블루", "블루색", "파랑", "파랑색", "남색", "남색색",
+        	    "연두", "연두색", "민트", "민트색", "올리브", "올리브색",
+        	    "노랑", "노랑색", "머스타드", "머스타드색", "오렌지", "오렌지색",
+        	    "보라", "보라색", "퍼플", "퍼플색", "연보라", "연보라색",
+        	    "그레이", "그레이색", "회색", "회색색", "차콜", "차콜색", "진회색", "진회색색"
+        	);
+
+
+        AtomicReference<String> detectedCategory = new AtomicReference<>(null);
+        Set<String> detectedColors = new HashSet<>();
+        List<String> remainingTokens = new ArrayList<>();
+
+        System.out.println("text " + text);
         if (StringUtils.hasText(text)) {
-            boolBuilder.should(s -> s.multiMatch(mm -> mm
-            	    .query(text)
-            	    .fields("title^3", "content^2")
-            	    .analyzer("korean_synonym_analyzer")
-            	    .fuzziness("AUTO")
-            	));
+            String[] tokens = text.split("\\s+");
+            for (String token : tokens) {
+                System.out.println("token " + token);
+                // 카테고리
+                if (detectedCategory.get() == null && keywordToCategory.containsKey(token)) {
+                    System.out.println("카테고리 진입 " + token);
+                    detectedCategory.set(keywordToCategory.get(token));
+                    continue;
+                }
+                // 색상
+                if (knownColors.contains(token)) {
+                    System.out.println("색상 진입 " + token);
+                    detectedColors.add(token);
+                    continue;
+                }
+                System.out.println("유사 검색용 진입" + token);
+                // 나머지 유사 검색용
+                remainingTokens.add(token);
+            }
+        }
+        System.out.println("감지된 카테고리: " + detectedCategory.get());
+        System.out.println("감지된 컬러: " + detectedColors);
+        System.out.println("감지된 유사키워드: " + remainingTokens);
+        System.out.println("\n\n===============================\n\n");
+        
+
+     // 1️⃣ category 필터
+        if (detectedCategory.get() != null) {
+        	
+        	System.out.println("최종 카테고리 필터 값: " + detectedCategory.get());
+            boolBuilder.filter(f -> f.term(t -> t.field("category").value(detectedCategory.get())));
+        }
+
+        // 2️⃣ color 필터 (filter로 변경)
+        if (!detectedColors.isEmpty()) {
+            Set<String> cleanedColors = detectedColors.stream()
+                .map(c -> c.replace("색", ""))
+                .collect(Collectors.toSet());
+            List<FieldValue> colorValues = cleanedColors.stream()
+                .map(FieldValue::of)
+                .toList();
             
+            System.out.print("최종 색상 필터 값:");
+            colorValues.forEach(v -> System.out.print(" "+v._get()));
+
+
+            boolBuilder.filter(f -> f.terms(t -> t.field("color").terms(tv -> tv.value(colorValues))));
+        }
+
+        System.out.println("");
+        // 3️⃣ 유사검색
+        if (!remainingTokens.isEmpty()) {
+            String remainingText = String.join(" ", remainingTokens);
+            System.out.println("최종 유사검색 텍스트: " + remainingText);
+            // title 정확일치 boost
+            boolBuilder.should(s -> s.match(m -> m.field("title").query(remainingText).boost(10.0f)));
+
+            // title + content fuzziness
+            boolBuilder.should(s -> s.multiMatch(mm -> mm
+                .query(remainingText)
+                .fields("title", "content")
+                .fuzziness("AUTO")
+            ));
+
             boolBuilder.minimumShouldMatch("1");
         }
 
-        if (StringUtils.hasText(category)) {
-            boolBuilder.filter(f -> f.term(t -> t.field("category").value(category)));
-        }
+        
 
-        if (tags != null && !tags.isEmpty()) {
-            List<FieldValue> values = tags.stream().map(FieldValue::of).toList();
-            boolBuilder.filter(f -> f.terms(t -> t.field("tags").terms(tv -> tv.value(values))));
-        }
+       
 
-        if (publishedFrom != null || publishedTo != null) {
-            boolBuilder.filter(f -> f.range(r -> r.date(d -> {
-                d.field("publishedAt");
-                if (publishedFrom != null)
-                    d.gte(publishedFrom.atOffset(ZoneOffset.UTC).toInstant().toString());
-                if (publishedTo != null)
-                    d.lte(publishedTo.atOffset(ZoneOffset.UTC).toInstant().toString());
-                return d;
-            })));
-        }
-
-        if (minRating != null) {
-            boolBuilder.filter(f -> f.range(r -> r.number(n -> n.field("rating").gte(minRating))));
-        }
-
-        // ✅ 조건이 없으면 match_all
-        if (!StringUtils.hasText(text) &&
-            !StringUtils.hasText(category) &&
-            (tags == null || tags.isEmpty()) &&
-            publishedFrom == null && publishedTo == null && minRating == null) {
-            boolBuilder.must(m -> m.matchAll(ma -> ma));
-        }
-
-        // ✅ Spring Data용 NativeQuery 생성
+        // 🔹 8️⃣ NativeQuery
         NativeQuery query = NativeQuery.builder()
                 .withQuery(q -> q.bool(boolBuilder.build()))
                 .withMaxResults(size)
+                .withSort(so -> so.score(sc -> sc.order(SortOrder.Desc)))
                 .build();
 
-        // ✅ 실행
+        // 🔹 9️⃣ 실행
         return elasticsearchOperations.search(query, ArticleDocument.class)
                 .stream()
                 .map(SearchHit::getContent)

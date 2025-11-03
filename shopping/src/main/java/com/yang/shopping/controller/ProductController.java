@@ -136,11 +136,14 @@ public class ProductController {
 	public String productListPage(HttpSession session, Model model) {
 	    Page<Product> products = (Page<Product>) session.getAttribute("searchedProducts");
 	    
+	    
 	    model.addAttribute("products", products);
 		model.addAttribute("newProducts", productService.selectNewProduct());
 		model.addAttribute("files", productService.selectNewProduct());
 		//여기다 최대 4개만 뽑는 최신등록 제품 가져오기
 	    
+		System.out.println("세션에서 꺼낸 products : " + products.getContent().toString());
+		
 		return "product/products";
 	}
 		

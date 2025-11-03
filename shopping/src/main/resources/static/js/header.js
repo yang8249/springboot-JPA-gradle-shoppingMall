@@ -100,10 +100,6 @@ btn.addEventListener('click', () => {
 			    data: JSON.stringify(data), // 검색 조건 JSON
 			    success: function(data) {
 					console.log("검색된 제품 목록:", data);
-					if (data.content.length === 0) {
-						alert("검색 결과가 없습니다.");
-						return;
-					}
 					// 페이지 이동
 					window.location.href = '/productListPage';
 

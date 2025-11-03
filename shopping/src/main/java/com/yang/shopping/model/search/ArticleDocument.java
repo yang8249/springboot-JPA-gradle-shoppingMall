@@ -13,6 +13,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
 import jakarta.persistence.Column;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.Set;
 
 @Data
@@ -37,6 +38,9 @@ public class ArticleDocument {
     @Field(type = FieldType.Keyword)
     private String author;
 
+    @Field(type = FieldType.Keyword)
+    private List<String> color;
+    
     @Field(type = FieldType.Keyword)
     private String category;
 
